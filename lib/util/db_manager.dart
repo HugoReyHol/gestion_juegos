@@ -24,8 +24,32 @@ class DbManager {
   }
 
   Future<void> _onCreate(Database db, int v) async {
-    // TODO Crear estructura de la base de datos
     await db.execute("""
+      CREATE TABLE Users (
+        idUser INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL UNIQUE,
+        password TEXT NOT NULL
+      )
+      
+      CREATE TABLE Games (
+        idGame INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT NOT NULL,
+        description TEXT NOT NULL,
+        image BLOB NOT NULL,
+        details TEXT NOT NULL,
+        releases TEXT NOT NULL
+      )
+      
+      CREATE TABLE Users_Games (
+        idUser INTEGER NOT NULL,
+        idGame INTEGER NOT NULL,
+        score INTEGER DEFAULT NULL,
+        timePlayed INTEGER DEFAULT NULL,
+        state TEXT NOT NULL DEFAULT 'planToPlay',
+        PRIMARY KEY (idUser, idGame),
+        FOREIGN KEY (idUser) REFERENCES Users(idUser) ON DELETE CASCADE,
+        FOREIGN KEY (idGame) REFERENCES Games(idGame) ON DELETE CASCADE
+      )
     """);
   }
 
