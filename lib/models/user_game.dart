@@ -1,10 +1,9 @@
 class UserGame {
-
-  int idGame;
-  int idUser;
-  int? score;
-  int? timePlayed;
-  States state;
+  late int idGame;
+  late int idUser;
+  late int? score;
+  late int? timePlayed;
+  late States state;
 
   UserGame({
     required this.idGame,
@@ -14,7 +13,7 @@ class UserGame {
     required this.state
   });
 
-  void fromMap(Map<String, dynamic> map) {
+  UserGame.fromMap(Map<String, dynamic> map) {
     idGame = map["idGame"];
     idUser = map["idUser"];
     score = map["score"];

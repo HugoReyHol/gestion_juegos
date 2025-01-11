@@ -1,13 +1,12 @@
 import 'dart:nativewrappers/_internal/vm/lib/typed_data_patch.dart';
 
 class Game {
-
-  int idGame;
-  String title;
-  String description;
-  Uint8List image;
-  String details;
-  String releases;
+  late int idGame;
+  late String title;
+  late String description;
+  late Uint8List image;
+  late String details;
+  late String releases;
 
   Game({
     required this.idGame,
@@ -18,7 +17,7 @@ class Game {
     required this.releases
   });
 
-  void fromMap(Map<String, dynamic> map) {
+  Game.fromMap(Map<String, dynamic> map) {
     idGame = map["idGame"];
     title = map["title"];
     description = map["description"];
