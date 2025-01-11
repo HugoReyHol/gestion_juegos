@@ -35,4 +35,10 @@ class GameDao {
 
     return games;
   }
+
+  static Future<int> insertGame(Game game) async {
+    final db = await DbManager().database;
+
+    return await db.insert("Games", game.toMap());
+  }
 }
