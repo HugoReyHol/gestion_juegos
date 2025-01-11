@@ -1,8 +1,7 @@
 class User {
-
-  int idUser;
-  String name;
-  String password;
+  late int idUser;
+  late String name;
+  late String password;
 
   User({
     required this.idUser,
@@ -10,7 +9,7 @@ class User {
     required this.password
   });
 
-  void fromMap(Map<String, dynamic> map){
+  User.fromMap(Map<String, dynamic> map) {
     idUser = map["idUser"];
     name = map["name"];
     password = map["password"];
