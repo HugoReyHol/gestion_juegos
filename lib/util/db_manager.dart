@@ -41,8 +41,8 @@ class DbManager {
       )
       
       CREATE TABLE Users_Games (
-        idUser INTEGER NOT NULL,
-        idGame INTEGER NOT NULL,
+        idUser INTEGER,
+        idGame INTEGER,
         score INTEGER DEFAULT NULL,
         timePlayed INTEGER DEFAULT NULL,
         state TEXT NOT NULL DEFAULT 'planToPlay',
@@ -56,6 +56,5 @@ class DbManager {
   Future<void> close() async {
     if (_database != null) await _database!.close();
   }
-  
-  
+
 }
