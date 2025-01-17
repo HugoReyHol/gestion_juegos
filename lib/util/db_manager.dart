@@ -1,8 +1,7 @@
 import 'dart:io';
-import 'package:gestion_juegos/daos/game_dao.dart';
 import 'package:gestion_juegos/models/game.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:path/path.dart';
+import 'package:path/path.dart' as path;
 
 class DbManager {
 
@@ -20,30 +19,35 @@ class DbManager {
   }
 
   Future<Database> _createDatabase() async {
-    final dbPath = await getDatabasesPath();
-    final path = join(dbPath, "gestion_juegos.db");
+    sqfliteFfiInit();
 
-    return await openDatabase(path, onCreate: _onCreate);
+    final databaseFactory = databaseFactoryFfi;
+    final dbPath = path.join(await databaseFactory.getDatabasesPath(), "gestion_juegos.db");
+
+    final db = await databaseFactory.openDatabase(dbPath);
+    await _onCreate(db);
+
+    return db;
   }
 
-  Future<void> _onCreate(Database db, int v) async {
+  Future<void> _onCreate(Database db) async {
     await db.execute("""
-      CREATE TABLE Users (
+      CREATE TABLE IF NOT EXISTS Users (
         idUser INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL UNIQUE,
         password TEXT NOT NULL
-      )
+      );
       
-      CREATE TABLE Games (
+      CREATE TABLE IF NOT EXISTS Games (
         idGame INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT NOT NULL,
         description TEXT NOT NULL,
         image BLOB NOT NULL,
         details TEXT NOT NULL,
         releases TEXT NOT NULL
-      )
+      );
       
-      CREATE TABLE Users_Games (
+      CREATE TABLE IF NOT EXISTS Users_Games (
         idUser INTEGER,
         idGame INTEGER,
         score INTEGER DEFAULT NULL,
@@ -61,7 +65,7 @@ class DbManager {
         idGame: 1,
         title: "The Legend of Zelda: Tears of the Kingdom",
         description: "The Legend of Zelda: Tears of the Kingdom is the sequel to The Legend of Zelda: Breath of the Wild. The setting for Link’s adventure has been expanded to include the skies above the vast lands of Hyrule.",
-        image: await File("lib/assets/zelda_totk.png").readAsBytes(),
+        image: await File("assets/zelda_totk.png").readAsBytes(),
         details: "Genres: Role-playing (RPG), Adventure, Action, Fantasy, Sci-Fi, Open world\n"
           "Game mode: Single player\n"
           "Developer: Nintendo EPD Production Group No.3\n"
@@ -71,7 +75,7 @@ class DbManager {
       Game(idGame: 2,
         title: "Portal",
         description: "Waking up in a seemingly empty laboratory, the player is made to complete various physics-based puzzle challenges through numerous test chambers in order to test out the new Aperture Science Handheld Portal Device, without an explanation as to how, why or by whom.",
-        image: await File("lib/assets/portal.png").readAsBytes(),
+        image: await File("assets/portal.png").readAsBytes(),
         details: "Genres: Shooter, Platform, Puzzle, Sci-Fi, Comedy\n"
           "Game mode: Single player\n"
           "Developer: Valve\n"
@@ -86,8 +90,22 @@ class DbManager {
       )
     ];
 
+    // TODO comprobar si se puede hacer con DAOs
     for (Game game in games) {
-      GameDao.insertGame(game);
+      if ((await db.query("Games", where: "idGame = ?", whereArgs: [game.idGame])).isEmpty) {
+        await db.insert("Games", game.toMap());
+        print("insert '${game.title}'");
+
+      } else {
+        await db.update(
+            "Games",
+            game.toMap(),
+            where: "idGame = ?",
+            whereArgs: [game.idGame]
+        );
+        print("update '${game.title}'");
+
+      }
     }
   }
 
