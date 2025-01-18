@@ -17,12 +17,10 @@ class _AppState extends State<App> {
   int _actualScren = 0;
 
   @override
-  void initState() {
-    super.initState();
-
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     _user ??= ModalRoute.of(context)?.settings.arguments as User;
     _screens.addAll([Home(user: _user!), Search(user: _user!), Stats(user: _user!)]);
-    print(_user!.toMap());
   }
 
   @override
