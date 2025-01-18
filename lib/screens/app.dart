@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gestion_juegos/models/user.dart';
+import 'package:gestion_juegos/screens/home.dart';
+import 'package:gestion_juegos/screens/search.dart';
+import 'package:gestion_juegos/screens/stats.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -9,14 +12,31 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  late final User user;
+  User? _user;
+  final List<Widget> _screens = [Home(), Search(), Stats()];
+  int _actualScren = 0;
 
   @override
   Widget build(BuildContext context) {
-    user = ModalRoute.of(context)?.settings.arguments as User;
-    print(user.toMap());
+    _user ??= ModalRoute.of(context)?.settings.arguments as User;
+    print(_user?.toMap());
 
-    return const Placeholder();
+    return Scaffold(
+      body: _screens[_actualScren],
+      bottomNavigationBar: BottomNavigationBar(
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(icon: Icon(Icons.home_outlined), activeIcon: Icon(Icons.home), label: "Inicio"),
+          BottomNavigationBarItem(icon: Icon(Icons.search_outlined), activeIcon: Icon(Icons.search), label: "Buscar"),
+          BottomNavigationBarItem(icon: Icon(Icons.table_chart_outlined), activeIcon: Icon(Icons.table_chart), label: "Estadísticas"),
+        ],
+        currentIndex: _actualScren,
+        onTap: (value) {
+          setState(() {
+            _actualScren = value;
+          });
+        },
+      ),
+    );
   }
 }
 
