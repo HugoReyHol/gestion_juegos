@@ -17,29 +17,33 @@ class _LoginState extends State<Login> {
   final TextEditingController _passCtrll = TextEditingController();
   String _errorMsg = "";
 
-  void _onRegister() {
-    setState(() async {
-      if (!_formkey.currentState!.validate()) return;
+  Future<void> _onRegister() async {
+    if (!_formkey.currentState!.validate()) return;
 
-      if ((await UserDao.getUser(_nameCtrll.text)) != null) {
+    final User? user = await UserDao.getUser(_nameCtrll.text);
+
+    if (user != null) {
+      setState(() {
         _errorMsg = "El usuario ${_nameCtrll.text} ya está registrado";
-        return;
-      }
+      });
+      return;
+    }
 
-      final int id = await UserDao.insertUser(
-        User(
-          name: _nameCtrll.text,
-          password: _passCtrll.text
-        )
-      );
+    final int id = await UserDao.insertUser(
+      User(
+        name: _nameCtrll.text,
+        password: _passCtrll.text // TODO implementar encriptacion
+      )
+    );
 
-      if (id == 0) {
+    if (id == 0) {
+      setState(() {
         _errorMsg = "No se ha podido crear el usuario";
-        return;
-      }
+      });
+      return;
+    }
 
-      Navigator.pushNamed(context, "/app");
-    });
+    Navigator.pushNamed(context, "/app");
   }
 
   void _onLogIn() async {
@@ -47,22 +51,20 @@ class _LoginState extends State<Login> {
 
     final User? user = await UserDao.getUser(_nameCtrll.text);
 
-    setState(() {
-      if (user == null) {
+    if (user == null) {
+      setState(() {
         _errorMsg = "El usuario ${_nameCtrll.text} no existe";
-        return;
-      }
+      });
+      return;
+    }
 
-      // TODO implementar encriptacion
-      if (user.password != _passCtrll.text) {
-        _errorMsg = "Contrasena incorrecta";
-        return;
-      }
-
-      _errorMsg = "";
-    });
-
-    if (_errorMsg != "") return;
+    // TODO implementar encriptacion
+    if (user.password != _passCtrll.text) {
+      setState(() {
+        _errorMsg = "Contraseña incorrecta";
+      });
+      return;
+    }
 
     // TODO guardar el usuario obtenido
 
