@@ -18,7 +18,9 @@ class UserGame {
     idUser = map["idUser"];
     score = map["score"];
     timePlayed = map["timePlayed"];
-    state = map["state"];
+    States.values.map((States st) {
+      if (st.name == map["state"]) state = st;
+    });
   }
 
   Map<String, dynamic> toMap() => {
@@ -26,7 +28,7 @@ class UserGame {
     "idUser": idUser,
     "score": score,
     "timePlayed": timePlayed,
-    "state": state
+    "state": state.name
   };
 
 }

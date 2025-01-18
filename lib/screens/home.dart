@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gestion_juegos/components/game_widget.dart';
+import 'package:gestion_juegos/daos/user_game_dao.dart';
 import 'package:gestion_juegos/models/user.dart';
 import 'package:gestion_juegos/models/user_game.dart';
 
@@ -11,13 +13,30 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<Home>{
   States _selectedState = States.playing;
   final TextEditingController _searchCtrll = TextEditingController();
+  late final List<UserGame> userGames;
+  bool _loading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadGames();
+  }
+
+  void _loadGames() async {
+    userGames = await UserGameDao.getUserGames(widget.user.idUser!);
+    setState(() {
+      _loading = false;
+    });
+  }
   
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return _loading ? Text("Cargando") :
+
+      Column(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,
       spacing: 15,
@@ -60,11 +79,14 @@ class _HomeState extends State<Home> {
           ],
         ),
         Expanded(child: GridView.count(
+          crossAxisSpacing: 15,
+          mainAxisSpacing: 15,
           crossAxisCount: 2,
-          children: List.generate(5, (int index) {
-            return Center(child: Text("Prueba $index"));
+          children: List.generate(userGames.length, (int index) {
+            return GameWidget(userGame: userGames[index]);
           })
         )),
+        GameWidget(userGame: userGames[0])
       ],
     );
   }
