@@ -17,13 +17,21 @@ class _AppState extends State<App> {
   int _actualScren = 0;
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
+
     _user ??= ModalRoute.of(context)?.settings.arguments as User;
     _screens.addAll([Home(user: _user!), Search(user: _user!), Stats(user: _user!)]);
     print(_user!.toMap());
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      body: _screens[_actualScren],
+      body: Padding(
+        padding: EdgeInsets.all(50),
+        child: _screens[_actualScren]
+      ),
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.home_outlined), activeIcon: Icon(Icons.home), label: "Inicio"),
