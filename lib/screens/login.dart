@@ -20,7 +20,7 @@ class _LoginState extends State<Login> {
   Future<void> _onRegister() async {
     if (!_formkey.currentState!.validate()) return;
 
-    final User? user = await UserDao.getUser(_nameCtrll.text);
+    User? user = await UserDao.getUser(_nameCtrll.text);
 
     if (user != null) {
       setState(() {
@@ -29,14 +29,14 @@ class _LoginState extends State<Login> {
       return;
     }
 
-    final int id = await UserDao.insertUser(
-      User(
+    user = User(
         name: _nameCtrll.text,
         password: _passCtrll.text // TODO implementar encriptacion
-      )
     );
 
-    if (id == 0) {
+    user.idUser = await UserDao.insertUser(user);
+
+    if (user.idUser == 0) {
       setState(() {
         _errorMsg = "No se ha podido crear el usuario";
       });
