@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gestion_juegos/screens/app.dart';
+import 'package:gestion_juegos/screens/details.dart';
+import 'package:gestion_juegos/screens/login.dart';
 
 void main() {
   runApp(const MainApp());
@@ -9,12 +12,13 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      routes: {
+        "/": (context) => Login(),
+        "/app": (context) => App(),
+        "/details": (context) => Details()
+      },
     );
   }
 }

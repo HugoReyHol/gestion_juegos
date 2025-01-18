@@ -5,7 +5,7 @@ class UserDao {
   static Future<User?> getUser(String name) async {
     final db = await DbManager().database;
 
-    final result = await db.query("Users", where: "name = $name");
+    final result = await db.query("Users", where: "name = ?", whereArgs: [name]);
 
     return result.isEmpty ? null : User.fromMap(result.first);
   }

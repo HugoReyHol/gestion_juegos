@@ -1,10 +1,10 @@
 class User {
-  late int idUser;
+  late int? idUser;
   late String name;
   late String password;
 
   User({
-    required this.idUser,
+    // required this.idUser,
     required this.name,
     required this.password
   });
@@ -16,7 +16,7 @@ class User {
   }
 
   Map<String, dynamic> toMap() => {
-    "idUser": idUser,
+    // "idUser": idUser,
     "name": name,
     "password": password
   };
