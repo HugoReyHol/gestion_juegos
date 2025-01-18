@@ -13,13 +13,14 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   User? _user;
-  final List<Widget> _screens = [Home(), Search(), Stats()];
+  final List<Widget> _screens = [];
   int _actualScren = 0;
 
   @override
   Widget build(BuildContext context) {
     _user ??= ModalRoute.of(context)?.settings.arguments as User;
-    print(_user?.toMap());
+    _screens.addAll([Home(user: _user!), Search(user: _user!), Stats(user: _user!)]);
+    print(_user!.toMap());
 
     return Scaffold(
       body: _screens[_actualScren],
