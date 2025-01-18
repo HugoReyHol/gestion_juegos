@@ -31,4 +31,4 @@ class UserGame {
 
 }
 
-enum States {playing, completed, onHold, dropped, planToPlay}
+enum States {playing, completed, on_hold, dropped, plan_to_play}
