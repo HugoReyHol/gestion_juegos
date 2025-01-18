@@ -43,7 +43,7 @@ class _LoginState extends State<Login> {
       return;
     }
 
-    Navigator.pushNamed(context, "/app");
+    Navigator.pushNamed(context, "/app", arguments: user);
   }
 
   void _onLogIn() async {
@@ -66,9 +66,7 @@ class _LoginState extends State<Login> {
       return;
     }
 
-    // TODO guardar el usuario obtenido
-
-    Navigator.pushNamed(context, "/app");
+    Navigator.pushNamed(context, "/app", arguments: user);
   }
 
   @override
