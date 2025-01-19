@@ -100,14 +100,17 @@ class _DetailsState extends State<Details> {
                           )
                         ],
                       ),
-                      Row(
+                      Row( // TODO hacer que empiece en el mismo sitio que el resto de componentes
                         spacing: 15,
                         children: [
                           Text("Tiempo jugado"),
                           SizedBox(
-                            width: 50,
+                            width: 75,
                             child: TextField(
                               controller: _timePlayedCtrll,
+                              decoration: InputDecoration(
+                                suffixText: "h"
+                              ),
                               keyboardType: TextInputType.number,
                               inputFormatters: [
                                 FilteringTextInputFormatter.digitsOnly
