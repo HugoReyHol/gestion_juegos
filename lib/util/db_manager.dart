@@ -52,7 +52,7 @@ class DbManager {
         idGame INTEGER,
         score INTEGER DEFAULT NULL,
         timePlayed INTEGER DEFAULT NULL,
-        state TEXT NOT NULL DEFAULT 'planToPlay',
+        state TEXT NOT NULL DEFAULT 'plan_to_play',
         PRIMARY KEY (idUser, idGame),
         FOREIGN KEY (idUser) REFERENCES Users(idUser) ON DELETE CASCADE,
         FOREIGN KEY (idGame) REFERENCES Games(idGame) ON DELETE CASCADE
