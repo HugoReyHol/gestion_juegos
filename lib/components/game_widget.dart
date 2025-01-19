@@ -35,13 +35,15 @@ class _GameWidgetState extends State<GameWidget> {
     return _loading ?
       Text("Cargando") :
       Card(
+        clipBehavior: Clip.antiAlias,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Image.memory(game.image),
             Padding(
               padding: EdgeInsets.all(10),
-              child: Text(game.title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold), maxLines: 2, overflow: TextOverflow.ellipsis)
+              child: Text(game.title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold), maxLines: 2, overflow: TextOverflow.ellipsis, )
             )
           ],
         ),

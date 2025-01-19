@@ -16,7 +16,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home>{
   States _selectedState = States.playing;
   final TextEditingController _searchCtrll = TextEditingController();
-  late final List<UserGame> userGames;
+  late final List<UserGame> _userGames;
   bool _loading = true;
 
   @override
@@ -26,7 +26,7 @@ class _HomeState extends State<Home>{
   }
 
   void _loadGames() async {
-    userGames = await UserGameDao.getUserGames(widget.user.idUser!);
+    _userGames = await UserGameDao.getUserGames(widget.user.idUser!);
     setState(() {
       _loading = false;
     });
@@ -78,15 +78,27 @@ class _HomeState extends State<Home>{
             )
           ],
         ),
-        Expanded(child: GridView.count(
-          crossAxisSpacing: 15,
-          mainAxisSpacing: 15,
-          crossAxisCount: 2,
-          children: List.generate(userGames.length, (int index) {
-            return GameWidget(userGame: userGames[index]);
-          })
+        Expanded(child: GridView.builder(
+          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+            maxCrossAxisExtent: 264,
+            childAspectRatio: 264/450,
+            crossAxisSpacing: 5,
+            mainAxisSpacing: 5
+          ),
+          itemCount: _userGames.length,
+          itemBuilder: (context, index) {
+            return GameWidget(userGame: _userGames[index]);
+          },
         )),
-        GameWidget(userGame: userGames[0])
+        // Expanded(child: GridView.count(
+        //   crossAxisSpacing: 15,
+        //   mainAxisSpacing: 15,
+        //   crossAxisCount: 2,
+        //   children: List.generate(_userGames.length, (int index) {
+        //     return GameWidget(userGame: _userGames[index]);
+        //   })
+        // )),
+        // GameWidget(userGame: _userGames[0])
       ],
     );
   }
