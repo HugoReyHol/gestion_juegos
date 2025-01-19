@@ -67,14 +67,16 @@ class _HomeState extends State<Home>{
                 )
               ),
             ),
-            SearchBar(
-              elevation: WidgetStatePropertyAll(5),
-              controller: _searchCtrll,
-              leading: Icon(Icons.search),
-              hintText: "Busca el nombre de un juego",
-              onChanged: (_) {
-                // TODO lógica de filtar lista juegos
-              },
+            Expanded(
+              child: SearchBar(
+                elevation: WidgetStatePropertyAll(5),
+                controller: _searchCtrll,
+                leading: Icon(Icons.search),
+                hintText: "Busca el nombre de un juego",
+                onChanged: (_) {
+                  // TODO lógica de filtar lista juegos
+                },
+              )
             )
           ],
         ),
