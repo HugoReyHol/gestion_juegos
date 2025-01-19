@@ -1,26 +1,26 @@
 class UserGame {
   late int idGame;
   late int idUser;
-  late int? score;
-  late int? timePlayed;
-  late States state;
+  int? score;
+  int? timePlayed;
+  States? state;
 
   UserGame({
     required this.idGame,
     required this.idUser,
-    required this.score,
-    required this.timePlayed,
-    required this.state
+    this.score,
+    this.timePlayed,
+    this.state
   });
 
-  UserGame.fromMap(Map<String, dynamic> map) {
-    idGame = map["idGame"];
-    idUser = map["idUser"];
-    score = map["score"];
-    timePlayed = map["timePlayed"];
-    States.values.map((States st) {
-      if (st.name == map["state"]) state = st;
-    });
+  factory UserGame.fromMap(Map<String, dynamic> map) {
+    return UserGame(
+      idGame: map["idGame"],
+      idUser: map["idUser"],
+      score: map["score"],
+      timePlayed: map["timePlayed"],
+      state: States.values.firstWhere((element) => element.name.toString() == map["state"])
+    );
   }
 
   Map<String, dynamic> toMap() => {
@@ -28,7 +28,7 @@ class UserGame {
     "idUser": idUser,
     "score": score,
     "timePlayed": timePlayed,
-    "state": state.name
+    "state": state?.name
   };
 
 }
