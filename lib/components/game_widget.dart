@@ -34,18 +34,21 @@ class _GameWidgetState extends State<GameWidget> {
   Widget build(BuildContext context) {
     return _loading ?
       Text("Cargando") :
-      Card(
-        clipBehavior: Clip.antiAlias,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Image.memory(game.image),
-            Padding(
-              padding: EdgeInsets.all(10),
-              child: Text(game.title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold), maxLines: 2, overflow: TextOverflow.ellipsis, )
-            )
-          ],
+      GestureDetector(
+        onTap: () => Navigator.pushNamed(context, "/details", arguments: widget.userGame),
+        child: Card(
+          clipBehavior: Clip.antiAlias,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Image.memory(game.image),
+              Padding(
+                padding: EdgeInsets.all(10),
+                child: Text(game.title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold), maxLines: 2, overflow: TextOverflow.ellipsis, )
+              )
+            ],
+          ),
         ),
       );
   }
