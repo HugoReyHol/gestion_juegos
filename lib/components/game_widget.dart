@@ -41,7 +41,7 @@ class _GameWidgetState extends State<GameWidget> {
             Image.memory(game.image),
             Padding(
               padding: EdgeInsets.all(10),
-              child: Text(game.title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold), softWrap: true)
+              child: Text(game.title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold), maxLines: 2, overflow: TextOverflow.ellipsis)
             )
           ],
         ),
