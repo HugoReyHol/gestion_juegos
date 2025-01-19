@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gestion_juegos/daos/game_dao.dart';
-import 'package:gestion_juegos/daos/user_game_dao.dart';
 import 'package:gestion_juegos/models/game.dart';
 import 'package:gestion_juegos/models/user_game.dart';
 
@@ -16,7 +15,7 @@ class _DetailsState extends State<Details> {
   Game? _game;
   UserGame? _userGame;
   bool _loading = true;
-  final TextEditingController _scoreCtrll = TextEditingController();
+  final List<String> _scoreValues = ["Sin seleccionar", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"].reversed.toList();
   final TextEditingController _timePlayedCtrll = TextEditingController();
 
 
@@ -30,7 +29,6 @@ class _DetailsState extends State<Details> {
 
     _userGame = ModalRoute.of(context)?.settings.arguments as UserGame;
     _game = await GameDao.getGameById(_userGame!.idGame);
-    _scoreCtrll.text = "${_userGame!.score}";
     _timePlayedCtrll.text = "${_userGame!.timePlayed}";
 
     setState(() {
@@ -59,36 +57,71 @@ class _DetailsState extends State<Details> {
                   Column(
                     spacing: 15,
                     children: [
-                      Expanded(
-                        child: Row(
-                          spacing: 15,
-                          children: [
-                            Text("Nota"),
-                            Expanded(
-                                child: TextField(
-                                  controller: _scoreCtrll,
-                                  decoration: InputDecoration(
-                                      labelText: "?"
-                                  ),
-                                )
-                            )
-                          ],
-                        )
+                      Row(
+                        spacing: 15,
+                        children: [
+                          Text("Nota"),
+                          DropdownButton<String>(
+                            padding: EdgeInsets.all(5),
+                            value: _userGame!.score == null ? "Sin seleccionar" : "${_userGame!.score}",
+                            items: _scoreValues.map((String score) =>
+                              DropdownMenuItem<String>(
+                                value: score,
+                                child: Text(score)
+                              )
+                            ).toList(),
+                            onChanged: (value) {
+                              // TODO implementar lógica para cambiar la nota
+                              setState(() {
+                                _userGame!.score = value == "Sin seleccionar" ? null : int.parse(value!);
+                              });
+                            },
+                          )
+                        ],
                       ),
-                      // Row(
-                      //   spacing: 15,
-                      //   children: [
-                      //     Text("Nota"),
-                      //     Expanded(
-                      //       child: TextField(
-                      //         controller: _scoreCtrll,
-                      //         decoration: InputDecoration(
-                      //           labelText: "?"
-                      //         ),
-                      //       )
-                      //     )
-                      //   ],
-                      // )
+                      Row(
+                        spacing: 15,
+                        children: [
+                          Text("Estado"),
+                          DropdownButton<States>(
+                            value: _userGame!.state,
+                            items: States.values.map((States state) {
+                              return DropdownMenuItem<States>(
+                                  value: state,
+                                  child: Text(state.name.replaceAll("_", " ").toUpperCase())
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              // TODO implementar lógica para cambiar el estado
+                              setState(() {
+                                _userGame!.state = value;
+                              });
+                            },
+                          )
+                        ],
+                      ),
+                      Row(
+                        spacing: 15,
+                        children: [
+                          Text("Tiempo jugado"),
+                          SizedBox(
+                            width: 50,
+                            child: TextField(
+                              controller: _timePlayedCtrll,
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly
+                              ],
+                              onChanged: (value) {
+                                // TODO logica de cambiar tiempo jugado
+                                setState(() {
+                                  _userGame!.timePlayed = int.parse(_timePlayedCtrll.text);
+                                });
+                              },
+                            ),
+                          )
+                        ],
+                      )
                     ],
                   )
                 ],
