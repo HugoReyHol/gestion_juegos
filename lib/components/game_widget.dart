@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gestion_juegos/daos/game_dao.dart';
-import 'package:gestion_juegos/models/user_game.dart';
 import 'package:gestion_juegos/models/game.dart';
 
 class GameWidget extends StatefulWidget {
