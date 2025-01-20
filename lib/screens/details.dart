@@ -46,7 +46,7 @@ class _DetailsState extends State<Details> {
           title: Text(_game!.title),
         ),
         body: Padding(
-          padding: EdgeInsets.all(50),
+          padding: EdgeInsets.fromLTRB(50, 0, 50, 50),
           child: Column(
             spacing: 15,
             children: [
@@ -129,92 +129,34 @@ class _DetailsState extends State<Details> {
                   )
                 ],
               ),
-              DefaultTabController(
-                length: 3,
-                initialIndex: 0,
-                child: Scaffold(
-                  appBar: AppBar(
-                    bottom: TabBar(
-                      tabs: <Tab>[
+              Expanded(
+                child: DefaultTabController(
+                  length: 3,
+                  child: Column(
+                    children: [
+                      TabBar(tabs:
+                      <Tab>[
                         Tab(text: "Descripcion"),
                         Tab(text: "Detalles"),
-                        Tab(text: "Lanzamientos"),
+                        Tab(text: "Lanzamientos")
                       ]
-                    ),
-                  ),
-                  body: TabBarView(
-                    children: <Widget>[
-                      Text(_game!.description),
-                      Text(_game!.details),
-                      Text(_game!.releases)
-                    ]
-                  ),
+                      ),
+                      Expanded(
+                        child: TabBarView(
+                          children: <Widget>[
+                            Text(_game!.description),
+                            Text(_game!.details),
+                            Text(_game!.releases)
+                          ]
+                        )
+                      )
+                    ],
+                  )
                 )
-              )
+              ),
             ],
           )
         ),
       );
-      // : Scaffold(
-      //     appBar: AppBar(
-      //       title: Text(_game!.title),
-      //       centerTitle: true,
-      //     ),
-      //     body: Column(
-      //       mainAxisAlignment: MainAxisAlignment.center,
-      //       spacing: 15,
-      //       children: [
-      //         Row(
-      //           spacing: 15,
-      //           children: [
-      //             Image.memory(_game!.image),
-      //             Column(
-      //               spacing: 15,
-      //               children: [
-      //                 Expanded(child: Row(
-      //                   spacing: 15,
-      //                   children: [
-      //                     Text("Nota"),
-      //                     Expanded(
-      //                         child: TextField(
-      //                             controller: _scoreCtrll,
-      //                             keyboardType: TextInputType.number,
-      //                             inputFormatters: [
-      //                               FilteringTextInputFormatter.digitsOnly
-      //                             ],
-      //                             onChanged: (value) {
-      //                               // TODO lógica actualizar userGame y DB
-      //                               print("Cambiado nota");
-      //                             }
-      //                         )
-      //                     )
-      //                   ],
-      //                 ))
-      //                 // Row(
-      //                 //   spacing: 15,
-      //                 //   children: [
-      //                 //     Text("Nota"),
-      //                 //     Expanded(
-      //                 //       child: TextField(
-      //                 //         controller: _scoreCtrll,
-      //                 //         keyboardType: TextInputType.number,
-      //                 //         inputFormatters: [
-      //                 //           FilteringTextInputFormatter.digitsOnly
-      //                 //         ],
-      //                 //         onChanged: (value) {
-      //                 //           // TODO lógica actualizar userGame y DB
-      //                 //           print("Cambiado nota");
-      //                 //         }
-      //                 //       )
-      //                 //     )
-      //                 //   ],
-      //                 // )
-      //               ],
-      //             )
-      //           ],
-      //         )
-      //       ],
-      //     ),
-      // );
   }
 }
