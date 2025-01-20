@@ -2,14 +2,14 @@ class UserGame {
   late int idGame;
   late int idUser;
   int? score;
-  int timePlayed;
+  int? timePlayed;
   States? state;
 
   UserGame({
     required this.idGame,
     required this.idUser,
     this.score,
-    required this.timePlayed,
+    this.timePlayed,
     this.state
   });
 

@@ -5,7 +5,12 @@ class UserGameDao {
   static Future<int> insertUserGame(UserGame userGame) async {
     final db = await DbManager().database;
 
-    return db.insert("Users_Games", userGame.toMap());
+    final Map<String, dynamic> game = userGame.toMap();
+
+    if (userGame.state == null) game.remove("state");
+    if (userGame.timePlayed == null) game.remove("timePlayed");
+
+    return db.insert("Users_Games", game);
   }
 
   static Future<UserGame?> getUserGame(int idUser, int idGame) async {
