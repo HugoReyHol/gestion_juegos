@@ -129,6 +129,28 @@ class _DetailsState extends State<Details> {
                   )
                 ],
               ),
+              DefaultTabController(
+                length: 3,
+                initialIndex: 0,
+                child: Scaffold(
+                  appBar: AppBar(
+                    bottom: TabBar(
+                      tabs: <Tab>[
+                        Tab(text: "Descripcion"),
+                        Tab(text: "Detalles"),
+                        Tab(text: "Lanzamientos"),
+                      ]
+                    ),
+                  ),
+                  body: TabBarView(
+                    children: <Widget>[
+                      Text(_game!.description),
+                      Text(_game!.details),
+                      Text(_game!.releases)
+                    ]
+                  ),
+                )
+              )
             ],
           )
         ),
