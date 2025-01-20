@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gestion_juegos/daos/game_dao.dart';
+import 'package:gestion_juegos/daos/user_dao.dart';
+import 'package:gestion_juegos/daos/user_game_dao.dart';
 import 'package:gestion_juegos/models/game.dart';
 import 'package:gestion_juegos/models/user_game.dart';
 
@@ -25,10 +27,15 @@ class _DetailsState extends State<Details> {
   }
 
   void _loadGameInfo() async {
-    if (_userGame != null) return;
+    if (!_loading) return;
+    final Map<String, dynamic> args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
 
-    _userGame = ModalRoute.of(context)?.settings.arguments as UserGame;
-    _game = await GameDao.getGameById(_userGame!.idGame);
+    _userGame = args["userGame"] != null ? args["userGame"] as UserGame : null;
+    _game = args["game"] != null ? args["game"] as Game : null;
+
+    _game ??= await GameDao.getGameById(_userGame!.idGame);
+    _userGame ??= await UserGameDao.getUserGame(UserDao.user.idUser!, _game!.idGame);
+
     _timePlayedCtrll.text = "${_userGame!.timePlayed}";
 
     setState(() {
@@ -40,8 +47,9 @@ class _DetailsState extends State<Details> {
   Widget build(BuildContext context) {
     _loadGameInfo();
 
-    return _loading ? Text("Cargando") :
-      Scaffold(
+    return _loading
+      ? Text("Cargando")
+      : Scaffold(
         appBar: AppBar(
           title: Text(_game!.title),
         ),
@@ -117,8 +125,21 @@ class _DetailsState extends State<Details> {
                               ],
                               onChanged: (value) {
                                 // TODO logica de cambiar tiempo jugado
+                                if (_timePlayedCtrll.text.isEmpty) return;
+
                                 setState(() {
                                   _userGame!.timePlayed = int.parse(_timePlayedCtrll.text);
+                                  _timePlayedCtrll.text = "${_userGame!.timePlayed}";
+                                });
+                              },
+                              onSubmitted: (value) {
+                                // TODO copiar logica onChanged
+                                // TODO logica de cambiar tiempo jugado
+                                if (_timePlayedCtrll.text.isEmpty) return;
+
+                                setState(() {
+                                  _userGame!.timePlayed = int.parse(_timePlayedCtrll.text);
+                                  _timePlayedCtrll.text = "${_userGame!.timePlayed}";
                                 });
                               },
                             ),

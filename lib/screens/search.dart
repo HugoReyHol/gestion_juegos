@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gestion_juegos/models/user.dart';
 
 class Search extends StatefulWidget {
-  final User user;
-
-  const Search({super.key, required this.user});
+  const Search({super.key});
 
   @override
   State<Search> createState() => _SearchState();

@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gestion_juegos/components/game_widget.dart';
+import 'package:gestion_juegos/daos/user_dao.dart';
 import 'package:gestion_juegos/daos/user_game_dao.dart';
-import 'package:gestion_juegos/models/user.dart';
 import 'package:gestion_juegos/models/user_game.dart';
 
 class Home extends StatefulWidget {
-  final User user;
-
-  const Home({super.key, required this.user});
+  const Home({super.key});
 
   @override
   State<Home> createState() => _HomeState();
@@ -26,7 +24,7 @@ class _HomeState extends State<Home>{
   }
 
   void _loadGames() async {
-    _userGames = await UserGameDao.getUserGames(widget.user.idUser!);
+    _userGames = await UserGameDao.getUserGames(UserDao.user.idUser!);
     setState(() {
       _loading = false;
     });

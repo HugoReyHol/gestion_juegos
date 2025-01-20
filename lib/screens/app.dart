@@ -12,15 +12,13 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  User? _user;
   final List<Widget> _screens = [];
   int _actualScren = 0;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _user ??= ModalRoute.of(context)?.settings.arguments as User;
-    _screens.addAll([Home(user: _user!), Search(user: _user!), Stats(user: _user!)]);
+    _screens.addAll([Home(), Search(), Stats()]);
   }
 
   @override

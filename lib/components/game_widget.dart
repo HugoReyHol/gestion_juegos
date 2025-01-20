@@ -35,7 +35,7 @@ class _GameWidgetState extends State<GameWidget> {
     return _loading ?
       Text("Cargando") :
       GestureDetector(
-        onTap: () => Navigator.pushNamed(context, "/details", arguments: widget.userGame),
+        onTap: () => Navigator.pushNamed(context, "/details", arguments: {"userGame": widget.userGame}),
         child: Card(
           clipBehavior: Clip.antiAlias,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),

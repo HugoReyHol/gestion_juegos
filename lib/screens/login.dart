@@ -43,7 +43,9 @@ class _LoginState extends State<Login> {
       return;
     }
 
-    Navigator.pushNamed(context, "/app", arguments: user);
+    UserDao.user = user;
+
+    Navigator.pushNamed(context, "/app");
   }
 
   void _onLogIn() async {
@@ -66,7 +68,9 @@ class _LoginState extends State<Login> {
       return;
     }
 
-    Navigator.pushNamed(context, "/app", arguments: user);
+    UserDao.user = user;
+
+    Navigator.pushNamed(context, "/app");
   }
 
   @override
