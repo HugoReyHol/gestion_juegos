@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gestion_juegos/components/game_grid_widget.dart';
+import 'package:gestion_juegos/daos/game_dao.dart';
 import 'package:gestion_juegos/daos/user_dao.dart';
 import 'package:gestion_juegos/daos/user_game_dao.dart';
+import 'package:gestion_juegos/models/game.dart';
 import 'package:gestion_juegos/models/user_game.dart';
 
 class Home extends StatefulWidget {
@@ -15,6 +17,7 @@ class _HomeState extends State<Home>{
   States _selectedState = States.playing;
   final TextEditingController _searchCtrll = TextEditingController();
   late final List<UserGame> _userGames;
+  final List<Game> _filteredGames = [];
   bool _loading = true;
 
   @override
@@ -25,22 +28,27 @@ class _HomeState extends State<Home>{
 
   void _loadGames() async {
     _userGames = await UserGameDao.getUserGames(UserDao.user.idUser!);
+
+    _userGames.forEach((element) async {
+      if (element.state == _selectedState) {
+        final Game game = await GameDao.getGameById(element.idGame) as Game;
+        _filteredGames.add(game);
+      }
+    });
+
     setState(() {
       _loading = false;
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return _loading ? Text("Cargando") :
 
       Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      mainAxisSize: MainAxisSize.max,
       spacing: 15,
       children: [
         Row(
-          mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           spacing: 15,
           children: [
@@ -60,6 +68,15 @@ class _HomeState extends State<Home>{
                     setState(() {
                       // TODO implementar lógica filtrar juegos
                       _selectedState = state!;
+
+                      _filteredGames.clear();
+
+                      _userGames.forEach((element) async {
+                        if (element.state == _selectedState) {
+                          final Game game = await GameDao.getGameById(element.idGame) as Game;
+                          _filteredGames.add(game);
+                        }
+                      });
                     });
                   }
                 )
@@ -79,10 +96,9 @@ class _HomeState extends State<Home>{
           ],
         ),
         GameGridWidget(
-          userGames: _userGames
+          games: _filteredGames
         )
       ]
     );
   }
 }
-

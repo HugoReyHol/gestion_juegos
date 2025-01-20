@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:gestion_juegos/models/user_game.dart';
+import 'package:gestion_juegos/models/game.dart';
 import 'game_widget.dart';
 
 class GameGridWidget extends StatefulWidget {
-  final List<UserGame> _userGames;
+  final List<Game> _games;
 
-  const GameGridWidget({super.key, required userGames}) : _userGames = userGames;
+  const GameGridWidget({super.key, required games}) : _games = games;
 
   @override
   State<GameGridWidget> createState() => _GameGridWidgetState();
@@ -22,9 +22,9 @@ class _GameGridWidgetState extends State<GameGridWidget> {
           crossAxisSpacing: 5,
           mainAxisSpacing: 5
         ),
-        itemCount: widget._userGames.length,
+        itemCount: widget._games.length,
         itemBuilder: (context, index) {
-          return GameWidget(userGame: widget._userGames[index]);
+          return GameWidget(game: widget._games[index]);
         },
       )
     );
