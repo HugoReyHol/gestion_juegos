@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gestion_juegos/components/game_widget.dart';
+import 'package:gestion_juegos/components/game_grid_widget.dart';
 import 'package:gestion_juegos/daos/user_dao.dart';
 import 'package:gestion_juegos/daos/user_game_dao.dart';
 import 'package:gestion_juegos/models/user_game.dart';
@@ -78,28 +78,10 @@ class _HomeState extends State<Home>{
             )
           ],
         ),
-        Expanded(child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: 264,
-            childAspectRatio: 264/450,
-            crossAxisSpacing: 5,
-            mainAxisSpacing: 5
-          ),
-          itemCount: _userGames.length,
-          itemBuilder: (context, index) {
-            return GameWidget(userGame: _userGames[index]);
-          },
-        )),
-        // Expanded(child: GridView.count(
-        //   crossAxisSpacing: 15,
-        //   mainAxisSpacing: 15,
-        //   crossAxisCount: 2,
-        //   children: List.generate(_userGames.length, (int index) {
-        //     return GameWidget(userGame: _userGames[index]);
-        //   })
-        // )),
-        // GameWidget(userGame: _userGames[0])
-      ],
+        GameGridWidget(
+          userGames: _userGames
+        )
+      ]
     );
   }
 }
