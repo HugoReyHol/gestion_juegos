@@ -59,14 +59,14 @@ class _DetailsState extends State<Details> {
             ? null
             : [
                 IconButton(
-                    onPressed: () async {
-                      await UserGameDao.deleteUserGame(_userGame!);
+                  onPressed: () async {
+                    await UserGameDao.deleteUserGame(_userGame!);
 
-                      setState(() {
-                        _userGame = null;
-                      });
-                    },
-                    icon: Icon(Icons.delete)
+                    setState(() {
+                      _userGame = null;
+                    });
+                  },
+                  icon: Icon(Icons.delete)
                 )
               ],
         ),
