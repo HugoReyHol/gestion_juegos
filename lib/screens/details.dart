@@ -55,6 +55,20 @@ class _DetailsState extends State<Details> {
       : Scaffold(
         appBar: AppBar(
           title: Text(_game!.title),
+          actions: _userGame == null
+            ? null
+            : [
+                IconButton(
+                    onPressed: () async {
+                      await UserGameDao.deleteUserGame(_userGame!);
+
+                      setState(() {
+                        _userGame = null;
+                      });
+                    },
+                    icon: Icon(Icons.delete)
+                )
+              ],
         ),
         body: Padding(
           padding: EdgeInsets.fromLTRB(50, 0, 50, 50),
