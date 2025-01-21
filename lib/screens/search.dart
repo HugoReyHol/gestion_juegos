@@ -35,7 +35,6 @@ class _SearchState extends State<Search> {
         spacing: 15,
         children: [
           Row(
-            spacing: 15,
             children: [
               Expanded(
                 child: SearchBar(
