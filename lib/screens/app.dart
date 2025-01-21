@@ -4,6 +4,8 @@ import 'package:gestion_juegos/screens/home.dart';
 import 'package:gestion_juegos/screens/search.dart';
 import 'package:gestion_juegos/screens/stats.dart';
 
+import 'home2.dart';
+
 class App extends StatefulWidget {
   const App({super.key});
 
@@ -18,7 +20,7 @@ class _AppState extends State<App> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _screens.addAll([Home(), Search(), Stats()]);
+    _screens.addAll([Home2(), Search(), Stats()]);
   }
 
   @override
