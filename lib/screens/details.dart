@@ -17,7 +17,7 @@ class _DetailsState extends State<Details> {
   Game? _game;
   UserGame? _userGame;
   bool _loading = true;
-  final List<String> _scoreValues = ["Sin seleccionar", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"].reversed.toList();
+  final List<String> _scoreValues = ["10", "9", "8", "7", "6", "5", "4", "3", "2", "1", "0", "Sin seleccionar"];
   final TextEditingController _timePlayedCtrll = TextEditingController();
 
 
@@ -33,10 +33,13 @@ class _DetailsState extends State<Details> {
     _userGame = args["userGame"] != null ? args["userGame"] as UserGame : null;
     _game = args["game"] != null ? args["game"] as Game : null;
 
+    // Si se pasa el userGame y game es null se carga su game
     _game ??= await GameDao.getGameById(_userGame!.idGame);
+
+    // Si se pasa el game y existe userGame se carga el userGame si no existe userGame se queda null
     _userGame ??= await UserGameDao.getUserGame(UserDao.user.idUser!, _game!.idGame);
 
-    _timePlayedCtrll.text = "${_userGame!.timePlayed}";
+    _timePlayedCtrll.text = "${_userGame?.timePlayed}";
 
     setState(() {
       _loading = false;
@@ -52,6 +55,20 @@ class _DetailsState extends State<Details> {
       : Scaffold(
         appBar: AppBar(
           title: Text(_game!.title),
+          actions: _userGame == null
+            ? null
+            : [
+                IconButton(
+                  onPressed: () async {
+                    await UserGameDao.deleteUserGame(_userGame!);
+
+                    setState(() {
+                      _userGame = null;
+                    });
+                  },
+                  icon: Icon(Icons.delete)
+                )
+              ],
         ),
         body: Padding(
           padding: EdgeInsets.fromLTRB(50, 0, 50, 50),
@@ -62,7 +79,19 @@ class _DetailsState extends State<Details> {
                 spacing: 15,
                 children: [
                   Image.memory(_game!.image),
-                  Column(
+                  _userGame == null ?
+                  ElevatedButton( // Boton para registra un _userGame si no existe
+                    onPressed: () {
+                      _userGame = UserGame(idGame: _game!.idGame, idUser: UserDao.user.idUser!);
+                      UserGameDao.insertUserGame(_userGame!);
+
+                      _timePlayedCtrll.text = "0";
+
+                      setState(() {});
+                    },
+                    child: Text("Añadir a la lista")
+                  )
+                  : Column( // Si _userGame existe
                     spacing: 15,
                     children: [
                       Row(
@@ -102,7 +131,7 @@ class _DetailsState extends State<Details> {
                             onChanged: (value) {
                               // TODO implementar lógica para cambiar el estado
                               setState(() {
-                                _userGame!.state = value;
+                                _userGame!.state = value!;
                               });
                             },
                           )
