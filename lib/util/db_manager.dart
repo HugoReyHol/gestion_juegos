@@ -50,9 +50,9 @@ class DbManager {
       CREATE TABLE IF NOT EXISTS Users_Games (
         idUser INTEGER,
         idGame INTEGER,
-        score INTEGER DEFAULT NULL,
-        timePlayed INTEGER NOT NULL DEFAULT 0,
-        state TEXT NOT NULL DEFAULT 'plan_to_play',
+        score INTEGER,
+        timePlayed INTEGER NOT NULL,
+        state TEXT NOT NULL,
         PRIMARY KEY (idUser, idGame),
         FOREIGN KEY (idUser) REFERENCES Users(idUser) ON DELETE CASCADE,
         FOREIGN KEY (idGame) REFERENCES Games(idGame) ON DELETE CASCADE
