@@ -33,10 +33,13 @@ class _DetailsState extends State<Details> {
     _userGame = args["userGame"] != null ? args["userGame"] as UserGame : null;
     _game = args["game"] != null ? args["game"] as Game : null;
 
+    // Si se pasa el userGame y game es null se carga su game
     _game ??= await GameDao.getGameById(_userGame!.idGame);
+
+    // Si se pasa el game y existe userGame se carga el userGame si no existe userGame se queda null
     _userGame ??= await UserGameDao.getUserGame(UserDao.user.idUser!, _game!.idGame);
 
-    _timePlayedCtrll.text = "${_userGame!.timePlayed}";
+    _timePlayedCtrll.text = "${_userGame?.timePlayed}";
 
     setState(() {
       _loading = false;
@@ -62,7 +65,19 @@ class _DetailsState extends State<Details> {
                 spacing: 15,
                 children: [
                   Image.memory(_game!.image),
-                  Column(
+                  _userGame == null ?
+                  ElevatedButton( // Boton para registra un _userGame si no existe
+                    onPressed: () {
+                      _userGame = UserGame(idGame: _game!.idGame, idUser: UserDao.user.idUser!);
+                      UserGameDao.insertUserGame(_userGame!);
+
+                      _timePlayedCtrll.text = "0";
+
+                      setState(() {});
+                    },
+                    child: Text("Añadir a la lista")
+                  )
+                  : Column( // Si _userGame existe
                     spacing: 15,
                     children: [
                       Row(
@@ -102,7 +117,7 @@ class _DetailsState extends State<Details> {
                             onChanged: (value) {
                               // TODO implementar lógica para cambiar el estado
                               setState(() {
-                                _userGame!.state = value;
+                                _userGame!.state = value!;
                               });
                             },
                           )
