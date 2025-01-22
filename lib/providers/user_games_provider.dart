@@ -36,14 +36,10 @@ class UserGamesNotifier extends StateNotifier<List<UserGame>> {
   Future<List<Game>> userGames2Games() async {
     final List<Game> games = [];
 
-    // print("UserGames ${state.length}");
-
     for (UserGame userGame in state) {
       games.add((await GameDao.getGameById(userGame.idGame))!);
     }
-
-    // print("Games ${games.length}");
-
+    
     return games;
   }
 }
