@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gestion_juegos/components/game_grid_widget.dart';
+import 'package:gestion_juegos/components/game_widget.dart';
 import 'package:gestion_juegos/daos/game_dao.dart';
 import 'package:gestion_juegos/models/game.dart';
 
@@ -49,9 +50,12 @@ class _SearchState extends State<Search> {
               )
             ],
           ),
-          GameGridWidget(
-            games: _games
-          )
+          Expanded(
+            child: ListView.builder(
+              itemCount: _games.length,
+              itemBuilder: (context, index) => GameWidget(game: _games[index], layoutMode: LayoutMode.horizontal),
+            )
+          ),
         ],
       );
   }
