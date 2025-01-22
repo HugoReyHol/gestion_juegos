@@ -28,7 +28,10 @@ class GameWidget extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Image.memory(_game.image),
+            Image(
+              image: MemoryImage(_game.image),
+              fit: BoxFit.cover
+            ),
             Padding(
                 padding: EdgeInsets.all(10),
                 child: Text(_game.title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold), maxLines: 2, overflow: TextOverflow.ellipsis)
