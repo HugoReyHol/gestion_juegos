@@ -13,7 +13,7 @@ class GameDao {
   static Future<List<Game>> getGamesByTitle(String title) async {
     final db = await DbManager().database;
 
-    final result = await db.query("Games", where: "title LIKE ?", whereArgs: ["%$title%"]);
+    final result = await db.query("Games", where: "title LIKE ?", whereArgs: ["%$title%"], orderBy: "title");
 
     final List<Game> games = [];
     for (var game in result) {
@@ -26,7 +26,7 @@ class GameDao {
   static Future<List<Game>> getGames() async {
     final db = await DbManager().database;
 
-    final result = await db.query("Games");
+    final result = await db.query("Games", orderBy: "title");
 
     final List<Game> games = [];
     for (var game in result) {
