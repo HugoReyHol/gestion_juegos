@@ -74,9 +74,11 @@ class GameWidget extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(15),
           child: FloatingActionButton(
+            heroTag: null,
             child: Icon(Icons.add),
             onPressed: () {
               print("Logica añadir juego");
+              print("Pulsado ${_game.title}");
             }
           ),
         )
