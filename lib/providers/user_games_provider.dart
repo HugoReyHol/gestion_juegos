@@ -27,17 +27,22 @@ class UserGamesNotifier extends StateNotifier<List<UserGame>> {
     getUserGames(userGame.idUser);
   }
 
-  void filterUserGames(int idUser, States st) {
-    getUserGames(idUser);
-    state = state.where((element) => element.state == st).toList();
+  void filterUserGames(int idUser, States st) async {
+    final List<UserGame> userGames = await UserGameDao.getUserGames(idUser);
+
+    state = userGames.where((element) => element.state == st).toList();
   }
 
   Future<List<Game>> userGames2Games() async {
     final List<Game> games = [];
 
+    // print("UserGames ${state.length}");
+
     for (UserGame userGame in state) {
       games.add((await GameDao.getGameById(userGame.idGame))!);
     }
+
+    // print("Games ${games.length}");
 
     return games;
   }
@@ -45,6 +50,6 @@ class UserGamesNotifier extends StateNotifier<List<UserGame>> {
 
 final userGamesProvider = StateNotifierProvider<UserGamesNotifier, List<UserGame>>((ref) {
   final notifier = UserGamesNotifier();
-  notifier.getUserGames(UserDao.user.idUser!);
+  notifier.filterUserGames(UserDao.user.idUser!, States.playing);
   return notifier;
 });
