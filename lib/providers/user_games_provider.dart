@@ -39,7 +39,9 @@ class UserGamesNotifier extends StateNotifier<List<UserGame>> {
     for (UserGame userGame in state) {
       games.add((await GameDao.getGameById(userGame.idGame))!);
     }
-    
+
+    games.sort((a, b) => a.title.compareTo(b.title));
+
     return games;
   }
 }
