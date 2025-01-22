@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gestion_juegos/components/game_grid_widget.dart';
 import 'package:gestion_juegos/daos/user_dao.dart';
-import '../components/game_grid_widget.dart';
-import '../models/user_game.dart';
-import '../providers/user_games_provider.dart';
+import 'package:gestion_juegos/models/user_game.dart';
+import 'package:gestion_juegos/providers/user_games_provider.dart';
+
 
 class Home extends ConsumerWidget {
   States _selectedState = States.playing;
@@ -11,7 +12,6 @@ class Home extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userGames = ref.watch(userGamesProvider);
     final userNotifier = ref.read(userGamesProvider.notifier);
 
     return Column(
@@ -23,14 +23,13 @@ class Home extends ConsumerWidget {
           children: [
             Card(
               elevation: 5,
-              child: Padding(
-                padding: EdgeInsets.all(10),
-                child: DropdownButton<States>(
+              child: DropdownButton<States>(
+                  padding: EdgeInsets.all(10),
                   value: _selectedState,
                   items: States.values.map((States state) {
                     return DropdownMenuItem<States>(
-                      value: state,
-                      child: Text(state.name.replaceAll("_", " ").toUpperCase())
+                        value: state,
+                        child: Text(state.name.replaceAll("_", " ").toUpperCase())
                     );
                   }).toList(),
                   onChanged: (States? state) {
@@ -38,7 +37,6 @@ class Home extends ConsumerWidget {
 
                     userNotifier.filterUserGames(UserDao.user.idUser!, _selectedState);
                   }
-                )
               ),
             ),
             Expanded(
@@ -69,50 +67,3 @@ class Home extends ConsumerWidget {
     );
   }
 }
-
-//
-// Column(
-// spacing: 15,
-// children: [
-// Row(
-// mainAxisAlignment: MainAxisAlignment.spaceBetween,
-// spacing: 15,
-// children: [
-// Card(
-// elevation: 5,
-// child: Padding(
-// padding: EdgeInsets.all(10),
-// child: DropdownButton<States>(
-// value: _selectedState,
-// items: States.values.map((States state) {
-// return DropdownMenuItem<States>(
-// value: state,
-// child: Text(state.name.replaceAll("_", " ").toUpperCase())
-// );
-// }).toList(),
-// onChanged: (States? state) {
-// _selectedState = state!;
-//
-// ref.read(userGamesProvider.notifier).filterUserGames(UserDao.user.idUser!, _selectedState);
-// }
-// )
-// ),
-// ),
-// Expanded(
-// child: SearchBar(
-// elevation: WidgetStatePropertyAll(5),
-// controller: _searchCtrll,
-// leading: Icon(Icons.search),
-// hintText: "Busca el nombre de un juego",
-// onChanged: (_) {
-// // TODO lógica de filtar lista juegos
-// },
-// )
-// )
-// ],
-// ),
-// GameGridWidget(
-// games: userGames2Games(userGames),
-// )
-// ]
-// );

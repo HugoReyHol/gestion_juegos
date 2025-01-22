@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gestion_juegos/screens/search.dart';
 import 'package:gestion_juegos/screens/stats.dart';
-
 import 'home.dart';
 
 class App extends StatefulWidget {
@@ -25,7 +24,7 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.all(50),
+        padding: EdgeInsets.all(30),
         child: _screens[_actualScren]
       ),
       bottomNavigationBar: BottomNavigationBar(
