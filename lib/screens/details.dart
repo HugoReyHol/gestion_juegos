@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gestion_juegos/daos/game_dao.dart';
 import 'package:gestion_juegos/daos/user_dao.dart';
 import 'package:gestion_juegos/daos/user_game_dao.dart';
 import 'package:gestion_juegos/models/game.dart';
@@ -30,16 +29,11 @@ class _DetailsState extends State<Details> {
     if (!_loading) return;
     final Map<String, dynamic> args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
 
-    _userGame = args["userGame"] != null ? args["userGame"] as UserGame : null;
     _game = args["game"] != null ? args["game"] as Game : null;
 
-    // Si se pasa el userGame y game es null se carga su game
-    _game ??= await GameDao.getGameById(_userGame!.idGame);
-
-    // Si se pasa el game y existe userGame se carga el userGame si no existe userGame se queda null
     _userGame ??= await UserGameDao.getUserGame(UserDao.user.idUser!, _game!.idGame);
 
-    _timePlayedCtrll.text = "${_userGame?.timePlayed}";
+    _timePlayedCtrll.text = _userGame == null ? "0" : "${_userGame!.timePlayed}";
 
     setState(() {
       _loading = false;
@@ -84,8 +78,6 @@ class _DetailsState extends State<Details> {
                     onPressed: () {
                       _userGame = UserGame(idGame: _game!.idGame, idUser: UserDao.user.idUser!);
                       UserGameDao.insertUserGame(_userGame!);
-
-                      _timePlayedCtrll.text = "0";
 
                       setState(() {});
                     },
