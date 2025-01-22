@@ -51,20 +51,21 @@ class GameWidget extends StatelessWidget {
             clipBehavior: Clip.antiAlias,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
             child: Row(
+              spacing: 10,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Image.memory(_game.image),
                 Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.all(10),
+                  child: SizedBox(
+                    height: 352,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(_game.title, style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold), maxLines: 2, overflow: TextOverflow.ellipsis),
                         Divider(),
-                        Text(_game.description, style: TextStyle(fontSize: 18), maxLines: 5, overflow: TextOverflow.ellipsis)
+                        Expanded(child: Text(_game.description, style: TextStyle(fontSize: 18, ), overflow: TextOverflow.fade))
                       ],
-                    )
+                    ),
                   )
                 )
               ]

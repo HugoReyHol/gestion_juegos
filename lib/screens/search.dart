@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gestion_juegos/components/game_grid_widget.dart';
 import 'package:gestion_juegos/components/game_widget.dart';
 import 'package:gestion_juegos/daos/game_dao.dart';
 import 'package:gestion_juegos/models/game.dart';
