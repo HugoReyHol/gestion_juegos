@@ -12,6 +12,7 @@ class Home extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final userGames = ref.watch(userGamesProvider);
     final userNotifier = ref.read(userGamesProvider.notifier);
 
     return Column(
