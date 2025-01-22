@@ -1,51 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:gestion_juegos/components/game_grid_widget.dart';
-import 'package:gestion_juegos/daos/game_dao.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_juegos/daos/user_dao.dart';
-import 'package:gestion_juegos/daos/user_game_dao.dart';
-import 'package:gestion_juegos/models/game.dart';
-import 'package:gestion_juegos/models/user_game.dart';
+import '../components/game_grid_widget.dart';
+import '../models/user_game.dart';
+import '../providers/user_games_provider.dart';
 
-class Home extends StatefulWidget {
-  const Home({super.key});
-
-  @override
-  State<Home> createState() => _HomeState();
-}
-
-class _HomeState extends State<Home>{
+class Home extends ConsumerWidget {
   States _selectedState = States.playing;
   final TextEditingController _searchCtrll = TextEditingController();
-  late final List<UserGame> _userGames;
-  final List<Game> _filteredGames = [];
-  bool _loading = true;
 
   @override
-  void initState() {
-    super.initState();
-    _loadGames();
-  }
+  Widget build(BuildContext context, WidgetRef ref) {
+    final userGames = ref.watch(userGamesProvider);
+    final userNotifier = ref.read(userGamesProvider.notifier);
 
-  void _loadGames() async {
-    _userGames = await UserGameDao.getUserGames(UserDao.user.idUser!);
-
-    _userGames.forEach((element) async {
-      if (element.state == _selectedState) {
-        final Game game = await GameDao.getGameById(element.idGame) as Game;
-        _filteredGames.add(game);
-      }
-    });
-
-    setState(() {
-      _loading = false;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return _loading ? Text("Cargando") :
-
-      Column(
+    return Column(
       spacing: 15,
       children: [
         Row(
@@ -65,19 +34,9 @@ class _HomeState extends State<Home>{
                     );
                   }).toList(),
                   onChanged: (States? state) {
-                    setState(() {
-                      // TODO implementar lógica filtrar juegos
-                      _selectedState = state!;
+                    _selectedState = state!;
 
-                      _filteredGames.clear();
-
-                      _userGames.forEach((element) async {
-                        if (element.state == _selectedState) {
-                          final Game game = await GameDao.getGameById(element.idGame) as Game;
-                          _filteredGames.add(game);
-                        }
-                      });
-                    });
+                    userNotifier.filterUserGames(UserDao.user.idUser!, _selectedState);
                   }
                 )
               ),
@@ -95,10 +54,65 @@ class _HomeState extends State<Home>{
             )
           ],
         ),
-        GameGridWidget(
-          games: _filteredGames
-        )
+        FutureBuilder(
+          future: userNotifier.userGames2Games(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            }
+            return GameGridWidget(
+              games: snapshot.data!,
+            );
+          },
+        ),
       ]
     );
   }
 }
+
+//
+// Column(
+// spacing: 15,
+// children: [
+// Row(
+// mainAxisAlignment: MainAxisAlignment.spaceBetween,
+// spacing: 15,
+// children: [
+// Card(
+// elevation: 5,
+// child: Padding(
+// padding: EdgeInsets.all(10),
+// child: DropdownButton<States>(
+// value: _selectedState,
+// items: States.values.map((States state) {
+// return DropdownMenuItem<States>(
+// value: state,
+// child: Text(state.name.replaceAll("_", " ").toUpperCase())
+// );
+// }).toList(),
+// onChanged: (States? state) {
+// _selectedState = state!;
+//
+// ref.read(userGamesProvider.notifier).filterUserGames(UserDao.user.idUser!, _selectedState);
+// }
+// )
+// ),
+// ),
+// Expanded(
+// child: SearchBar(
+// elevation: WidgetStatePropertyAll(5),
+// controller: _searchCtrll,
+// leading: Icon(Icons.search),
+// hintText: "Busca el nombre de un juego",
+// onChanged: (_) {
+// // TODO lógica de filtar lista juegos
+// },
+// )
+// )
+// ],
+// ),
+// GameGridWidget(
+// games: userGames2Games(userGames),
+// )
+// ]
+// );
