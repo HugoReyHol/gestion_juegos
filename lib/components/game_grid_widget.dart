@@ -19,7 +19,7 @@ class GameGridWidget extends StatelessWidget {
           ),
           itemCount: _games.length,
           itemBuilder: (context, index) {
-            return GameWidget(game: _games[index]);
+            return GameWidget(game: _games[index], layoutMode: LayoutMode.vertical);
           },
         )
     );
