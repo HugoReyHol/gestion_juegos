@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:gestion_juegos/models/game.dart';
 
@@ -33,9 +31,9 @@ class GameWidget extends StatelessWidget {
               fit: BoxFit.cover
             ),
             Padding(
-                padding: EdgeInsets.all(10),
-                child: Text(_game.title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold), maxLines: 2, overflow: TextOverflow.ellipsis)
-            )
+              padding: EdgeInsets.all(10),
+              child: Text(_game.title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold), maxLines: 2, overflow: TextOverflow.ellipsis),
+            ),
           ]
         )
       )
