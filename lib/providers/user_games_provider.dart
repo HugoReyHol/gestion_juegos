@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gestion_juegos/daos/game_dao.dart';
 import 'package:gestion_juegos/daos/user_dao.dart';
 import 'package:gestion_juegos/daos/user_game_dao.dart';
+import 'package:gestion_juegos/models/game.dart';
 import 'package:gestion_juegos/models/user_game.dart';
 
 class UserGamesNotifier extends StateNotifier<List<UserGame>> {
@@ -28,6 +30,16 @@ class UserGamesNotifier extends StateNotifier<List<UserGame>> {
   void filterUserGames(int idUser, States st) {
     getUserGames(idUser);
     state = state.where((element) => element.state == st).toList();
+  }
+
+  Future<List<Game>> userGames2Games() async {
+    final List<Game> games = [];
+
+    for (UserGame userGame in state) {
+      games.add((await GameDao.getGameById(userGame.idGame))!);
+    }
+
+    return games;
   }
 }
 
