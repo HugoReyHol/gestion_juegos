@@ -3,7 +3,7 @@ import 'package:gestion_juegos/daos/game_dao.dart';
 import 'package:gestion_juegos/models/game.dart';
 
 class GamesNotifier extends StateNotifier<List<Game>> {
-  Game? _currentGame;
+  Game? currentGame;
   GamesNotifier() : super([]);
 
   void getGames() async {
@@ -14,11 +14,6 @@ class GamesNotifier extends StateNotifier<List<Game>> {
     state = await GameDao.getGamesByTitle(title);
   }
 
-  Game? getCurrentGame() => _currentGame;
-
-  set currentGame(Game value) {
-    _currentGame = value;
-  }
 }
 
 final gamesProvider = StateNotifierProvider<GamesNotifier, List<Game>>((ref) => GamesNotifier());
