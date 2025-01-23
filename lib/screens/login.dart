@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gestion_juegos/providers/login_state_provider.dart';
 import 'package:gestion_juegos/providers/user_provider.dart';
 
 class Login extends ConsumerWidget {
@@ -8,11 +9,12 @@ class Login extends ConsumerWidget {
   final _formkey = GlobalKey<FormState>();
   final TextEditingController _nameCtrll = TextEditingController();
   final TextEditingController _passCtrll = TextEditingController();
-  String _errorMsg = "";
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userProv = ref.watch(userProvider);
+    final loginState = ref.watch(loginStateProvider);
+    // if (user != null) Navigator.pushNamed(context, "/app");
+
     return Scaffold(
       appBar: AppBar(
         title: Center(child: Text("Login")),
@@ -29,6 +31,7 @@ class Login extends ConsumerWidget {
                 spacing: 15,
                 children: [
                   TextFormField(
+                    enabled: !loginState.isLoading,
                     decoration:  InputDecoration(
                       labelText: "Introduzca su nombre"
                     ),
@@ -40,6 +43,7 @@ class Login extends ConsumerWidget {
                     controller: _nameCtrll,
                   ),
                   TextFormField(
+                    enabled: !loginState.isLoading,
                     decoration: InputDecoration(
                       labelText: "Introduzca su contreña"
                     ),
@@ -58,32 +62,27 @@ class Login extends ConsumerWidget {
               spacing: 20,
               children: [
                 ElevatedButton(
-                  onPressed: () async {
-                    if (_formkey.currentState!.validate()) {
-                      _errorMsg = await ref.watch(userProvider.notifier).onRegister(_nameCtrll.text, _passCtrll.text);
-                    }
-
-                    if (_errorMsg == "") {
-                      Navigator.pushNamed(context, "/app");
-                    }
-                  },
+                  onPressed: loginState.isLoading ? null :
+                    () {
+                      if (_formkey.currentState!.validate()) {
+                        ref.read(loginStateProvider.notifier).onRegister(_nameCtrll.text, _passCtrll.text);
+                      }
+                    },
                   child: Text("Registrarme")
                 ),
                 ElevatedButton(
-                  onPressed: () async {
-                    if (_formkey.currentState!.validate()) {
-                      _errorMsg = await ref.watch(userProvider.notifier).onLogIn(_nameCtrll.text, _passCtrll.text);
-                    }
-
-                    if (_errorMsg == "") {
-                      Navigator.pushNamed(context, "/app");
-                    }
-                  },
+                  onPressed: loginState.isLoading ? null :
+                    () {
+                      if (_formkey.currentState!.validate()) {
+                        ref.read(loginStateProvider.notifier).onLogIn(_nameCtrll.text, _passCtrll.text);
+                      }
+                      // if (user != null) Navigator.pushNamed(context, "/app");
+                    },
                   child: Text("Iniciar sesión")
                 )
               ],
             ),
-            Text(_errorMsg)
+            Text(loginState.errorMsg == null ? "" : loginState.errorMsg!)
           ],
         ),
       )
