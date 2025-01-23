@@ -64,6 +64,7 @@ class Details extends ConsumerWidget {
                                   child: Text(score)
                                 )).toList(),
                               onChanged: (value) {
+                                userGame.score = value == "Sin seleccionar" ? null : int.parse(value!);
                                 // TODO implementar lógica para cambiar la nota en el DB
                               },
                           )
@@ -82,6 +83,7 @@ class Details extends ConsumerWidget {
                                 );
                               }).toList(),
                               onChanged: (value) {
+                                userGame.state = value!;
                                 // TODO implementar lógica para cambiar el estado en la DB
                               },
                             )
@@ -106,20 +108,16 @@ class Details extends ConsumerWidget {
                                   // TODO logica de cambiar tiempo jugado en la DB
                                   if (_timePlayedCtrll.text.isEmpty) return;
 
-                                  // setState(() {
-                                  //   userGame!.timePlayed = int.parse(_timePlayedCtrll.text);
-                                  //   _timePlayedCtrll.text = "${userGame!.timePlayed}";
-                                  // });
+                                  userGame.timePlayed = int.parse(_timePlayedCtrll.text);
+                                  _timePlayedCtrll.text = "${userGame.timePlayed}";
                                 },
                                 onSubmitted: (value) {
                                   // TODO copiar logica onChanged
                                   // TODO logica de cambiar tiempo jugado en la DB
                                   if (_timePlayedCtrll.text.isEmpty) return;
 
-                                  // setState(() {
-                                  //   userGame!.timePlayed = int.parse(_timePlayedCtrll.text);
-                                  //   _timePlayedCtrll.text = "${userGame!.timePlayed}";
-                                  // });
+                                    userGame.timePlayed = int.parse(_timePlayedCtrll.text);
+                                    _timePlayedCtrll.text = "${userGame.timePlayed}";
                                 },
                               ),
                             )
