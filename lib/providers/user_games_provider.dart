@@ -10,7 +10,7 @@ class UserGamesNotifier extends StateNotifier<List<UserGame>> {
   List<UserGame> allUserGames = [];
   UserGamesNotifier() : super([]);
 
-  void getUserGames(int idUser) async{
+  void _getUserGames(int idUser) async{
     allUserGames = await UserGameDao.getUserGames(idUser);
   }
 
@@ -21,19 +21,20 @@ class UserGamesNotifier extends StateNotifier<List<UserGame>> {
 
   void updateUserGame(UserGame userGame) async{
     await UserGameDao.updateUserGame(userGame);
-    allUserGames.
-    state = state.map((e) => e.idGame == userGame.idGame ? userGame : e).toList();
+    allUserGames[allUserGames.indexWhere((e) => e.idGame == userGame.idGame)] = userGame;
+    // state = state.map((e) => e.idGame == userGame.idGame ? userGame : e).toList();
   }
 
   void deleteUserGame(UserGame userGame) async {
     await UserGameDao.deleteUserGame(userGame);
-    state = state.where((element) => element.idGame == userGame.idGame).toList();
+    allUserGames.remove(userGame);
+    // state = state.where((e) => e.idGame == userGame.idGame).toList();
   }
 
   void filterUserGames(int idUser, States st) async {
-    final List<UserGame> userGames = await UserGameDao.getUserGames(idUser);
+    // final List<UserGame> userGames = await UserGameDao.getUserGames(idUser);
 
-    state = userGames.where((element) => element.state == st).toList();
+    state = allUserGames.where((element) => element.state == st).toList();
   }
 
   Future<List<Game>> userGames2Games() async {
@@ -55,6 +56,7 @@ class UserGamesNotifier extends StateNotifier<List<UserGame>> {
 
 final userGamesProvider = StateNotifierProvider<UserGamesNotifier, List<UserGame>>((ref) {
   final notifier = UserGamesNotifier();
+  notifier._getUserGames(ref.watch(userProvider)!.idUser!);
   notifier.filterUserGames(ref.watch(userProvider)!.idUser!, States.playing);
   return notifier;
 });
