@@ -7,9 +7,6 @@ class UserGameDao {
 
     final Map<String, dynamic> game = userGame.toMap();
 
-    if (userGame.state == null) game.remove("state");
-    if (userGame.timePlayed == null) game.remove("timePlayed");
-
     return db.insert("Users_Games", game);
   }
 
