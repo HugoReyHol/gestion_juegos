@@ -6,6 +6,7 @@ import 'package:gestion_juegos/models/user_game.dart';
 import 'package:gestion_juegos/providers/user_provider.dart';
 
 class UserGamesNotifier extends StateNotifier<List<UserGame>> {
+  UserGame? currentUserGame;
   UserGamesNotifier() : super([]);
 
   void getUserGames(int idUser) async{
@@ -43,6 +44,10 @@ class UserGamesNotifier extends StateNotifier<List<UserGame>> {
     games.sort((a, b) => a.title.compareTo(b.title));
 
     return games;
+  }
+
+  void setUserGame(int idUser, int idGame) async {
+    currentUserGame = await UserGameDao.getUserGame(idUser, idGame);
   }
 }
 

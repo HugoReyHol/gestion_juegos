@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_juegos/models/game.dart';
 import 'package:gestion_juegos/providers/games_provider.dart';
+import 'package:gestion_juegos/providers/user_games_provider.dart';
+import 'package:gestion_juegos/providers/user_provider.dart';
 
 enum LayoutMode {vertical, horizontal}
 
@@ -23,6 +25,10 @@ class GameWidget extends ConsumerWidget {
     return GestureDetector(
       onTap: () {
         ref.read(gamesProvider.notifier).currentGame = _game;
+        ref.read(userGamesProvider.notifier).setUserGame(
+          ref.read(userProvider)!.idUser!,
+          _game.idGame
+        );
         Navigator.pushNamed(context, "/details");
       },
       child: Card(
@@ -54,6 +60,10 @@ class GameWidget extends ConsumerWidget {
         GestureDetector(
           onTap: () {
             ref.read(gamesProvider.notifier).currentGame = _game;
+            ref.read(userGamesProvider.notifier).setUserGame(
+              ref.read(userProvider)!.idUser!,
+              _game.idGame
+            );
             Navigator.pushNamed(context, "/details");
           },
           child: Card(
