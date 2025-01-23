@@ -7,25 +7,27 @@ import 'package:gestion_juegos/providers/user_provider.dart';
 
 class UserGamesNotifier extends StateNotifier<List<UserGame>> {
   UserGame? currentUserGame;
+  List<UserGame> allUserGames = [];
   UserGamesNotifier() : super([]);
 
   void getUserGames(int idUser) async{
-    state = await UserGameDao.getUserGames(idUser);
+    allUserGames = await UserGameDao.getUserGames(idUser);
   }
 
   void insertUserGame(UserGame userGame) async {
     await UserGameDao.insertUserGame(userGame);
-    getUserGames(userGame.idUser);
+    allUserGames.add(userGame);
   }
 
   void updateUserGame(UserGame userGame) async{
     await UserGameDao.updateUserGame(userGame);
-    getUserGames(userGame.idUser);
+    allUserGames.
+    state = state.map((e) => e.idGame == userGame.idGame ? userGame : e).toList();
   }
 
   void deleteUserGame(UserGame userGame) async {
     await UserGameDao.deleteUserGame(userGame);
-    getUserGames(userGame.idUser);
+    state = state.where((element) => element.idGame == userGame.idGame).toList();
   }
 
   void filterUserGames(int idUser, States st) async {
