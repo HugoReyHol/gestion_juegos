@@ -41,7 +41,7 @@ class GameWidget extends StatelessWidget {
   }
 
   // TODO mejorar el display horizontal
-  // TODO añadir botón para agregar sin entrar en details
+  // TODO si el usuario ya tiene el juego no mostrar el boton
   Widget _buildHorizontal(BuildContext context) {
     return Stack(
       alignment: Alignment.bottomRight,
