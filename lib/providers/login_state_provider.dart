@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_juegos/daos/user_dao.dart';
 import 'package:gestion_juegos/models/login_state.dart';
@@ -9,7 +10,7 @@ class LoginStateNotifier extends StateNotifier<LoginState> {
 
   LoginStateNotifier(this.ref) : super(LoginState());
 
-  Future<void> onLogIn(String name, String password) async {
+  Future<void> onLogIn(String name, String password, BuildContext context) async {
     state = state.copyWith(isLoading: true);
 
     final User? user = await UserDao.getUser(name);
@@ -27,9 +28,10 @@ class LoginStateNotifier extends StateNotifier<LoginState> {
 
     ref.read(userProvider.notifier).setUser(user);
     state = state.copyWith();
+    Navigator.pushNamed(context, "/app");
   }
 
-  Future<void> onRegister(String name, String password) async {
+  Future<void> onRegister(String name, String password, BuildContext context) async {
     state = state.copyWith(isLoading: true);
 
     User? user = await UserDao.getUser(name);
@@ -49,6 +51,7 @@ class LoginStateNotifier extends StateNotifier<LoginState> {
 
     ref.read(userProvider.notifier).setUser(user);
     state = state.copyWith();
+    Navigator.pushNamed(context, "/app");
   }
 
   

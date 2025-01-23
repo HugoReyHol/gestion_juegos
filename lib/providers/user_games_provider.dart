@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_juegos/daos/game_dao.dart';
-import 'package:gestion_juegos/daos/user_dao.dart';
 import 'package:gestion_juegos/daos/user_game_dao.dart';
 import 'package:gestion_juegos/models/game.dart';
 import 'package:gestion_juegos/models/user_game.dart';
+import 'package:gestion_juegos/providers/user_provider.dart';
 
 class UserGamesNotifier extends StateNotifier<List<UserGame>> {
   UserGamesNotifier() : super([]);
@@ -48,6 +48,6 @@ class UserGamesNotifier extends StateNotifier<List<UserGame>> {
 
 final userGamesProvider = StateNotifierProvider<UserGamesNotifier, List<UserGame>>((ref) {
   final notifier = UserGamesNotifier();
-  notifier.filterUserGames(UserDao.user.idUser!, States.playing);
+  notifier.filterUserGames(ref.watch(userProvider)!.idUser!, States.playing);
   return notifier;
 });
