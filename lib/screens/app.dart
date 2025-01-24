@@ -24,7 +24,7 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.all(30),
+        padding: EdgeInsets.fromLTRB(30, 30, 30, 0),
         child: _screens[_actualScren]
       ),
       bottomNavigationBar: BottomNavigationBar(
