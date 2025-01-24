@@ -12,7 +12,6 @@ class Login extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final loginState = ref.watch(loginStateProvider);
-    // if (user != null) Navigator.pushNamed(context, "/app");
 
     return Scaffold(
       appBar: AppBar(
