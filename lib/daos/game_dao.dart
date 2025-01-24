@@ -2,6 +2,7 @@ import 'package:gestion_juegos/models/game.dart';
 import 'package:gestion_juegos/util/db_manager.dart';
 
 class GameDao {
+  @Deprecated("Usar la función getGames() del provider")
   static Future<Game?> getGameById(int idGame) async {
     final db = await DbManager().database;
 
@@ -9,7 +10,8 @@ class GameDao {
 
     return result.isEmpty ? null : Game.fromMap(result.first);
   }
-
+  
+  @Deprecated("Usar la función filterGamesByTitle() del provider")
   static Future<List<Game>> getGamesByTitle(String title) async {
     final db = await DbManager().database;
 
