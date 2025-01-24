@@ -5,13 +5,21 @@ import 'package:gestion_juegos/models/game.dart';
 import 'package:gestion_juegos/models/user_game.dart';
 import 'package:gestion_juegos/providers/user_provider.dart';
 
-class UserGamesNotifier extends StateNotifier<List<UserGame>> {
+class UserGamesNotifier extends Notifier<List<UserGame>> {
+  late final List<UserGame> allUserGames;
   UserGame? currentUserGame;
-  List<UserGame> allUserGames = [];
-  UserGamesNotifier() : super([]);
 
-  void _getUserGames(int idUser) async{
-    allUserGames = await UserGameDao.getUserGames(idUser);
+  @override
+  List<UserGame> build() {
+    state = [];
+    _getUserGames();
+    return state;
+  }
+
+  void _getUserGames() async{
+    // allUserGames = await UserGameDao.getUserGames(ref.watch(userProvider)!.idUser!);
+    allUserGames = await UserGameDao.getUserGames(ref.watch(userProvider)!.idUser!);
+    filterUserGames();
   }
 
   void insertUserGame(UserGame userGame) async {
@@ -31,7 +39,7 @@ class UserGamesNotifier extends StateNotifier<List<UserGame>> {
     // state = state.where((e) => e.idGame == userGame.idGame).toList();
   }
 
-  void filterUserGames(int idUser, States st) async {
+  void filterUserGames([States st = States.playing]) async {
     // final List<UserGame> userGames = await UserGameDao.getUserGames(idUser);
 
     state = allUserGames.where((element) => element.state == st).toList();
@@ -54,9 +62,4 @@ class UserGamesNotifier extends StateNotifier<List<UserGame>> {
   }
 }
 
-final userGamesProvider = StateNotifierProvider<UserGamesNotifier, List<UserGame>>((ref) {
-  final notifier = UserGamesNotifier();
-  notifier._getUserGames(ref.watch(userProvider)!.idUser!);
-  notifier.filterUserGames(ref.watch(userProvider)!.idUser!, States.playing);
-  return notifier;
-});
+final userGamesProvider = NotifierProvider<UserGamesNotifier, List<UserGame>>(() => UserGamesNotifier());

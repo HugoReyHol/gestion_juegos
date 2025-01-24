@@ -37,7 +37,7 @@ class Home extends ConsumerWidget {
                   onChanged: (States? state) {
                     _selectedState = state!;
 
-                    userNotifier.filterUserGames(user!.idUser!, _selectedState);
+                    userNotifier.filterUserGames(_selectedState);
                   }
               ),
             ),
