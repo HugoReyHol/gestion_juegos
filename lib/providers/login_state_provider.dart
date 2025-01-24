@@ -5,39 +5,44 @@ import 'package:gestion_juegos/models/login_state.dart';
 import 'package:gestion_juegos/models/user.dart';
 import 'package:gestion_juegos/providers/user_provider.dart';
 
-class LoginStateNotifier extends StateNotifier<LoginState> {
-  final Ref ref;
+class LoginStateNotifier extends AutoDisposeNotifier<LoginState> {
 
-  LoginStateNotifier(this.ref) : super(LoginState());
+  @override
+  LoginState build() {
+    ref.onDispose(() {
+      print("LoginNotifier eliminado");
+    });
+
+    return LoginState();
+  }
 
   Future<void> onLogIn(String name, String password, BuildContext context) async {
-    state = state.copyWith(isLoading: true);
+    _updateState(true);
 
     final User? user = await UserDao.getUser(name);
 
     if (user == null) {
-      state = state.copyWith(errorMsg: "El usuario $name no existe");
+      _updateState(false, "El usuario $name no existe");
       return;
     }
 
     // TODO Implementar encriptacion
     if (user.password != password) {
-      state = state.copyWith(errorMsg: "Contraseña incorrecta");
+      _updateState(false, "Contraseña incorrecta");
       return;
     }
 
     ref.read(userProvider.notifier).setUser(user);
-    state = state.copyWith();
-    Navigator.pushNamed(context, "/app");
+    Navigator.pushReplacementNamed(context, "/app");
   }
 
   Future<void> onRegister(String name, String password, BuildContext context) async {
-    state = state.copyWith(isLoading: true);
+    _updateState(true);
 
     User? user = await UserDao.getUser(name);
 
     if (user != null) {
-      state = state.copyWith(errorMsg: "El usuario $name ya está registrado");
+      _updateState(false, "El usuario $name ya está registrado");
       return;
     }
 
@@ -45,16 +50,19 @@ class LoginStateNotifier extends StateNotifier<LoginState> {
     user.idUser = await UserDao.insertUser(user);
 
     if (user.idUser == 0) {
-      state = state.copyWith(errorMsg: "No se ha podido crear el usuario");
+      _updateState(false, "No se ha podido crear el usuario");
       return;
     }
 
     ref.read(userProvider.notifier).setUser(user);
-    state = state.copyWith();
-    Navigator.pushNamed(context, "/app");
+    Navigator.pushReplacementNamed(context, "/app");
   }
 
-  
+  void _updateState(bool isLoading, [String errorMsg = ""]) {
+    state.isLoading = isLoading;
+    state.errorMsg = errorMsg;
+    ref.notifyListeners();
+  }
 }
 
-final loginStateProvider = StateNotifierProvider<LoginStateNotifier, LoginState>((ref) => LoginStateNotifier(ref));
+final loginStateProvider = NotifierProvider.autoDispose<LoginStateNotifier, LoginState>(() => LoginStateNotifier());
