@@ -29,17 +29,11 @@ void main() {
   test("Obtener el userGame con su game", () async {
     final db = await DbManager().database;
 
-    // print(await db.rawQuery("""
-    //   SELECT Users_Games.*, Games.*
-    //   FROM Users_Games, Games
-    //   WHERE Users_Games.idUser = 1 AND Users_Games.idGame = Games.idGame
-    // """));
-
     print(await db.rawQuery("""
-      SELECT Users_Games.*, Games.*
-      FROM Users_Games      
-      JOIN Games ON Users_Games.idGame = Games.idGame
-      WHERE Users_Games.idUser = 1
+      SELECT *
+      FROM Users_Games, Games
+      WHERE Users_Games.idUser = 1 
+      AND Users_Games.idGame = Games.idGame
     """));
   });
 
