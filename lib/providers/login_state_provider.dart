@@ -32,7 +32,7 @@ class LoginStateNotifier extends AutoDisposeNotifier<LoginState> {
       return;
     }
 
-    ref.read(userProvider.notifier).setUser(user);
+    ref.read(userProvider.notifier).state = user;
     Navigator.pushReplacementNamed(context, "/app");
   }
 
@@ -54,7 +54,7 @@ class LoginStateNotifier extends AutoDisposeNotifier<LoginState> {
       return;
     }
 
-    ref.read(userProvider.notifier).setUser(user);
+    ref.read(userProvider.notifier).state = user;
     Navigator.pushReplacementNamed(context, "/app");
   }
 
