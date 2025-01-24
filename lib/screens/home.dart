@@ -26,7 +26,7 @@ class Home extends ConsumerWidget {
             Card(
               elevation: 5,
               child: DropdownButton<States>(
-                  padding: EdgeInsets.all(10),
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   value: _selectedState,
                   items: States.values.map((States state) {
                     return DropdownMenuItem<States>(
