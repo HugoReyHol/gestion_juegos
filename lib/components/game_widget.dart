@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_juegos/models/game.dart';
+import 'package:gestion_juegos/models/user_game.dart';
 import 'package:gestion_juegos/providers/games_provider.dart';
 import 'package:gestion_juegos/providers/user_games_provider.dart';
 
@@ -14,8 +15,6 @@ class GameWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.read(userGamesProvider.notifier).setUserGame(_game.idGame);
-
     switch (layoutMode) {
       case LayoutMode.vertical: return _buildVertical(context, ref);
       case LayoutMode.horizontal: return _buildHorizontal(context, ref);
@@ -52,6 +51,9 @@ class GameWidget extends ConsumerWidget {
   // TODO mejorar el display horizontal
   // TODO si el usuario ya tiene el juego no mostrar el boton
   Widget _buildHorizontal(BuildContext context, WidgetRef ref) {
+    final userGamesNotifier = ref.read(userGamesProvider.notifier);
+    final UserGame? userGame = ref.watch(userGameProvider(_game.idGame));
+
     return Stack(
       alignment: Alignment.bottomRight,
       children: [
@@ -86,14 +88,13 @@ class GameWidget extends ConsumerWidget {
             )
           )
         ),
-        if (ref.read(userGamesProvider.notifier).currentUserGame == null) Padding(
+        if (userGame == null) Padding(
           padding: const EdgeInsets.all(15),
           child: FloatingActionButton(
             heroTag: null,
             child: Icon(Icons.add),
             onPressed: () {
-              print("Logica añadir juego");
-              print("Pulsado ${_game.title}");
+              userGamesNotifier.insertUserGame(_game.idGame);
             }
           ),
         )

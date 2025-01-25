@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_juegos/daos/user_game_dao.dart';
 import 'package:gestion_juegos/models/user_game.dart';
 import 'package:gestion_juegos/providers/user_provider.dart';
+import 'package:collection/collection.dart';
 
 class UserGamesNotifier extends Notifier<List<UserGame>> {
   late final List<UserGame> allUserGames;
@@ -19,9 +20,12 @@ class UserGamesNotifier extends Notifier<List<UserGame>> {
     filterUserGames();
   }
 
-  void insertUserGame(UserGame userGame) async {
+  Future<UserGame> insertUserGame(int idGame) async {
+    final UserGame userGame = UserGame(idGame: idGame, idUser: ref.read(userProvider)!.idUser!);
     await UserGameDao.insertUserGame(userGame);
     allUserGames.add(userGame);
+    ref.notifyListeners();
+    return userGame;
   }
 
   void updateUserGame(UserGame userGame) async{
@@ -41,9 +45,17 @@ class UserGamesNotifier extends Notifier<List<UserGame>> {
   }
 
   void setUserGame(int idGame) async {
-    int index = allUserGames.indexWhere((e) => e.idGame == idGame);
-    currentUserGame = index == -1 ? null : allUserGames[index];
+    currentUserGame = allUserGames.firstWhereOrNull((e) => e.idGame == idGame);
+  }
+
+  bool containsUserGame(int idGame) {
+    return allUserGames.indexWhere((e) => e.idGame == idGame) != -1;
   }
 }
 
 final userGamesProvider = NotifierProvider<UserGamesNotifier, List<UserGame>>(() => UserGamesNotifier());
+
+final userGameProvider = Provider.family<UserGame?, int>((ref, id) {
+  final userGames = ref.watch(userGamesProvider);
+  return ref.read(userGamesProvider.notifier).allUserGames.firstWhereOrNull((e) => e.idGame == id);
+});
