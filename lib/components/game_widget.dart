@@ -48,7 +48,6 @@ class GameWidget extends ConsumerWidget {
   }
 
   // TODO mejorar el display horizontal
-  // TODO si el usuario ya tiene el juego no mostrar el boton
   Widget _buildHorizontal(BuildContext context, WidgetRef ref) {
     final userGamesNotifier = ref.read(userGamesProvider.notifier);
     final UserGame? userGame = ref.watch(userGameProvider(_game.idGame));
@@ -68,7 +67,10 @@ class GameWidget extends ConsumerWidget {
               spacing: 10,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Image.memory(_game.image),
+                Image(
+                  image: MemoryImage(_game.image),
+                  fit: BoxFit.cover,
+                ),
                 Expanded(
                   child: SizedBox(
                     height: 352,
@@ -80,7 +82,7 @@ class GameWidget extends ConsumerWidget {
                         Expanded(child: Text(_game.description, style: TextStyle(fontSize: 18, ), overflow: TextOverflow.fade))
                       ],
                     ),
-                  )
+                  ),
                 )
               ]
             )
