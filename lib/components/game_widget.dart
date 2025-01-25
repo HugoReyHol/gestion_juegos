@@ -25,7 +25,6 @@ class GameWidget extends ConsumerWidget {
     return GestureDetector(
       onTap: () {
         ref.read(gamesProvider.notifier).currentGame = _game;
-        ref.read(userGamesProvider.notifier).setUserGame(_game.idGame);
         Navigator.pushNamed(context, "/details");
       },
       child: Card(
@@ -60,7 +59,6 @@ class GameWidget extends ConsumerWidget {
         GestureDetector(
           onTap: () {
             ref.read(gamesProvider.notifier).currentGame = _game;
-            ref.read(userGamesProvider.notifier).setUserGame(_game.idGame);
             Navigator.pushNamed(context, "/details");
           },
           child: Card(
