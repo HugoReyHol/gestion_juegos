@@ -13,6 +13,16 @@ class UserGame {
     this.gameState = GameStates.plan_to_play
   });
 
+  UserGame copyWith() {
+    return UserGame(
+      idGame: idGame,
+      idUser: idUser,
+      score: score,
+      timePlayed: timePlayed,
+      gameState: gameState
+    );
+  }
+
   factory UserGame.fromMap(Map<String, dynamic> map) {
     return UserGame(
       idGame: map["idGame"],

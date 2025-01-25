@@ -27,7 +27,7 @@ class UserGamesNotifier extends Notifier<List<UserGame>> {
 
   void updateUserGame(UserGame userGame) async{
     await UserGameDao.updateUserGame(userGame);
-    state[state.indexWhere((e) => e.idGame == userGame.idGame)] = userGame;
+    state[state.indexWhere((e) => e.idGame == userGame.idGame)] = userGame.copyWith();
     ref.notifyListeners();
   }
 
