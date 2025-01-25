@@ -35,7 +35,6 @@ class Home extends ConsumerWidget {
                   );
                 }).toList(),
                 onChanged: (GameStates? gameState) {
-                  filteredUserGamesNotifier.filterUserGames();
                   ref.read(stateProvider.notifier).state = gameState!;
                 }
               )
