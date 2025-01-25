@@ -76,16 +76,16 @@ class Details extends ConsumerWidget {
                           spacing: 15,
                           children: [
                             Text("Estado"),
-                            DropdownButton<States>(
-                              value: userGame.state,
-                              items: States.values.map((States state) {
-                                return DropdownMenuItem<States>(
-                                  value: state,
-                                  child: Text(state.name.replaceAll("_", " ").toUpperCase())
+                            DropdownButton<GameStates>(
+                              value: userGame.gameState,
+                              items: GameStates.values.map((GameStates gameState) {
+                                return DropdownMenuItem<GameStates>(
+                                  value: gameState,
+                                  child: Text(gameState.name.replaceAll("_", " ").toUpperCase())
                                 );
                               }).toList(),
                               onChanged: (value) {
-                                userGame.state = value!;
+                                userGame.gameState = value!;
                                 // TODO implementar lógica para cambiar el estado en la DB
                               },
                             )

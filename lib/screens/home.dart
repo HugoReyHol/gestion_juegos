@@ -3,17 +3,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_juegos/components/game_grid_widget.dart';
 import 'package:gestion_juegos/models/user_game.dart';
 import 'package:gestion_juegos/providers/games_provider.dart';
-import 'package:gestion_juegos/providers/home_games_provider.dart';
+import 'package:gestion_juegos/providers/home_providers.dart';
 import 'package:gestion_juegos/providers/user_games_provider.dart';
 
 class Home extends ConsumerWidget {
-  Home({super.key});
-
-  States _selectedState = States.playing;
+  const Home({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userGamesNotifier = ref.read(userGamesProvider.notifier);
+    final selectedState = ref.watch(stateProvider);
+    final filteredUserGamesNotifier = ref.read(filteredUserGamesProvider.notifier);
     final gamesNotifier = ref.read(gamesProvider.notifier);
     final homeGames = ref.watch(homeGamesProvider);
 
@@ -26,18 +25,18 @@ class Home extends ConsumerWidget {
           children: [
             Card(
               elevation: 5,
-              child: DropdownButton<States>(
+              child: DropdownButton<GameStates>(
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                value: _selectedState,
-                items: States.values.map((States state) {
-                  return DropdownMenuItem<States>(
-                    value: state,
+                value: selectedState,
+                items: GameStates.values.map((GameStates state) {
+                  return DropdownMenuItem<GameStates>(
+                    value: selectedState,
                     child: Text(state.name.replaceAll("_", " ").toUpperCase())
                   );
                 }).toList(),
-                onChanged: (States? state) {
-                  _selectedState = state!;
-                  userGamesNotifier.filterUserGames(_selectedState);
+                onChanged: (GameStates? gameState) {
+                  filteredUserGamesNotifier.filterUserGames();
+                  ref.read(stateProvider.notifier).state = gameState!;
                 }
               )
             ),

@@ -3,14 +3,14 @@ class UserGame {
   late int idUser;
   int? score;
   int timePlayed;
-  States state;
+  GameStates gameState;
 
   UserGame({
     required this.idGame,
     required this.idUser,
     this.score,
     this.timePlayed = 0,
-    this.state = States.plan_to_play
+    this.gameState = GameStates.plan_to_play
   });
 
   factory UserGame.fromMap(Map<String, dynamic> map) {
@@ -19,7 +19,7 @@ class UserGame {
       idUser: map["idUser"],
       score: map["score"],
       timePlayed: map["timePlayed"],
-      state: States.values.firstWhere((element) => element.name.toString() == map["state"])
+      gameState: GameStates.values.firstWhere((element) => element.name.toString() == map["state"])
     );
   }
 
@@ -28,9 +28,9 @@ class UserGame {
     "idUser": idUser,
     "score": score,
     "timePlayed": timePlayed,
-    "state": state.name
+    "state": gameState.name
   };
 
 }
 
-enum States {playing, completed, on_hold, dropped, plan_to_play}
+enum GameStates {playing, completed, on_hold, dropped, plan_to_play}

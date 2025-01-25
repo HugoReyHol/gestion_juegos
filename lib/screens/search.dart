@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_juegos/components/game_widget.dart';
 import 'package:gestion_juegos/providers/games_provider.dart';
-import 'package:gestion_juegos/providers/user_games_provider.dart';
 
 class Search extends ConsumerWidget {
   const Search({super.key});
