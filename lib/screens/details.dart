@@ -17,6 +17,7 @@ class Details extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final Game game = ref.read(gamesProvider.notifier).currentGame!;
     final UserGame? userGame = ref.watch(userGameProvider(game.idGame));
+    _timePlayedCtrll.text = "${userGame?.timePlayed}";
 
     return Scaffold(
       appBar: AppBar(
@@ -104,20 +105,16 @@ class Details extends ConsumerWidget {
                                 inputFormatters: [
                                   FilteringTextInputFormatter.digitsOnly
                                 ],
-                                onChanged: (value) {
-                                  // TODO logica de cambiar tiempo jugado en la DB
-                                  if (_timePlayedCtrll.text.isEmpty) return;
-
-                                  userGame.timePlayed = int.parse(_timePlayedCtrll.text);
-                                  _timePlayedCtrll.text = "${userGame.timePlayed}";
-                                },
+                                // onChanged: (value) {
+                                //   // TODO logica de cambiar tiempo jugado en la DB
+                                //   userGame.timePlayed = value.isEmpty ? 0 : int.parse(value);
+                                //   ref.read(userGamesProvider.notifier).updateUserGame(userGame);
+                                //   print(userGame.timePlayed);
+                                // },
                                 onSubmitted: (value) {
-                                  // TODO copiar logica onChanged
-                                  // TODO logica de cambiar tiempo jugado en la DB
-                                  if (_timePlayedCtrll.text.isEmpty) return;
-
-                                    userGame.timePlayed = int.parse(_timePlayedCtrll.text);
-                                    _timePlayedCtrll.text = "${userGame.timePlayed}";
+                                  userGame.timePlayed = value.isEmpty ? 0 : int.parse(value);
+                                  ref.read(userGamesProvider.notifier).updateUserGame(userGame);
+                                  print(userGame.timePlayed);
                                 },
                               ),
                             )
