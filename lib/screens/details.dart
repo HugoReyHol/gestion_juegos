@@ -105,16 +105,9 @@ class Details extends ConsumerWidget {
                                 inputFormatters: [
                                   FilteringTextInputFormatter.digitsOnly
                                 ],
-                                // onChanged: (value) {
-                                //   // TODO logica de cambiar tiempo jugado en la DB
-                                //   userGame.timePlayed = value.isEmpty ? 0 : int.parse(value);
-                                //   ref.read(userGamesProvider.notifier).updateUserGame(userGame);
-                                //   print(userGame.timePlayed);
-                                // },
                                 onSubmitted: (value) {
                                   userGame.timePlayed = value.isEmpty ? 0 : int.parse(value);
                                   ref.read(userGamesProvider.notifier).updateUserGame(userGame);
-                                  print(userGame.timePlayed);
                                 },
                               ),
                             )
