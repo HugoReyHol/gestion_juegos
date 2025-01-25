@@ -14,6 +14,8 @@ class GameWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.read(userGamesProvider.notifier).setUserGame(_game.idGame);
+
     switch (layoutMode) {
       case LayoutMode.vertical: return _buildVertical(context, ref);
       case LayoutMode.horizontal: return _buildHorizontal(context, ref);
@@ -84,7 +86,7 @@ class GameWidget extends ConsumerWidget {
             )
           )
         ),
-        Padding(
+        if (ref.read(userGamesProvider.notifier).currentUserGame == null) Padding(
           padding: const EdgeInsets.all(15),
           child: FloatingActionButton(
             heroTag: null,
