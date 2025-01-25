@@ -84,12 +84,12 @@ class Details extends ConsumerWidget {
                               }).toList(),
                               onChanged: (value) {
                                 userGame.gameState = value!;
-                                // TODO implementar lógica para cambiar el estado en la DB
+                                ref.read(userGamesProvider.notifier).updateUserGame(userGame);
                               },
                             )
                           ],
                         ),
-                        Row( // TODO hacer que empiece en el mismo sitio que el resto de componentes
+                        Row(
                           spacing: 15,
                           children: [
                             Text("Tiempo jugado"),
