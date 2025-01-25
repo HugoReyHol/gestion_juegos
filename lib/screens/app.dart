@@ -1,24 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gestion_juegos/providers/games_provider.dart';
 import 'package:gestion_juegos/screens/search.dart';
 import 'package:gestion_juegos/screens/stats.dart';
-import 'home.dart';
+import 'package:gestion_juegos/screens/home.dart';
 
-class App extends StatefulWidget {
+class App extends ConsumerStatefulWidget {
   const App({super.key});
 
   @override
-  State<App> createState() => _AppState();
+  ConsumerState<App> createState() => _AppState();
 }
 
-class _AppState extends State<App> {
-  final List<Widget> _screens = [];
+class _AppState extends ConsumerState<App> {
+  final List<Widget> _screens = [Home(), Search(), Stats()];
   int _actualScren = 0;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _screens.addAll([Home(), Search(), Stats()]);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +32,7 @@ class _AppState extends State<App> {
         currentIndex: _actualScren,
         onTap: (value) {
           setState(() {
+            ref.read(gamesProvider.notifier).resetGames();
             _actualScren = value;
           });
         },
