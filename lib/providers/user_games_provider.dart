@@ -41,7 +41,7 @@ class UserGamesNotifier extends Notifier<List<UserGame>> {
   }
 
   void setUserGame(int idGame) async {
-    currentUserGame = await UserGameDao.getUserGame(ref.watch(userProvider)!.idUser!, idGame);
+    currentUserGame = allUserGames.firstWhere((e) => e.idGame == idGame);
   }
 }
 
