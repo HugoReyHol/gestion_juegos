@@ -19,7 +19,7 @@ class GamesNotifier extends Notifier<List<Game>> {
   }
 
   void filterGamesByTitle(String title) async {
-    state = allGames.where((e) => e.title.contains(title)).toList();
+    state = allGames.where((e) => e.title.toLowerCase().contains(title)).toList();
   }
 
   Game getGameById(int idGame) => allGames.firstWhere((e) => e.idGame == idGame);

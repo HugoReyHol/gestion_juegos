@@ -40,19 +40,6 @@ class UserGamesNotifier extends Notifier<List<UserGame>> {
     state = allUserGames.where((e) => e.state == st).toList();
   }
 
-  // TODO usar un provider conjunto
-  // Future<List<Game>> userGames2Games() async {
-  //   final List<Game> games = [];
-  //
-  //   for (UserGame userGame in state) {
-  //     games.add((await GameDao.getGameById(userGame.idGame))!);
-  //   }
-  //
-  //   games.sort((a, b) => a.title.compareTo(b.title));
-  //
-  //   return games;
-  // }
-
   void setUserGame(int idGame) async {
     currentUserGame = await UserGameDao.getUserGame(ref.watch(userProvider)!.idUser!, idGame);
   }
