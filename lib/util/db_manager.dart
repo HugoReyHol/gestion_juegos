@@ -193,6 +193,64 @@ class DbManager {
           "Xbox One: 2024-1-26\n"
           "Xbox Series X|S: 2024-1-26"
       ),
+      Game(idGame: 11,
+        title: "Sifu",
+        description: "A third person action game featuring intense hand-to-hand combat, it puts you in control of a young Kung-Fu student on his path of revenge throughout the city.",
+        image: await File("assets/sifu.png").readAsBytes(),
+        details: "Genres: Fighting, Hack and slash/Beat 'em up, Indie, Action\n"
+          "Game mode: Single player\n"
+          "Developer: Sloclap\n"
+          "Publisher: Sloclap, Kepler Interactive",
+        releases: "Windows: 2022-2-8\n"
+          "PlayStation 4: 2022-2-8\n"
+          "PlayStation 5: 2022-2-8\n"
+          "Xbox One: 2023-3-28\n"
+          "Xbox Series X|S: 2023-3-28\n"
+          "Nintendo Switch: 2022-11-8"
+      ),
+      Game(idGame: 12,
+        title: "Sekiro",
+        description: "Enter a dark and brutal new gameplay experience from the creators of Bloodborne and the Dark Souls series. Sekiro: Shadows Die Twice is an intense, third-person, action-adventure set against the bloody backdrop of 14th-century Japan. Step into the role of a disgraced warrior brought back from the brink of death whose mission is to rescue his master and exact revenge on his arch nemesis.",
+        image: await File("assets/sekiro.png").readAsBytes(),
+        details: "Genres: Adventure, Action, Fantasy, Stealth\n"
+          "Game mode: Single player\n"
+          "Developer: FromSoftware\n"
+          "Publisher: Activision",
+        releases: "Windows: 2019-3-22\n"
+          "PlayStation 4: 2019-3-22\n"
+          "Xbox One: 2019-3-22"
+      ),
+      Game(idGame: 13,
+        title: "Hollow Knight",
+        description: "A 2D metroidvania with an emphasis on close combat and exploration in which the player enters the once-prosperous now-bleak insect kingdom of Hallownest, travels through its various districts, meets friendly inhabitants, fights hostile ones and uncovers the kingdom's history while improving their combat abilities and movement arsenal by fighting bosses and accessing out-of-the-way areas.",
+        image: await File("assets/hollow_knight.png").readAsBytes(),
+        details: "Genres: Platform, Adventure, Indie, Action, Fantasy\n"
+          "Game mode: Single player\n"
+          "Developer: Team Cherry\n"
+          "Publisher: Team Cherry",
+        releases: "Windows: 2017-2-24\n"
+          "Linux: 2017-2-24\n"
+          "Mac: 2017-4-11\n"
+          "Nintendo Switch: 2018-6-12"
+      ),
+      Game(idGame: 14,
+        title: "Stardew Valley",
+        description: "Stardew Valley is an open-ended country-life RPG! You’ve inherited your grandfather’s old farm plot in Stardew Valley. Armed with hand-me-down tools and a few coins, you set out to begin your new life. Can you learn to live off the land and turn these overgrown fields into a thriving home? It won’t be easy. Ever since Joja Corporation came to town, the old ways of life have all but disappeared. The community center, once the town’s most vibrant hub of activity, now lies in shambles. But the valley seems full of opportunity. With a little dedication, you might just be the one to restore Stardew Valley to greatness!",
+        image: await File("assets/stardew_valley.png").readAsBytes(),
+        details: "Genres: Role-playing (RPG), Simulator, Strategy, Adventure, Indie, Fantasy, Buseness, Sandbox, Romance\n"
+          "Game mode: Single player, Multiplayer, Co-operative\n"
+          "Developer: ConcernedApe\n"
+          "Publisher: ConcernedApe, Chucklefish Games",
+        releases: "Windows: 2016-2-26\n"
+          "Linux: 2016-2-26\n"
+          "Mac: 2016-7-29\n"
+          "PlayStation 4: EU 2016-12-14\n"
+          "Xbox One: 2016-12-14\n"
+          "Nintendo Switch: 2017-10-5\n"
+          "PlayStation Vita: 2018-5-22\n"
+          "iOS: 2018-10-24\n"
+          "Android: 2019-3-13"
+      ),
     ];
 
     // TODO comprobar si se puede hacer con DAOs
