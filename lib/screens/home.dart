@@ -7,6 +7,8 @@ import 'package:gestion_juegos/providers/home_games_provider.dart';
 import 'package:gestion_juegos/providers/user_games_provider.dart';
 
 class Home extends ConsumerWidget {
+  Home({super.key});
+
   States _selectedState = States.playing;
 
   @override

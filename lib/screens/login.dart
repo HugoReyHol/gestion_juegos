@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_juegos/providers/login_state_provider.dart';
 
 class Login extends ConsumerWidget {
+  Login({super.key});
+
   final int _maxNameLength = 15;
   final int _minPassLength = 8;
   final _formkey = GlobalKey<FormState>();
@@ -74,7 +76,6 @@ class Login extends ConsumerWidget {
                       if (_formkey.currentState!.validate()) {
                         ref.read(loginStateProvider.notifier).onLogIn(_nameCtrll.text, _passCtrll.text, context);
                       }
-                      // if (user != null) Navigator.pushNamed(context, "/app");
                     },
                   child: Text("Iniciar sesión")
                 )

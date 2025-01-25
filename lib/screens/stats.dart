@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gestion_juegos/models/user.dart';
 
 class Stats extends StatelessWidget {
   const Stats({super.key});

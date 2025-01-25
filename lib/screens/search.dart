@@ -4,6 +4,7 @@ import 'package:gestion_juegos/components/game_widget.dart';
 import 'package:gestion_juegos/providers/games_provider.dart';
 
 class Search extends ConsumerWidget {
+  const Search({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
