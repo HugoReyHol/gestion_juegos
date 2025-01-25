@@ -251,6 +251,18 @@ class DbManager {
           "iOS: 2018-10-24\n"
           "Android: 2019-3-13"
       ),
+      Game(idGame: 15,
+        title: "Monster Hunter: World",
+        description: "Welcome to a new world! Take on the role of a hunter and slay ferocious monsters in a living, breathing ecosystem where you can use the landscape and its diverse inhabitants to get the upper hand. Hunt alone or in co-op with up to three other players, and use materials collected from fallen foes to craft new gear and take on even bigger, badder beasts!",
+        image: await File("assets/mhw.png").readAsBytes(),
+        details: "Genres: Role-playing (RPG), Adventure, Action, Fantasy\n"
+          "Game mode: Single player, Multiplayer, Co-operative\n"
+          "Developer: Capcom\n"
+          "Publisher: Capcom",
+        releases: "Windows: 2018-8-9\n"
+          "PlayStation 4: 2018-1-26\n"
+          "Xbox One: 2018-1-26\n"
+      ),
     ];
 
     // TODO comprobar si se puede hacer con DAOs
