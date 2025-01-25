@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gestion_juegos/daos/user_game_dao.dart';
 import 'package:gestion_juegos/models/game.dart';
 import 'package:gestion_juegos/models/user_game.dart';
 import 'package:gestion_juegos/providers/games_provider.dart';
@@ -58,15 +57,15 @@ class Details extends ConsumerWidget {
                             Text("Nota"),
                             DropdownButton<String>(
                               padding: EdgeInsets.all(5),
-                              value: userGame.score == null ? "Sin seleccionar" : "${userGame.score}",
+                              value: userGame.score == null ? _scoreValues.last : "${userGame.score}",
                               items: _scoreValues.map((String score) =>
                                 DropdownMenuItem<String>(
                                   value: score,
                                   child: Text(score)
                                 )).toList(),
                               onChanged: (value) {
-                                userGame.score = value == "Sin seleccionar" ? null : int.parse(value!);
-                                // TODO implementar lógica para cambiar la nota en el DB
+                                userGame.score = value == _scoreValues.last ? null : int.parse(value!);
+                                ref.read(userGamesProvider.notifier).updateUserGame(userGame);
                               },
                             )
                           ],
