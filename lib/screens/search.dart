@@ -30,6 +30,7 @@ class Search extends ConsumerWidget {
         Expanded(
           child: ListView.builder(
             itemCount: games.length,
+            padding: EdgeInsets.symmetric(horizontal: 8),
             itemBuilder: (context, index) => GameWidget(game: games[index], layoutMode: LayoutMode.horizontal),
           )
         ),
