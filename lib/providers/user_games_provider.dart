@@ -49,11 +49,11 @@ final userGamesProvider = NotifierProvider<UserGamesNotifier, List<UserGame>>(()
 class FilteredUserGamesNotifier extends Notifier<List<UserGame>> {
   @override
   List<UserGame> build() {
-    filterUserGames();
+    _filterUserGames();
     return state;
   }
 
-  void filterUserGames() {
+  void _filterUserGames() {
     final userGames = ref.watch(userGamesProvider);
     final gameState = ref.watch(stateProvider);
     state = userGames.where((e) => e.gameState == gameState).toList();
