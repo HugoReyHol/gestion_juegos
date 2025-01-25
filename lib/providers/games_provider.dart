@@ -8,17 +8,18 @@ class GamesNotifier extends Notifier<List<Game>> {
 
   @override
   List<Game> build() {
+    state = [];
     _getGames();
-    return allGames;
+    return state;
   }
 
   void _getGames() async {
     allGames = await GameDao.getGames();
+    state = allGames;
   }
 
   void filterGamesByTitle(String title) async {
-    state.removeWhere((e) => !e.title.contains(title));
-    ref.notifyListeners();
+    state = allGames.where((e) => e.title.contains(title)).toList();
   }
 
   Game getGameById(int idGame) => allGames.firstWhere((e) => e.idGame == idGame);
