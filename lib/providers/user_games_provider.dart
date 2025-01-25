@@ -7,7 +7,6 @@ import 'package:collection/collection.dart';
 
 // Provider de todos los juegos en la base de datos
 class UserGamesNotifier extends Notifier<List<UserGame>> {
-  UserGame? currentUserGame;
 
   @override
   List<UserGame> build() {
@@ -36,10 +35,6 @@ class UserGamesNotifier extends Notifier<List<UserGame>> {
     await UserGameDao.deleteUserGame(userGame);
     state.removeWhere((e) => e.idGame == userGame.idGame);
     ref.notifyListeners();
-  }
-
-  void setUserGame(int idGame) async {
-    currentUserGame = state.firstWhereOrNull((e) => e.idGame == idGame);
   }
 }
 
