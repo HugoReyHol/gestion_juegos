@@ -46,6 +46,7 @@ class LoginStateNotifier extends AutoDisposeNotifier<LoginState> {
       return;
     }
 
+    // TODO Implementar encriptacion
     user = User(name: name, password: password);
     user.idUser = await UserDao.insertUser(user);
 
@@ -65,4 +66,4 @@ class LoginStateNotifier extends AutoDisposeNotifier<LoginState> {
   }
 }
 
-final loginStateProvider = NotifierProvider.autoDispose<LoginStateNotifier, LoginState>(() => LoginStateNotifier());
+final loginStateProvider = AutoDisposeNotifierProvider<LoginStateNotifier, LoginState>(() => LoginStateNotifier());
