@@ -17,7 +17,7 @@ class Details extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final Game game = ref.read(gamesProvider.notifier).currentGame!;
-    final UserGame? userGame = ref.read(userGamesProvider.notifier).currentUserGame;
+    final UserGame? userGame = ref.watch(userGameProvider(game.idGame));
 
     return Scaffold(
       appBar: AppBar(
@@ -27,8 +27,7 @@ class Details extends ConsumerWidget {
           : [
               IconButton(
                 onPressed: () async {
-                  await UserGameDao.deleteUserGame(userGame);
-                  // TODO funcionalidad borrar juego de la DB usando un método del provider
+                  ref.read(userGamesProvider.notifier).deleteUserGame(userGame);
                 },
                 icon: Icon(Icons.delete)
               )
@@ -46,7 +45,7 @@ class Details extends ConsumerWidget {
                 userGame == null
                   ? ElevatedButton( // Boton para registra un _userGame si no existe
                       onPressed: () {
-                        // TODO funcionalidad insertar juego de la DB usando un método del provider
+                        ref.read(userGamesProvider.notifier).insertUserGame(game.idGame);
                       },
                       child: Text("Añadir a la lista")
                     )
