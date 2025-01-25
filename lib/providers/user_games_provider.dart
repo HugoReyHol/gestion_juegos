@@ -1,7 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gestion_juegos/daos/game_dao.dart';
 import 'package:gestion_juegos/daos/user_game_dao.dart';
-import 'package:gestion_juegos/models/game.dart';
 import 'package:gestion_juegos/models/user_game.dart';
 import 'package:gestion_juegos/providers/user_provider.dart';
 
@@ -17,7 +15,6 @@ class UserGamesNotifier extends Notifier<List<UserGame>> {
   }
 
   void _getUserGames() async{
-    // allUserGames = await UserGameDao.getUserGames(ref.watch(userProvider)!.idUser!);
     allUserGames = await UserGameDao.getUserGames(ref.watch(userProvider)!.idUser!);
     filterUserGames();
   }
@@ -40,25 +37,24 @@ class UserGamesNotifier extends Notifier<List<UserGame>> {
   }
 
   void filterUserGames([States st = States.playing]) async {
-    // final List<UserGame> userGames = await UserGameDao.getUserGames(idUser);
-
-    state = allUserGames.where((element) => element.state == st).toList();
+    state = allUserGames.where((e) => e.state == st).toList();
   }
 
-  Future<List<Game>> userGames2Games() async {
-    final List<Game> games = [];
+  // TODO usar un provider conjunto
+  // Future<List<Game>> userGames2Games() async {
+  //   final List<Game> games = [];
+  //
+  //   for (UserGame userGame in state) {
+  //     games.add((await GameDao.getGameById(userGame.idGame))!);
+  //   }
+  //
+  //   games.sort((a, b) => a.title.compareTo(b.title));
+  //
+  //   return games;
+  // }
 
-    for (UserGame userGame in state) {
-      games.add((await GameDao.getGameById(userGame.idGame))!);
-    }
-
-    games.sort((a, b) => a.title.compareTo(b.title));
-
-    return games;
-  }
-
-  void setUserGame(int idUser, int idGame) async {
-    currentUserGame = await UserGameDao.getUserGame(idUser, idGame);
+  void setUserGame(int idGame) async {
+    currentUserGame = await UserGameDao.getUserGame(ref.watch(userProvider)!.idUser!, idGame);
   }
 }
 
