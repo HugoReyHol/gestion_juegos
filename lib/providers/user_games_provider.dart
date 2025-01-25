@@ -41,7 +41,8 @@ class UserGamesNotifier extends Notifier<List<UserGame>> {
   }
 
   void setUserGame(int idGame) async {
-    currentUserGame = allUserGames.firstWhere((e) => e.idGame == idGame);
+    int index = allUserGames.indexWhere((e) => e.idGame == idGame);
+    currentUserGame = index == -1 ? null : allUserGames[index];
   }
 }
 
