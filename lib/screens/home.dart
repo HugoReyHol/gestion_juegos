@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_juegos/components/game_grid_widget.dart';
 import 'package:gestion_juegos/models/user_game.dart';
 import 'package:gestion_juegos/providers/games_provider.dart';
-import 'package:gestion_juegos/providers/screens_providers.dart';
+import 'package:gestion_juegos/providers/home_games_provider.dart';
 import 'package:gestion_juegos/providers/user_games_provider.dart';
 
 class Home extends ConsumerWidget {
@@ -35,7 +35,6 @@ class Home extends ConsumerWidget {
                 }).toList(),
                 onChanged: (States? state) {
                   _selectedState = state!;
-
                   userGamesNotifier.filterUserGames(_selectedState);
                 }
               )
@@ -46,7 +45,6 @@ class Home extends ConsumerWidget {
                 leading: Icon(Icons.search),
                 hintText: "Busca el nombre de un juego",
                 onChanged: (value) {
-                  print(value);
                   gamesNotifier.filterGamesByTitle(value);
                 },
               )
