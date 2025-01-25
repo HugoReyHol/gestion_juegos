@@ -28,10 +28,10 @@ class Home extends ConsumerWidget {
               child: DropdownButton<GameStates>(
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 value: selectedState,
-                items: GameStates.values.map((GameStates state) {
+                items: GameStates.values.map((GameStates gameState) {
                   return DropdownMenuItem<GameStates>(
-                    value: selectedState,
-                    child: Text(state.name.replaceAll("_", " ").toUpperCase())
+                    value: gameState,
+                    child: Text(gameState.name.replaceAll("_", " ").toUpperCase())
                   );
                 }).toList(),
                 onChanged: (GameStates? gameState) {
