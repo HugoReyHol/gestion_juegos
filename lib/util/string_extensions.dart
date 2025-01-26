@@ -3,9 +3,8 @@ import 'package:crypto/crypto.dart';
 
 extension StringExtensions on String {
 
-  String encrypt() {
+  String encrypt() => sha256.convert(utf8.encode(this)).toString();
 
-    return sha256.convert(utf8.encode(this)).toString();
-  }
+  String capitalize() => this[0].toUpperCase() + this.substring(1);
 
 }

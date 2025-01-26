@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_juegos/providers/stats_provider.dart';
+import 'package:gestion_juegos/util/string_extensions.dart';
 
 class Stats extends ConsumerWidget {
   const Stats({super.key});
@@ -36,16 +37,11 @@ class StatInfo extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(formatText(text)),
+            Text(text.capitalize().replaceAll("_", " ")),
             Text(value == -1 ? "None" : "$value")
           ],
         ),
       ),
     );
-  }
-
-  String formatText(String input) {
-    final out = input[0].toUpperCase() + input.substring(1);
-    return out.replaceAll("_", " ");
   }
 }
