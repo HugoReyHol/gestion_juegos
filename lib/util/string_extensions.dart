@@ -5,6 +5,6 @@ extension StringExtensions on String {
 
   String encrypt() => sha256.convert(utf8.encode(this)).toString();
 
-  String capitalize() => this[0].toUpperCase() + this.substring(1);
+  String capitalize() => this[0].toUpperCase() + substring(1);
 
 }
