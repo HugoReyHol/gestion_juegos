@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'package:flutter/services.dart';
 import 'package:gestion_juegos/models/game.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:path/path.dart' as path;
@@ -59,13 +59,12 @@ class DbManager {
       )
     """);
 
-    // TODO añadir más juegos a la base de datos
     final List<Game> games = [
       Game(
         idGame: 1,
         title: "The Legend of Zelda: Tears of the Kingdom",
         description: "The Legend of Zelda: Tears of the Kingdom is the sequel to The Legend of Zelda: Breath of the Wild. The setting for Link’s adventure has been expanded to include the skies above the vast lands of Hyrule.",
-        image: await File("assets/zelda_totk.png").readAsBytes(),
+        image: Uint8List.sublistView(await rootBundle.load("assets/zelda_totk.png")),
         details: "Genres: Role-playing (RPG), Adventure, Action, Fantasy, Sci-Fi, Open world\n"
           "Game mode: Single player\n"
           "Developer: Nintendo EPD Production Group No.3\n"
@@ -75,7 +74,7 @@ class DbManager {
       Game(idGame: 2,
         title: "Portal",
         description: "Waking up in a seemingly empty laboratory, the player is made to complete various physics-based puzzle challenges through numerous test chambers in order to test out the new Aperture Science Handheld Portal Device, without an explanation as to how, why or by whom.",
-        image: await File("assets/portal.png").readAsBytes(),
+        image: Uint8List.sublistView(await rootBundle.load("assets/portal.png")),
         details: "Genres: Shooter, Platform, Puzzle, Sci-Fi, Comedy\n"
           "Game mode: Single player\n"
           "Developer: Valve\n"
@@ -91,7 +90,7 @@ class DbManager {
       Game(idGame: 3,
         title: "The Legend of Zelda: Majora's Mask 3D",
         description: "The Legend of Zelda: Majora's Mask 3D is a remake of the original Nintendo 64 game with more up-to-date graphics, streamlined UI and different additional game modes. Most textures are significantly more detailed, and many models are more faithful to the game's concept and promotional art. In addition, the frame rate has been increased to 30 FPS compared to the original's 20 FPS.",
-        image: await File("assets/zelda_mm.png").readAsBytes(),
+        image: Uint8List.sublistView(await rootBundle.load("assets/zelda_mm.png")),
         details: "Genres: Role-playing (RPG), Adventure, Action, Fantasy\n"
           "Game mode: Single player\n"
           "Developer: Grezzo\n"
@@ -101,7 +100,7 @@ class DbManager {
       Game(idGame: 4,
         title: "BioShock",
         description: "BioShock is a horror-themed first-person shooter set in a steampunk underwater dystopia. The player is urged to turn everything into a weapon: biologically modifying their own body with Plasmids, hacking devices and systems, upgrading their weapons, crafting new ammo variants, and experimenting with different battle techniques are all possible.",
-        image: await File("assets/bioshock.png").readAsBytes(),
+        image: Uint8List.sublistView(await rootBundle.load("assets/bioshock.png")),
         details: "Genres: Shooter, Puzzle, Role-playing (RPG), Adventure, Action, Sci-Fi, Horror, Stealth\n"
           "Game mode: Single player\n"
           "Developer: 2K Boston, 2K Australia\n"
@@ -113,7 +112,7 @@ class DbManager {
       Game(idGame: 5,
         title: "Helldivers 2",
         description: "The Galaxy’s Last Line of Offence. Enlist in the Helldivers and join the fight for freedom across a hostile galaxy in a fast, frantic, and ferocious third-person shooter.",
-        image: await File("assets/helldivers_2.png").readAsBytes(),
+        image: Uint8List.sublistView(await rootBundle.load("assets/helldivers_2.png")),
         details: "Genres: Shooter, Tactical, Action, Sci-Fi\n"
           "Game mode: Single player, Multiplayer, Co-operative\n"
           "Developer: Arrowhead Game Studios\n"
@@ -124,7 +123,7 @@ class DbManager {
       Game(idGame: 6,
         title: "Inscryption",
         description: "Inscryption is an inky black card-based odyssey that blends the deckbuilding roguelike, escape-room style puzzles, and psychological horror into a blood-laced smoothie. Darker still are the secrets inscrybed upon the cards...",
-        image: await File("assets/inscryption.png").readAsBytes(),
+        image: Uint8List.sublistView(await rootBundle.load("assets/inscryption.png")),
         details: "Genres: Puzzle, Strategy, Adventure, Indie, Card & Board Game, Horror, Mystery\n"
           "Game mode: Single player\n"
           "Developer: Daniel Mullins Games\n"
@@ -141,7 +140,7 @@ class DbManager {
       Game(idGame: 7,
         title: "Disco Elysium",
         description: "A CRPG in which, waking up in a hotel room a total amnesiac with highly opinionated voices in his head, a middle-aged detective on a murder case inadvertently ends up playing a part in the political dispute between a local labour union and a larger international body, all while struggling to piece together his past, diagnose the nature of the reality around him and come to terms with said reality.",
-        image: await File("assets/disco_elysium.png").readAsBytes(),
+        image: Uint8List.sublistView(await rootBundle.load("assets/disco_elysium.png")),
         details: "Genres: Role-playing (RPG), Adventure, Indie, Thriller, Drama, Mystery\n"
           "Game mode: Single player\n"
           "Developer: ZA/UM\n"
@@ -152,7 +151,7 @@ class DbManager {
       Game(idGame: 8,
         title: "Tunic",
         description: "Tunic is an action adventure about a tiny fox in a big world. Explore the wilderness, discover spooky ruins, and fight terrible creatures from long ago.",
-        image: await File("assets/tunic.png").readAsBytes(),
+        image: Uint8List.sublistView(await rootBundle.load("assets/tunic.png")),
         details: "Genres: Puzzle, Role-playing (RPG), Adventure, Indie, Action, Fantasy\n"
           "Game mode: Single player\n"
           "Developer: Andrew Shouldice\n"
@@ -168,7 +167,7 @@ class DbManager {
       Game(idGame: 9,
         title: "Dave the Diver",
         description: "Marine adventure set in the mysterious Blue Hole. Explore the sea with Dave by day, and run a sushi restaurant at night. Uncover the secrets of the Blue Hole, and unwrap this deep sea mystery involving three friends, each with distinct personalities. New adventures await.",
-        image: await File("assets/dave_the_diver.png").readAsBytes(),
+        image: Uint8List.sublistView(await rootBundle.load("assets/dave_the_diver.png")),
         details: "Genres: Role-playing (RPG), Simulator, Adventure, Action, Fantasy, Business\n"
           "Game mode: Single player\n"
           "Developer: MINTROCKET\n"
@@ -182,7 +181,7 @@ class DbManager {
       Game(idGame: 10,
         title: "Like a Dragon: Infinite Wealth",
         description: "Two larger-than-life heroes, Ichiban Kasuga and Kazuma Kiryu are brought together by the hand of fate, or perhaps something more sinister… Live it up in Japan and explore all that Hawaii has to offer in an RPG adventure so big it spans the Pacific.",
-        image: await File("assets/yakuza_iw.png").readAsBytes(),
+        image: Uint8List.sublistView(await rootBundle.load("assets/yakuza_iw.png")),
         details: "Genres: Role-playing (RPG), Hack and slash/Beat 'em up, Adventure, Action, Drama\n"
           "Game mode: Single player\n"
           "Developer: Ryu Ga Gotoku Studios\n"
@@ -196,7 +195,7 @@ class DbManager {
       Game(idGame: 11,
         title: "Sifu",
         description: "A third person action game featuring intense hand-to-hand combat, it puts you in control of a young Kung-Fu student on his path of revenge throughout the city.",
-        image: await File("assets/sifu.png").readAsBytes(),
+        image: Uint8List.sublistView(await rootBundle.load("assets/sifu.png")),
         details: "Genres: Fighting, Hack and slash/Beat 'em up, Indie, Action\n"
           "Game mode: Single player\n"
           "Developer: Sloclap\n"
@@ -211,7 +210,7 @@ class DbManager {
       Game(idGame: 12,
         title: "Sekiro",
         description: "Enter a dark and brutal new gameplay experience from the creators of Bloodborne and the Dark Souls series. Sekiro: Shadows Die Twice is an intense, third-person, action-adventure set against the bloody backdrop of 14th-century Japan. Step into the role of a disgraced warrior brought back from the brink of death whose mission is to rescue his master and exact revenge on his arch nemesis.",
-        image: await File("assets/sekiro.png").readAsBytes(),
+        image: Uint8List.sublistView(await rootBundle.load("assets/sekiro.png")),
         details: "Genres: Adventure, Action, Fantasy, Stealth\n"
           "Game mode: Single player\n"
           "Developer: FromSoftware\n"
@@ -223,7 +222,7 @@ class DbManager {
       Game(idGame: 13,
         title: "Hollow Knight",
         description: "A 2D metroidvania with an emphasis on close combat and exploration in which the player enters the once-prosperous now-bleak insect kingdom of Hallownest, travels through its various districts, meets friendly inhabitants, fights hostile ones and uncovers the kingdom's history while improving their combat abilities and movement arsenal by fighting bosses and accessing out-of-the-way areas.",
-        image: await File("assets/hollow_knight.png").readAsBytes(),
+        image: Uint8List.sublistView(await rootBundle.load("assets/hollow_knight.png")),
         details: "Genres: Platform, Adventure, Indie, Action, Fantasy\n"
           "Game mode: Single player\n"
           "Developer: Team Cherry\n"
@@ -236,7 +235,7 @@ class DbManager {
       Game(idGame: 14,
         title: "Stardew Valley",
         description: "Stardew Valley is an open-ended country-life RPG! You’ve inherited your grandfather’s old farm plot in Stardew Valley. Armed with hand-me-down tools and a few coins, you set out to begin your new life. Can you learn to live off the land and turn these overgrown fields into a thriving home? It won’t be easy. Ever since Joja Corporation came to town, the old ways of life have all but disappeared. The community center, once the town’s most vibrant hub of activity, now lies in shambles. But the valley seems full of opportunity. With a little dedication, you might just be the one to restore Stardew Valley to greatness!",
-        image: await File("assets/stardew_valley.png").readAsBytes(),
+        image: Uint8List.sublistView(await rootBundle.load("assets/stardew_valley.png")),
         details: "Genres: Role-playing (RPG), Simulator, Strategy, Adventure, Indie, Fantasy, Buseness, Sandbox, Romance\n"
           "Game mode: Single player, Multiplayer, Co-operative\n"
           "Developer: ConcernedApe\n"
@@ -254,7 +253,7 @@ class DbManager {
       Game(idGame: 15,
         title: "Monster Hunter: World",
         description: "Welcome to a new world! Take on the role of a hunter and slay ferocious monsters in a living, breathing ecosystem where you can use the landscape and its diverse inhabitants to get the upper hand. Hunt alone or in co-op with up to three other players, and use materials collected from fallen foes to craft new gear and take on even bigger, badder beasts!",
-        image: await File("assets/mhw.png").readAsBytes(),
+        image: Uint8List.sublistView(await rootBundle.load("assets/mhw.png")),
         details: "Genres: Role-playing (RPG), Adventure, Action, Fantasy\n"
           "Game mode: Single player, Multiplayer, Co-operative\n"
           "Developer: Capcom\n"
