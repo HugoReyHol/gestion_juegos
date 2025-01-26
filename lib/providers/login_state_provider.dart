@@ -4,6 +4,7 @@ import 'package:gestion_juegos/daos/user_dao.dart';
 import 'package:gestion_juegos/models/login_state.dart';
 import 'package:gestion_juegos/models/user.dart';
 import 'package:gestion_juegos/providers/user_provider.dart';
+import 'package:gestion_juegos/util/string_extensions.dart';
 
 class LoginStateNotifier extends AutoDisposeNotifier<LoginState> {
 
@@ -26,8 +27,7 @@ class LoginStateNotifier extends AutoDisposeNotifier<LoginState> {
       return;
     }
 
-    // TODO Implementar encriptacion
-    if (user.password != password) {
+    if (user.password != password.encrypt()) {
       _updateState(false, "Contraseña incorrecta");
       return;
     }
@@ -46,8 +46,7 @@ class LoginStateNotifier extends AutoDisposeNotifier<LoginState> {
       return;
     }
 
-    // TODO Implementar encriptacion
-    user = User(name: name, password: password);
+    user = User(name: name, password: password.encrypt());
     user.idUser = await UserDao.insertUser(user);
 
     if (user.idUser == 0) {
