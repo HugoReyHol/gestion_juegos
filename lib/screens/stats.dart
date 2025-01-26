@@ -21,15 +21,13 @@ class Stats extends ConsumerWidget {
 }
 
 class StatInfo extends StatelessWidget {
-  String text;
+  final String text;
   final dynamic value;
 
-  StatInfo({super.key, required this.text, required this.value});
+  const StatInfo({super.key, required this.text, required this.value});
 
   @override
   Widget build(BuildContext context) {
-    text = text[0].toUpperCase() + text.substring(1);
-
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
       child: Padding(
@@ -38,11 +36,16 @@ class StatInfo extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(text.replaceAll("_", " ")),
+            Text(formatText(text)),
             Text(value == -1 ? "None" : "$value")
           ],
         ),
       ),
     );
+  }
+
+  String formatText(String input) {
+    final out = input[0].toUpperCase() + input.substring(1);
+    return out.replaceAll("_", " ");
   }
 }
