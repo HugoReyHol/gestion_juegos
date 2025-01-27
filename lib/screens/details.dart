@@ -19,7 +19,6 @@ class Details extends ConsumerWidget {
     final UserGame? userGame = ref.watch(userGameProvider(game.idGame));
     _timePlayedCtrll.text = "${userGame?.timePlayed}";
 
-    // TODO al hace la ventana muy estracha la columa del formulario sale del aspect ratio
     return Scaffold(
       appBar: AppBar(
         title: Text(game.title),
