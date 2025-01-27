@@ -34,88 +34,102 @@ class Details extends ConsumerWidget {
             ],
       ),
       body: Padding(
-        padding: EdgeInsets.fromLTRB(50, 0, 50, 50),
+        padding: EdgeInsets.fromLTRB(30, 0, 30, 30),
         child: Column(
           spacing: 15,
           children: [
-            Row(
-              spacing: 15,
-              children: [
-                Image.memory(game.image),
-                userGame == null
-                  ? ElevatedButton( // Boton para registra un _userGame si no existe
-                      onPressed: () {
-                        ref.read(userGamesProvider.notifier).insertUserGame(game.idGame);
-                      },
-                      child: Text("Añadir a la lista")
-                    )
-                  : Column( // Si _userGame existe
-                      spacing: 15,
-                      children: [
-                        Row(
-                          spacing: 15,
-                          children: [
-                            Text("Nota"),
-                            DropdownButton<String>(
-                              padding: EdgeInsets.all(5),
-                              value: userGame.score == null ? _scoreValues.last : "${userGame.score}",
-                              items: _scoreValues.map((String score) =>
-                                DropdownMenuItem<String>(
-                                  value: score,
-                                  child: Text(score)
-                                )).toList(),
-                              onChanged: (value) {
-                                userGame.score = value == _scoreValues.last ? null : int.parse(value!);
-                                ref.read(userGamesProvider.notifier).updateUserGame(userGame);
-                              },
-                            )
-                          ],
-                        ),
-                        Row(
-                          spacing: 15,
-                          children: [
-                            Text("Estado"),
-                            DropdownButton<GameStates>(
-                              value: userGame.gameState,
-                              items: GameStates.values.map((GameStates gameState) {
-                                return DropdownMenuItem<GameStates>(
-                                  value: gameState,
-                                  child: Text(gameState.name.replaceAll("_", " ").toUpperCase())
-                                );
-                              }).toList(),
-                              onChanged: (value) {
-                                userGame.gameState = value!;
-                                ref.read(userGamesProvider.notifier).updateUserGame(userGame);
-                              },
-                            )
-                          ],
-                        ),
-                        Row(
-                          spacing: 15,
-                          children: [
-                            Text("Tiempo jugado"),
-                            SizedBox(
-                              width: 75,
-                              child: TextField(
-                                controller: _timePlayedCtrll,
-                                decoration: InputDecoration(
-                                  suffixText: "h"
-                                ),
-                                keyboardType: TextInputType.number,
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.digitsOnly
-                                ],
-                                onSubmitted: (value) {
-                                  userGame.timePlayed = value.isEmpty ? 0 : int.parse(value);
-                                  ref.read(userGamesProvider.notifier).updateUserGame(userGame);
-                                },
-                              ),
-                            )
-                          ],
+            AspectRatio(
+              aspectRatio: 2.5,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                spacing: 15,
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: Image(
+                      image: MemoryImage(game.image),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  Flexible(
+                    flex: 7,
+                    child: userGame == null
+                      ? ElevatedButton( // Boton para registra un _userGame si no existe
+                          onPressed: () {
+                            ref.read(userGamesProvider.notifier).insertUserGame(game.idGame);
+                          },
+                          child: Text("Añadir a la lista")
                         )
-                      ],
-                    )
-              ],
+                      : Column( // Si _userGame existe
+                          mainAxisSize: MainAxisSize.min,
+                          spacing: 15,
+                          children: [
+                            Row(
+                              spacing: 15,
+                              children: [
+                                Text("Nota"),
+                                DropdownButton<String>(
+                                  padding: EdgeInsets.all(5),
+                                  value: userGame.score == null ? _scoreValues.last : "${userGame.score}",
+                                  items: _scoreValues.map((String score) =>
+                                    DropdownMenuItem<String>(
+                                      value: score,
+                                      child: Text(score)
+                                    )).toList(),
+                                  onChanged: (value) {
+                                    userGame.score = value == _scoreValues.last ? null : int.parse(value!);
+                                    ref.read(userGamesProvider.notifier).updateUserGame(userGame);
+                                  },
+                                )
+                              ],
+                            ),
+                            Row(
+                              spacing: 15,
+                              children: [
+                                Text("Estado"),
+                                DropdownButton<GameStates>(
+                                  value: userGame.gameState,
+                                  items: GameStates.values.map((GameStates gameState) {
+                                    return DropdownMenuItem<GameStates>(
+                                      value: gameState,
+                                      child: Text(gameState.name.replaceAll("_", " ").toUpperCase())
+                                    );
+                                  }).toList(),
+                                  onChanged: (value) {
+                                    userGame.gameState = value!;
+                                    ref.read(userGamesProvider.notifier).updateUserGame(userGame);
+                                  },
+                                )
+                              ],
+                            ),
+                            Row(
+                              spacing: 15,
+                              children: [
+                                Text("Tiempo jugado"),
+                                SizedBox(
+                                  width: 75,
+                                  child: TextField(
+                                    controller: _timePlayedCtrll,
+                                    decoration: InputDecoration(
+                                      suffixText: "h"
+                                    ),
+                                    keyboardType: TextInputType.number,
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.digitsOnly
+                                    ],
+                                    onSubmitted: (value) {
+                                      userGame.timePlayed = value.isEmpty ? 0 : int.parse(value);
+                                      ref.read(userGamesProvider.notifier).updateUserGame(userGame);
+                                    },
+                                  ),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                  )
+                ],
+              ),
             ),
             Expanded(
               child: DefaultTabController(
