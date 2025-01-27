@@ -5,6 +5,7 @@ import 'package:gestion_juegos/models/game.dart';
 import 'package:gestion_juegos/models/user_game.dart';
 import 'package:gestion_juegos/providers/games_provider.dart';
 import 'package:gestion_juegos/providers/user_games_provider.dart';
+import 'package:gestion_juegos/util/style_constants.dart';
 
 
 class Details extends ConsumerWidget {
@@ -12,12 +13,14 @@ class Details extends ConsumerWidget {
 
   final List<String> _scoreValues = ["10", "9", "8", "7", "6", "5", "4", "3", "2", "1", "0", "Sin seleccionar"];
   final TextEditingController _timePlayedCtrll = TextEditingController();
+  late double marginSize;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final Game game = ref.read(gamesProvider.notifier).currentGame!;
     final UserGame? userGame = ref.watch(userGameProvider(game.idGame));
     _timePlayedCtrll.text = "${userGame?.timePlayed}";
+    marginSize = MediaQuery.of(context).size.width <= 600 ? compactMargin : normalMargin;
 
     return Scaffold(
       appBar: AppBar(
@@ -34,7 +37,7 @@ class Details extends ConsumerWidget {
             ],
       ),
       body: Padding(
-        padding: EdgeInsets.fromLTRB(30, 0, 30, 30),
+        padding: EdgeInsets.symmetric(vertical: 5, horizontal: marginSize),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 15,
