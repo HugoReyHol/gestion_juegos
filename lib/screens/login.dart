@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_juegos/providers/login_state_provider.dart';
+import 'package:gestion_juegos/util/style_constants.dart';
 
 class Login extends ConsumerWidget {
   Login({super.key});
@@ -20,9 +21,9 @@ class Login extends ConsumerWidget {
         title: Center(child: Text("Login")),
       ),
       body: Padding(
-        padding: EdgeInsets.all(50),
+        padding: EdgeInsets.all(normalMargin),
         child: Column(
-          spacing: 70,
+          spacing: 50,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Form(
@@ -31,7 +32,7 @@ class Login extends ConsumerWidget {
                 spacing: 15,
                 children: [
                   TextFormField(
-                    enabled: !loginState.isLoading,
+                    enabled: !loginState,
                     decoration:  InputDecoration(
                       labelText: "Introduzca su nombre"
                     ),
@@ -43,7 +44,7 @@ class Login extends ConsumerWidget {
                     controller: _nameCtrll,
                   ),
                   TextFormField(
-                    enabled: !loginState.isLoading,
+                    enabled: !loginState,
                     decoration: InputDecoration(
                       labelText: "Introduzca su contreña"
                     ),
@@ -62,7 +63,7 @@ class Login extends ConsumerWidget {
               spacing: 20,
               children: [
                 ElevatedButton(
-                  onPressed: loginState.isLoading ? null :
+                  onPressed: loginState ? null :
                     () {
                       if (_formkey.currentState!.validate()) {
                         ref.read(loginStateProvider.notifier).onRegister(_nameCtrll.text, _passCtrll.text, context);
@@ -71,7 +72,7 @@ class Login extends ConsumerWidget {
                   child: Text("Registrarme")
                 ),
                 ElevatedButton(
-                  onPressed: loginState.isLoading ? null :
+                  onPressed: loginState ? null :
                     () {
                       if (_formkey.currentState!.validate()) {
                         ref.read(loginStateProvider.notifier).onLogIn(_nameCtrll.text, _passCtrll.text, context);
@@ -80,8 +81,7 @@ class Login extends ConsumerWidget {
                   child: Text("Iniciar sesión")
                 )
               ],
-            ),
-            Text(loginState.errorMsg == null ? "" : loginState.errorMsg!)
+            )
           ],
         ),
       )

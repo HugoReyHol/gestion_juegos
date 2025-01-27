@@ -1,34 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_juegos/daos/user_dao.dart';
-import 'package:gestion_juegos/models/login_state.dart';
 import 'package:gestion_juegos/models/user.dart';
 import 'package:gestion_juegos/providers/user_provider.dart';
 import 'package:gestion_juegos/util/string_extensions.dart';
 
-class LoginStateNotifier extends AutoDisposeNotifier<LoginState> {
+class LoginStateNotifier extends AutoDisposeNotifier<bool> {
 
   @override
-  LoginState build() {
-    ref.onDispose(() {
-      print("LoginNotifier eliminado");
-    });
-
-    return LoginState();
-  }
+  bool build() => false;
 
   Future<void> onLogIn(String name, String password, BuildContext context) async {
-    _updateState(true);
+    state = true;
 
     final User? user = await UserDao.getUser(name);
 
     if (user == null) {
-      _updateState(false, "El usuario $name no existe");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Center(child: Text("El usuario $name no existe")))
+      );
+      state = false;
       return;
     }
 
     if (user.password != password.encrypt()) {
-      _updateState(false, "Contraseña incorrecta");
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Center(child: Text("Contraseña incorrecta")))
+      );
+      state = false;
       return;
     }
 
@@ -37,12 +36,15 @@ class LoginStateNotifier extends AutoDisposeNotifier<LoginState> {
   }
 
   Future<void> onRegister(String name, String password, BuildContext context) async {
-    _updateState(true);
+    state = true;
 
     User? user = await UserDao.getUser(name);
 
     if (user != null) {
-      _updateState(false, "El usuario $name ya está registrado");
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Center(child: Text("El usuario $name ya está registrado")))
+      );
+      state = false;
       return;
     }
 
@@ -50,19 +52,16 @@ class LoginStateNotifier extends AutoDisposeNotifier<LoginState> {
     user.idUser = await UserDao.insertUser(user);
 
     if (user.idUser == 0) {
-      _updateState(false, "No se ha podido crear el usuario");
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Center(child: Text("No se ha podido crear el usuario")))
+      );
+      state = false;
       return;
     }
 
     ref.read(userProvider.notifier).state = user;
     Navigator.pushReplacementNamed(context, "/app");
   }
-
-  void _updateState(bool isLoading, [String errorMsg = ""]) {
-    state.isLoading = isLoading;
-    state.errorMsg = errorMsg;
-    ref.notifyListeners();
-  }
 }
 
-final loginStateProvider = AutoDisposeNotifierProvider<LoginStateNotifier, LoginState>(() => LoginStateNotifier());
+final loginStateProvider = AutoDisposeNotifierProvider<LoginStateNotifier, bool>(() => LoginStateNotifier());
