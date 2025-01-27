@@ -50,6 +50,7 @@ class GameWidget extends ConsumerWidget {
   Widget _buildHorizontal(BuildContext context, WidgetRef ref) {
     final userGamesNotifier = ref.read(userGamesProvider.notifier);
     final UserGame? userGame = ref.watch(userGameProvider(_game.idGame));
+    bool isCompact = MediaQuery.of(context).size.width <= 600;
 
     return AspectRatio(
       aspectRatio: 2.5,
@@ -84,9 +85,20 @@ class GameWidget extends ConsumerWidget {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(_game.title, style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold), maxLines: 2, overflow: TextOverflow.ellipsis),
+                        Text(
+                          _game.title,
+                          style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis
+                        ),
                         Divider(),
-                        Expanded(child: Text(_game.description, style: TextStyle(fontSize: 18, ), overflow: TextOverflow.fade))
+                        Expanded(
+                          child: Text(
+                            isCompact ? _game.getDeveloper() : _game.description,
+                            style: TextStyle(fontSize: 18, ),
+                            overflow: TextOverflow.fade
+                          )
+                        )
                       ],
                     ),
                   )
@@ -97,7 +109,7 @@ class GameWidget extends ConsumerWidget {
           if (userGame == null) Padding(
             padding: const EdgeInsets.all(15),
             child: FloatingActionButton(
-              mini: MediaQuery.of(context).size.width <= 600,
+              mini: isCompact,
               heroTag: null,
               child: Icon(Icons.add),
               onPressed: () {

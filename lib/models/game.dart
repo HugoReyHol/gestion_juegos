@@ -35,4 +35,10 @@ class Game {
     "releases": releases
   };
 
+  String getDeveloper() {
+    String text = details.split("\n")[2];
+    return text.substring(10);
+
+  }
+
 }
