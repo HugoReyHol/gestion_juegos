@@ -31,7 +31,7 @@ class _HomeState extends ConsumerState<Home>{
             if (!focusNode.hasFocus) Card(
               elevation: 5,
               child: DropdownButton<GameStates>(
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                padding: EdgeInsets.symmetric(horizontal: 10),
                 value: selectedState,
                 items: GameStates.values.map((GameStates gameState) {
                   return DropdownMenuItem<GameStates>(
