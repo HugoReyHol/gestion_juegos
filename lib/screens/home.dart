@@ -56,7 +56,12 @@ class _HomeState extends ConsumerState<Home>{
                 onTap: () {
                   setState(() {});
                 },
-                onTapOutside: (event) {
+                onTapOutside: (_) {
+                  setState(() {
+                    focusNode.unfocus();
+                  });
+                },
+                onSubmitted: (_) {
                   setState(() {
                     focusNode.unfocus();
                   });
