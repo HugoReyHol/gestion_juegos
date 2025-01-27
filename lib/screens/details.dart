@@ -19,6 +19,7 @@ class Details extends ConsumerWidget {
     final UserGame? userGame = ref.watch(userGameProvider(game.idGame));
     _timePlayedCtrll.text = "${userGame?.timePlayed}";
 
+    // TODO al hace la ventana muy estracha la columa del formulario sale del aspect ratio
     return Scaffold(
       appBar: AppBar(
         title: Text(game.title),
@@ -57,13 +58,13 @@ class Details extends ConsumerWidget {
                     Flexible(
                       flex: 7,
                       child: userGame == null
-                        ? ElevatedButton( // Boton para registra un _userGame si no existe
+                        ? ElevatedButton( // Boton para registra un userGame si no existe
                             onPressed: () {
                               ref.read(userGamesProvider.notifier).insertUserGame(game.idGame);
                             },
                             child: Text("Añadir a la lista")
                           )
-                        : Column( // Si _userGame existe
+                        : Column( // Si userGame existe
                             mainAxisSize: MainAxisSize.min,
                             spacing: 15,
                             children: [
