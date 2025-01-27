@@ -4,6 +4,7 @@ import 'package:gestion_juegos/providers/games_provider.dart';
 import 'package:gestion_juegos/screens/search.dart';
 import 'package:gestion_juegos/screens/stats.dart';
 import 'package:gestion_juegos/screens/home.dart';
+import 'package:gestion_juegos/util/style_constants.dart';
 
 class App extends ConsumerStatefulWidget {
   const App({super.key});
@@ -15,17 +16,22 @@ class App extends ConsumerStatefulWidget {
 class _AppState extends ConsumerState<App> {
   final List<Widget> _screens = [Home(), Search(), Stats()];
   int _actualScreen = 0;
+  late double marginSize;
 
   // TODO hacer que al pasar de ancho se abra ventana lateral en vez del NavigationBar
   @override
   Widget build(BuildContext context) {
+    marginSize = MediaQuery.of(context).size.width <= 600 ? compactMargin : normalMargin;
+
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: true,
-      ),
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
-        child: _screens[_actualScreen]
+      // appBar: AppBar(
+      //   automaticallyImplyLeading: true,
+      // ),
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 5, horizontal: marginSize),
+          child: _screens[_actualScreen]
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
