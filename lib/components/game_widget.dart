@@ -47,34 +47,41 @@ class GameWidget extends ConsumerWidget {
     );
   }
 
-  // TODO mejorar el display horizontal
   Widget _buildHorizontal(BuildContext context, WidgetRef ref) {
     final userGamesNotifier = ref.read(userGamesProvider.notifier);
     final UserGame? userGame = ref.watch(userGameProvider(_game.idGame));
 
-    return Stack(
-      alignment: Alignment.bottomRight,
-      children: [
-        GestureDetector(
-          onTap: () {
-            ref.read(gamesProvider.notifier).currentGame = _game;
-            Navigator.pushNamed(context, "/details");
-          },
-          child: Card(
-            clipBehavior: Clip.antiAlias,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-            child: Row(
-              spacing: 10,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Image(
-                  image: MemoryImage(_game.image),
-                  fit: BoxFit.cover,
-                ),
-                Expanded(
-                  child: SizedBox(
-                    height: 352,
+    return AspectRatio(
+      aspectRatio: 2.5,
+      child: Stack(
+        alignment: Alignment.bottomRight,
+        children: [
+          GestureDetector(
+            onTap: () {
+              ref.read(gamesProvider.notifier).currentGame = _game;
+              Navigator.pushNamed(context, "/details");
+            },
+            child: Card(
+              clipBehavior: Clip.antiAlias,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                spacing: 10,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Flexible(
+                    fit: FlexFit.tight,
+                    flex: 3,
+                    child: Image(
+                      image: MemoryImage(_game.image),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  Flexible(
+                    fit: FlexFit.tight,
+                    flex: 7,
                     child: Column(
+                      mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(_game.title, style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold), maxLines: 2, overflow: TextOverflow.ellipsis),
@@ -82,23 +89,23 @@ class GameWidget extends ConsumerWidget {
                         Expanded(child: Text(_game.description, style: TextStyle(fontSize: 18, ), overflow: TextOverflow.fade))
                       ],
                     ),
-                  ),
-                )
-              ]
+                  )
+                ]
+              )
             )
-          )
-        ),
-        if (userGame == null) Padding(
-          padding: const EdgeInsets.all(15),
-          child: FloatingActionButton(
-            heroTag: null,
-            child: Icon(Icons.add),
-            onPressed: () {
-              userGamesNotifier.insertUserGame(_game.idGame);
-            }
           ),
-        )
-      ]
+          if (userGame == null) Padding(
+            padding: const EdgeInsets.all(15),
+            child: FloatingActionButton(
+              heroTag: null,
+              child: Icon(Icons.add),
+              onPressed: () {
+                userGamesNotifier.insertUserGame(_game.idGame);
+              }
+            ),
+          )
+        ]
+      ),
     );
   }
 }
