@@ -4,6 +4,7 @@ import 'package:gestion_juegos/models/game.dart';
 import 'package:gestion_juegos/models/user_game.dart';
 import 'package:gestion_juegos/providers/games_provider.dart';
 import 'package:gestion_juegos/providers/user_games_provider.dart';
+import 'package:gestion_juegos/util/style_constants.dart';
 
 enum LayoutMode {vertical, horizontal}
 
@@ -87,7 +88,10 @@ class GameWidget extends ConsumerWidget {
                       children: [
                         Text(
                           _game.title,
-                          style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            fontSize: isCompact ? compactTitle : normalTitle,
+                            fontWeight: FontWeight.bold
+                          ),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis
                         ),
@@ -95,7 +99,9 @@ class GameWidget extends ConsumerWidget {
                         Expanded(
                           child: Text(
                             isCompact ? _game.getDeveloper() : _game.description,
-                            style: TextStyle(fontSize: 18, ),
+                            style: TextStyle(
+                              fontSize: isCompact ? compactText : normalText
+                            ),
                             overflow: TextOverflow.fade
                           )
                         )
