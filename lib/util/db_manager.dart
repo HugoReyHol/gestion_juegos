@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:gestion_juegos/models/game.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -21,10 +22,11 @@ class DbManager {
   Future<Database> _createDatabase() async {
     sqfliteFfiInit();
 
-    final databaseFactory = databaseFactoryFfi;
-    final dbPath = path.join(await databaseFactory.getDatabasesPath(), "gestion_juegos.db");
+    final dbFactory = !(Platform.isAndroid || Platform.isIOS) ? databaseFactoryFfi : databaseFactory;
 
-    final db = await databaseFactory.openDatabase(dbPath);
+    final dbPath = path.join(await dbFactory.getDatabasesPath(), "gestion_juegos.db");
+
+    final db = await dbFactory.openDatabase(dbPath);
     await _onCreate(db);
 
     return db;
@@ -37,7 +39,9 @@ class DbManager {
         name TEXT NOT NULL UNIQUE,
         password TEXT NOT NULL
       );
-      
+    """);
+
+    await db.execute("""
       CREATE TABLE IF NOT EXISTS Games (
         idGame INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT NOT NULL,
@@ -46,8 +50,10 @@ class DbManager {
         details TEXT NOT NULL,
         releases TEXT NOT NULL
       );
-      
-      CREATE TABLE IF NOT EXISTS Users_Games (
+    """);
+
+    await db.execute("""
+       CREATE TABLE IF NOT EXISTS Users_Games (
         idUser INTEGER,
         idGame INTEGER,
         score INTEGER,
@@ -56,8 +62,10 @@ class DbManager {
         PRIMARY KEY (idUser, idGame),
         FOREIGN KEY (idUser) REFERENCES Users(idUser) ON DELETE CASCADE,
         FOREIGN KEY (idGame) REFERENCES Games(idGame) ON DELETE CASCADE
-      )
+      );
     """);
+
+    print(await db.query("sqlite_master", where: "type = ?", whereArgs: ["table"], columns: ["name"]));
 
     final List<Game> games = [
       Game(
