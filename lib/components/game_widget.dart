@@ -97,6 +97,7 @@ class GameWidget extends ConsumerWidget {
           if (userGame == null) Padding(
             padding: const EdgeInsets.all(15),
             child: FloatingActionButton(
+              mini: MediaQuery.of(context).size.width <= 600,
               heroTag: null,
               child: Icon(Icons.add),
               onPressed: () {
