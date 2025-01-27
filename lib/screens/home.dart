@@ -5,11 +5,18 @@ import 'package:gestion_juegos/models/user_game.dart';
 import 'package:gestion_juegos/providers/games_provider.dart';
 import 'package:gestion_juegos/providers/home_providers.dart';
 
-class Home extends ConsumerWidget {
+class Home extends ConsumerStatefulWidget {
   const Home({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<Home> createState() => _HomeState();
+}
+
+class _HomeState extends ConsumerState<Home>{
+  final FocusNode focusNode = FocusNode();
+
+  @override
+  Widget build(BuildContext context) {
     final selectedState = ref.watch(stateProvider);
     final gamesNotifier = ref.read(gamesProvider.notifier);
     final homeGames = ref.watch(homeGamesProvider);
@@ -21,7 +28,7 @@ class Home extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           spacing: 15,
           children: [
-            Card(
+            if (!focusNode.hasFocus) Card(
               elevation: 5,
               child: DropdownButton<GameStates>(
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -39,20 +46,31 @@ class Home extends ConsumerWidget {
             ),
             Expanded(
               child: SearchBar(
+                focusNode: focusNode,
                 elevation: WidgetStatePropertyAll(5),
                 leading: Icon(Icons.search),
                 hintText: "Busca el nombre de un juego",
                 onChanged: (value) {
                   gamesNotifier.filterGamesByTitle(value);
                 },
+                onTap: () {
+                  setState(() {});
+                },
+                onTapOutside: (event) {
+                  setState(() {
+                    focusNode.unfocus();
+                  });
+                },
               )
             )
           ],
         ),
         GameGridWidget(
-          games: homeGames
+            games: homeGames
         )
       ]
     );
   }
+
+
 }
