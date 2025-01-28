@@ -41,4 +41,10 @@ class Game {
 
   }
 
+  String getPublisher() {
+    String text = details.split("\n")[3];
+    return text.substring(10);
+
+  }
+
 }
