@@ -22,11 +22,11 @@ class Details extends ConsumerWidget {
     _timePlayedCtrll.text = "${userGame?.timePlayed}";
     marginSize = MediaQuery.of(context).size.width <= 600 ? compactMargin : normalMargin;
 
-    // TODO arreglar bug al escribir horas en details teniendo el movil rotado, las tabbar saltan
     // TODO con el movil rotado el formulario entra en las tabbars
     return DefaultTabController(
       length: 3,
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: Text(game.title),
           actions: userGame == null
