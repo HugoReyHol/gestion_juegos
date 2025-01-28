@@ -25,6 +25,7 @@ class _HomeState extends ConsumerState<Home>{
       spacing: 15,
       children: [
         Flexible(
+          flex: 0,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             spacing: 15,
