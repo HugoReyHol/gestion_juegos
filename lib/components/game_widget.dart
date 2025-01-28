@@ -302,7 +302,7 @@ class GameWidget extends ConsumerWidget {
                       )
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(15),
+                      padding: const EdgeInsets.fromLTRB(0, 5, 15, 15),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
