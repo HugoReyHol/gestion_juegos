@@ -32,8 +32,36 @@ class Details extends ConsumerWidget {
             ? null
             : [
                 IconButton(
-                  onPressed: () async {
-                    ref.read(userGamesProvider.notifier).deleteUserGame(userGame);
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: Text("¿Borrar ${game.title} de la colección?"),
+                        content: Text("Esta acción no se puede deshacer"),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop(false);
+                            },
+                            child: Text("Cancelar")
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              ref.read(userGamesProvider.notifier).deleteUserGame(userGame);
+                              Navigator.of(context).pop(true);
+                            },
+                            child: Text("Aceptar")
+                          ),
+                        ],
+                      ),
+                    ).then((value) {
+                      if (value == true) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text("Juego borrado de la colección")
+                        )
+                      );
+                      }
+                    });
                   },
                   icon: Icon(Icons.delete)
                 )
