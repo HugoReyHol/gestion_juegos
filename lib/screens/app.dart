@@ -31,6 +31,7 @@ class _AppState extends ConsumerState<App> {
       // ),
       body: SafeArea(
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (!_isCompact) NavigationRail(
               labelType: NavigationRailLabelType.all,

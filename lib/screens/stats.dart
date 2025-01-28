@@ -13,50 +13,25 @@ class Stats extends ConsumerWidget {
   // TODO Hacer más bonitas las cards de StatInfo
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final gameStats = ref.watch(statsProvider);
-    final lastGames = ref.watch(lastGamesProvider(isCompact ? 2 : 4));
     isCompact = MediaQuery.of(context).size.width <= 600;
 
     return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Last updates:",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: compactTitle
-            ),
-          ),
-          Divider(),
-          for (var game in lastGames) GameWidget(
-            game: game,
-            layoutMode: LayoutMode.stats
-          ),
-          SizedBox(height: 15,),
-          Text(
-            "Statistics:",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: compactTitle
-            ),
-          ),
-          Divider(),
-          for (var key in gameStats.keys) StatInfo(
-            text: key,
-            value: gameStats[key]
-          ),
-        ],
-      ),
+      child: isCompact
+        ? _CompactStats()
+        : _NormalStats()
     );
   }
+
+
+
 }
 
 class StatInfo extends StatelessWidget {
   final String text;
   final dynamic value;
+  final bool isCompact;
 
-  const StatInfo({super.key, required this.text, required this.value});
+  const StatInfo({super.key, required this.text, required this.value, required this.isCompact});
 
   @override
   Widget build(BuildContext context) {
@@ -71,12 +46,111 @@ class StatInfo extends StatelessWidget {
               text.capitalize().replaceAll("_", " "),
               style: TextStyle(
                 fontWeight: FontWeight.bold,
+                fontSize: isCompact ? compactText : normalText
               ),
             ),
-            Text(value == -1 ? "None" : "$value")
+            Text(
+              value == -1 ? "None" : "$value",
+              style: TextStyle(fontSize: isCompact ? compactText : normalText),
+            )
           ],
         ),
       ),
+    );
+  }
+}
+
+class _CompactStats extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final gameStats = ref.watch(statsProvider);
+    final lastGames = ref.watch(lastGamesProvider(2));
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Last updates:",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: compactTitle
+          ),
+        ),
+        Divider(),
+        for (var game in lastGames) GameWidget(
+          game: game,
+          layoutMode: LayoutMode.statsCompact
+        ),
+        SizedBox(height: 15,),
+        Text(
+          "Statistics:",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: compactTitle
+          ),
+        ),
+        Divider(),
+        for (var key in gameStats.keys) StatInfo(
+          text: key,
+          value: gameStats[key],
+          isCompact: true,
+        ),
+      ],
+    );
+  }
+}
+
+class _NormalStats extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final gameStats = ref.watch(statsProvider);
+    final lastGames = ref.watch(lastGamesProvider(4));
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          flex: 4,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Last updates:",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: normalTitle
+                ),
+              ),
+              Divider(),
+              for (var game in lastGames) GameWidget(
+                game: game,
+                layoutMode: LayoutMode.statsNormal
+              )
+            ],
+          ),
+        ),
+        Expanded(
+          flex: 6,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Statistics:",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: normalTitle
+                ),
+              ),
+              Divider(),
+              for (var key in gameStats.keys) StatInfo(
+                text: key,
+                value: gameStats[key],
+                isCompact: false,
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
