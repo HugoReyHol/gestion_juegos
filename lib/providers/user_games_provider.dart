@@ -42,23 +42,6 @@ class UserGamesNotifier extends Notifier<List<UserGame>> {
 
 final userGamesProvider = NotifierProvider<UserGamesNotifier, List<UserGame>>(() => UserGamesNotifier());
 
-// Provider de los juegos filtrados, a partir de todos los juegos en la base de datos
-class FilteredUserGamesNotifier extends Notifier<List<UserGame>> {
-  @override
-  List<UserGame> build() {
-    _filterUserGames();
-    return state;
-  }
-
-  void _filterUserGames() {
-    final userGames = ref.watch(userGamesProvider);
-    final gameState = ref.watch(stateProvider);
-    state = userGames.where((e) => e.gameState == gameState).toList();
-  }
-}
-
-final filteredUserGamesProvider = NotifierProvider<FilteredUserGamesNotifier, List<UserGame>>(() => FilteredUserGamesNotifier());
-
 // Provider de los últimos juegos modificados
 final lastUserGamesProvider = Provider.family<List<UserGame>, int>((ref, amount) {
   final userGames = ref.watch(userGamesProvider);

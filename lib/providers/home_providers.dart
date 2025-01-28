@@ -8,7 +8,8 @@ final stateProvider = StateProvider<GameStates>((ref) => GameStates.playing);
 
 final homeGamesProvider = Provider<List<Game>>((ref) {
   final games = ref.watch(gamesProvider);
-  final userGames = ref.watch(filteredUserGamesProvider);
+  final userGames = ref.watch(userGamesProvider);
+  final gameState = ref.watch(stateProvider);
 
-  return games.where((g) => userGames.any((ug) => ug.idGame == g.idGame)).toList();
+  return games.where((g) => userGames.any((ug) => ug.idGame == g.idGame && ug.gameState == gameState)).toList();
 });
