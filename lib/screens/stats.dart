@@ -12,6 +12,7 @@ class Stats extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final gameStats = ref.watch(statsProvider);
+    final lastGames = ref.watch(lastGamesProvider(3));
 
     return ListView.builder(
       itemCount: gameStats.length,
