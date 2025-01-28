@@ -50,7 +50,7 @@ class _HomeState extends ConsumerState<Home>{
             children: [
               if (!(focusNode.hasFocus && isCompact)) Card(
                 elevation: 5,
-                child: DropdownButton<GameStates>(
+                child: DropdownButton<GameStates?>(
                   padding: EdgeInsets.symmetric(horizontal: 10),
                   value: selectedState,
                   items: GameStates.values.map((GameStates gameState) {
@@ -58,9 +58,12 @@ class _HomeState extends ConsumerState<Home>{
                       value: gameState,
                       child: Text(gameState.name.replaceAll("_", " ").toUpperCase())
                     );
-                  }).toList(),
+                  }).followedBy([DropdownMenuItem<GameStates>(
+                      value: null,
+                      child: Text("ALL")
+                  )]).toList(),
                   onChanged: (GameStates? gameState) {
-                    ref.read(stateProvider.notifier).state = gameState!;
+                    ref.read(stateProvider.notifier).state = gameState;
                   }
                 )
               ),
