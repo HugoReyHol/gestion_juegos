@@ -20,14 +20,16 @@ class UserGamesNotifier extends Notifier<List<UserGame>> {
   }
 
   void insertUserGame(int idGame) async {
-    final UserGame userGame = UserGame(idGame: idGame, idUser: ref.read(userProvider)!.idUser!);
+    final UserGame userGame = UserGame(idGame: idGame, idUser: ref.read(userProvider)!.idUser!, lastChange: DateTime.now());
     await UserGameDao.insertUserGame(userGame);
     state = [...state, userGame];
   }
 
   void updateUserGame(UserGame userGame) async{
+    userGame.lastChange = DateTime.now();
     await UserGameDao.updateUserGame(userGame);
-    state[state.indexWhere((e) => e.idGame == userGame.idGame)] = userGame.copyWith();
+    state.removeWhere((e) => e.idGame == userGame.idGame);
+    state.add(userGame.copyWith());
     ref.notifyListeners();
   }
 
@@ -56,6 +58,12 @@ class FilteredUserGamesNotifier extends Notifier<List<UserGame>> {
 }
 
 final filteredUserGamesProvider = NotifierProvider<FilteredUserGamesNotifier, List<UserGame>>(() => FilteredUserGamesNotifier());
+
+// Provider de los últimos juegos modificados
+final lastUserGamesProvider = Provider.family<List<UserGame>, int>((ref, amount) {
+  final userGames = ref.watch(userGamesProvider);
+  return userGames.sublist(userGames.length - amount);
+});
 
 // Provider de un juego individual para el game_widget
 final userGameProvider = Provider.family<UserGame?, int>((ref, id) {

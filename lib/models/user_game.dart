@@ -4,13 +4,15 @@ class UserGame {
   int? score;
   int timePlayed;
   GameStates gameState;
+  DateTime lastChange;
 
   UserGame({
     required this.idGame,
     required this.idUser,
     this.score,
     this.timePlayed = 0,
-    this.gameState = GameStates.plan_to_play
+    this.gameState = GameStates.plan_to_play,
+    required this.lastChange
   });
 
   UserGame copyWith() {
@@ -19,7 +21,8 @@ class UserGame {
       idUser: idUser,
       score: score,
       timePlayed: timePlayed,
-      gameState: gameState
+      gameState: gameState,
+      lastChange: lastChange
     );
   }
 
@@ -29,7 +32,8 @@ class UserGame {
       idUser: map["idUser"],
       score: map["score"],
       timePlayed: map["timePlayed"],
-      gameState: GameStates.values.firstWhere((element) => element.name.toString() == map["state"])
+      gameState: GameStates.values.firstWhere((element) => element.name.toString() == map["state"]),
+      lastChange: DateTime.fromMillisecondsSinceEpoch(map["lastChange"])
     );
   }
 
@@ -38,7 +42,8 @@ class UserGame {
     "idUser": idUser,
     "score": score,
     "timePlayed": timePlayed,
-    "state": gameState.name
+    "state": gameState.name,
+    "lastChange": lastChange.millisecondsSinceEpoch
   };
 
 }
