@@ -272,7 +272,6 @@ class DbManager {
       ),
     ];
 
-    // TODO comprobar si se puede hacer con DAOs
     for (Game game in games) {
       if ((await db.query("Games", where: "idGame = ?", whereArgs: [game.idGame])).isEmpty) {
         await db.insert("Games", game.toMap());
