@@ -15,6 +15,22 @@ class Home extends ConsumerStatefulWidget {
 class _HomeState extends ConsumerState<Home>{
   final FocusNode focusNode = FocusNode();
 
+
+  @override
+  void initState() {
+    super.initState();
+
+    focusNode.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    focusNode.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final selectedState = ref.watch(stateProvider);
@@ -55,18 +71,8 @@ class _HomeState extends ConsumerState<Home>{
                   onChanged: (value) {
                     gamesNotifier.filterGamesByTitle(value);
                   },
-                  onTap: () {
-                    setState(() {});
-                  },
-                  onTapOutside: (_) {
-                    setState(() {
-                      focusNode.unfocus();
-                    });
-                  },
-                  onSubmitted: (_) {
-                    setState(() {
-                      focusNode.unfocus();
-                    });
+                  onTapOutside: (event) { // Necesario para Android
+                    focusNode.unfocus();
                   },
                 )
               )
