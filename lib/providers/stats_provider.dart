@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_juegos/models/user_game.dart';
 import 'package:gestion_juegos/providers/user_games_provider.dart';
 
+// Provider para las estadisticas
 class StatsNotifier extends Notifier<Map<String, dynamic>> {
   @override
   Map<String, dynamic> build() {
@@ -45,3 +46,9 @@ class StatsNotifier extends Notifier<Map<String, dynamic>> {
 }
 
 final statsProvider = NotifierProvider<StatsNotifier, Map<String, dynamic>>(() => StatsNotifier());
+
+// Provider de los últimos juegos modificados
+final lastUserGamesProvider = Provider.family<List<UserGame>, int>((ref, amount) {
+  final userGames = ref.watch(userGamesProvider);
+  return userGames.sublist(userGames.length - amount);
+});

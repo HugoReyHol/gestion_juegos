@@ -42,12 +42,6 @@ class UserGamesNotifier extends Notifier<List<UserGame>> {
 
 final userGamesProvider = NotifierProvider<UserGamesNotifier, List<UserGame>>(() => UserGamesNotifier());
 
-// Provider de los últimos juegos modificados
-final lastUserGamesProvider = Provider.family<List<UserGame>, int>((ref, amount) {
-  final userGames = ref.watch(userGamesProvider);
-  return userGames.sublist(userGames.length - amount);
-});
-
 // Provider de un juego individual para el game_widget
 final userGameProvider = Provider.family<UserGame?, int>((ref, id) {
   final userGames = ref.watch(userGamesProvider);
