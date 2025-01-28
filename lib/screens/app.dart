@@ -19,7 +19,6 @@ class _AppState extends ConsumerState<App> {
   late bool _isCompact;
   late double _marginSize;
 
-  // TODO hacer que al pasar de ancho se abra ventana lateral en vez del NavigationBar
   @override
   Widget build(BuildContext context) {
     _isCompact = MediaQuery.of(context).size.width <= 600;
