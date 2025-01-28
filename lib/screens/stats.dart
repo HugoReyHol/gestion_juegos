@@ -9,7 +9,6 @@ class Stats extends ConsumerWidget {
   Stats({super.key});
   late bool isCompact;
 
-  // TODO Si no es compact dividir las stats en 2 columnas
   // TODO Hacer más bonitas las cards de StatInfo
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -104,7 +103,7 @@ class _NormalStats extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final gameStats = ref.watch(statsProvider);
-    final lastGames = ref.watch(lastGamesProvider(4));
+    final lastGames = ref.watch(lastGamesProvider(3));
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,

@@ -251,7 +251,6 @@ class GameWidget extends ConsumerWidget {
     );
   }
 
-  // TODO Implementar _buildStatsNormal
   Widget _buildStatsNormal(BuildContext context, WidgetRef ref) {
     final UserGame? userGame = ref.watch(userGameProvider(_game.idGame));
 
@@ -296,27 +295,10 @@ class GameWidget extends ConsumerWidget {
                     ),
                     Divider(),
                     Expanded(
-                      child: RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: "Dev: ",
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: compactText, color: Colors.black)
-                            ),
-                            TextSpan(
-                              text: "${_game.getDeveloper()}\n",
-                              style: TextStyle(fontSize: compactText, color: Colors.black)
-                            ),
-                            TextSpan(
-                              text: "Pub: ",
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: compactText, color: Colors.black)
-                            ),
-                            TextSpan(
-                              text: _game.getPublisher(),
-                              style: TextStyle(fontSize: compactText, color: Colors.black)
-                            ),
-                          ]
-                        ),
+                      child: Text(
+                        _game.description,
+                        style: TextStyle(fontSize: normalText),
+                        overflow: TextOverflow.fade
                       )
                     ),
                     Padding(
@@ -329,11 +311,11 @@ class GameWidget extends ConsumerWidget {
                               children: [
                                 TextSpan(
                                   text: "Last update: ",
-                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: compactText, color: Colors.black),
+                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: normalText, color: Colors.black),
                                 ),
                                 TextSpan(
                                   text: "${userGame?.lastChange.spanishDateTime()}",
-                                  style: TextStyle(fontSize: compactText, color: Colors.black)
+                                  style: TextStyle(fontSize: normalText, color: Colors.black)
                                 )
                               ]
                             ),
