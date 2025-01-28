@@ -16,12 +16,14 @@ class App extends ConsumerStatefulWidget {
 class _AppState extends ConsumerState<App> {
   final List<Widget> _screens = [Home(), Search(), Stats()];
   int _actualScreen = 0;
-  late double marginSize;
+  late bool _isCompact;
+  late double _marginSize;
 
   // TODO hacer que al pasar de ancho se abra ventana lateral en vez del NavigationBar
   @override
   Widget build(BuildContext context) {
-    marginSize = MediaQuery.of(context).size.width <= 600 ? compactMargin : normalMargin;
+    _isCompact = MediaQuery.of(context).size.width <= 600;
+    _marginSize = _isCompact ? compactMargin : normalMargin;
 
     return Scaffold(
       // appBar: AppBar(
@@ -29,11 +31,11 @@ class _AppState extends ConsumerState<App> {
       // ),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 5, horizontal: marginSize),
+          padding: EdgeInsets.symmetric(vertical: 5, horizontal: _marginSize),
           child: _screens[_actualScreen]
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: _isCompact ? BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.home_outlined), activeIcon: Icon(Icons.home), label: "Inicio"),
           BottomNavigationBarItem(icon: Icon(Icons.search_outlined), activeIcon: Icon(Icons.search), label: "Buscar"),
@@ -43,7 +45,7 @@ class _AppState extends ConsumerState<App> {
         onTap: (value) {
           changeScreen(value);
         },
-      ),
+      ) : null,
       drawer: Drawer(
         width: 250,
         child: ListView(
