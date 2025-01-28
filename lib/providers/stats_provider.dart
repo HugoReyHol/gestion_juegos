@@ -52,7 +52,7 @@ final statsProvider = NotifierProvider<StatsNotifier, Map<String, dynamic>>(() =
 // Provider de los últimos juegos modificados
 final lastGamesProvider = Provider.family<List<Game>, int>((ref, amount) {
   final userGames = ref.watch(userGamesProvider);
-  final games = ref.read(gamesProvider);
+  final games = ref.read(gamesProvider.notifier).allGames;
 
   final List<UserGame> lastUserGames = userGames.isNotEmpty ? userGames.sublist(userGames.length - amount).reversed.toList() : [];
   final List<Game> lastGames = [];
