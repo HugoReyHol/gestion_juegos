@@ -24,51 +24,53 @@ class _HomeState extends ConsumerState<Home>{
     return Column(
       spacing: 15,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          spacing: 15,
-          children: [
-            if (!focusNode.hasFocus) Card(
-              elevation: 5,
-              child: DropdownButton<GameStates>(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                value: selectedState,
-                items: GameStates.values.map((GameStates gameState) {
-                  return DropdownMenuItem<GameStates>(
-                    value: gameState,
-                    child: Text(gameState.name.replaceAll("_", " ").toUpperCase())
-                  );
-                }).toList(),
-                onChanged: (GameStates? gameState) {
-                  ref.read(stateProvider.notifier).state = gameState!;
-                }
+        Flexible(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            spacing: 15,
+            children: [
+              if (!focusNode.hasFocus) Card(
+                elevation: 5,
+                child: DropdownButton<GameStates>(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  value: selectedState,
+                  items: GameStates.values.map((GameStates gameState) {
+                    return DropdownMenuItem<GameStates>(
+                      value: gameState,
+                      child: Text(gameState.name.replaceAll("_", " ").toUpperCase())
+                    );
+                  }).toList(),
+                  onChanged: (GameStates? gameState) {
+                    ref.read(stateProvider.notifier).state = gameState!;
+                  }
+                )
+              ),
+              Expanded(
+                child: SearchBar(
+                  focusNode: focusNode,
+                  elevation: WidgetStatePropertyAll(5),
+                  leading: Icon(Icons.search),
+                  hintText: "Busca el nombre de un juego",
+                  onChanged: (value) {
+                    gamesNotifier.filterGamesByTitle(value);
+                  },
+                  onTap: () {
+                    setState(() {});
+                  },
+                  onTapOutside: (_) {
+                    setState(() {
+                      focusNode.unfocus();
+                    });
+                  },
+                  onSubmitted: (_) {
+                    setState(() {
+                      focusNode.unfocus();
+                    });
+                  },
+                )
               )
-            ),
-            Expanded(
-              child: SearchBar(
-                focusNode: focusNode,
-                elevation: WidgetStatePropertyAll(5),
-                leading: Icon(Icons.search),
-                hintText: "Busca el nombre de un juego",
-                onChanged: (value) {
-                  gamesNotifier.filterGamesByTitle(value);
-                },
-                onTap: () {
-                  setState(() {});
-                },
-                onTapOutside: (_) {
-                  setState(() {
-                    focusNode.unfocus();
-                  });
-                },
-                onSubmitted: (_) {
-                  setState(() {
-                    focusNode.unfocus();
-                  });
-                },
-              )
-            )
-          ],
+            ],
+          ),
         ),
         GameGridWidget(
             games: homeGames

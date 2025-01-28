@@ -30,12 +30,32 @@ class _AppState extends ConsumerState<App> {
       //   automaticallyImplyLeading: true,
       // ),
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 5, horizontal: _marginSize),
-          child: _screens[_actualScreen]
+        child: Row(
+          children: [
+            if (!_isCompact) NavigationRail(
+              labelType: NavigationRailLabelType.all,
+              elevation: 5,
+              destinations: [
+                NavigationRailDestination(icon: Icon(Icons.home_outlined), selectedIcon: Icon(Icons.home), label: Text("Inicio")),
+                NavigationRailDestination(icon: Icon(Icons.search_outlined), selectedIcon: Icon(Icons.search), label: Text("Buscar")),
+                NavigationRailDestination(icon: Icon(Icons.table_chart_outlined), selectedIcon: Icon(Icons.table_chart), label: Text("Estadísticas"))
+              ],
+              selectedIndex: _actualScreen,
+              onDestinationSelected: (value) {
+                changeScreen(value);
+              },
+            ),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 5, horizontal: _marginSize),
+                child: _screens[_actualScreen]
+              ),
+            ),
+          ],
         ),
       ),
       bottomNavigationBar: _isCompact ? BottomNavigationBar(
+        elevation: 5,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.home_outlined), activeIcon: Icon(Icons.home), label: "Inicio"),
           BottomNavigationBarItem(icon: Icon(Icons.search_outlined), activeIcon: Icon(Icons.search), label: "Buscar"),
@@ -46,36 +66,6 @@ class _AppState extends ConsumerState<App> {
           changeScreen(value);
         },
       ) : null,
-      drawer: Drawer(
-        width: 250,
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            ListTile(
-              title: Text("Ventanas"),
-            ),
-            Divider(),
-            ListTile(
-              selected: _actualScreen == 0,
-              leading: Icon(Icons.home),
-              title: Text("Inicio"),
-              onTap: () => changeScreen(0),
-            ),
-            ListTile(
-              selected: _actualScreen == 1,
-              leading: Icon(Icons.search),
-              title: Text("Buscar"),
-              onTap: () => changeScreen(1),
-            ),
-            ListTile(
-              selected: _actualScreen == 2,
-              leading: Icon(Icons.table_chart),
-              title: Text("Estadísticas"),
-              onTap: () => changeScreen(2),
-            ),
-          ],
-        ),
-      ),
     );
   }
 
