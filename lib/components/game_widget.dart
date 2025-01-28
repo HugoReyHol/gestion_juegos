@@ -188,7 +188,7 @@ class GameWidget extends ConsumerWidget {
                     Text(
                       _game.title,
                       style: TextStyle(
-                        fontSize: normalTitle,
+                        fontSize: compactTitle,
                         fontWeight: FontWeight.bold
                       ),
                       maxLines: 2,
