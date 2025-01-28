@@ -4,9 +4,10 @@ import 'package:gestion_juegos/models/game.dart';
 import 'package:gestion_juegos/models/user_game.dart';
 import 'package:gestion_juegos/providers/games_provider.dart';
 import 'package:gestion_juegos/providers/user_games_provider.dart';
+import 'package:gestion_juegos/util/extensions.dart';
 import 'package:gestion_juegos/util/style_constants.dart';
 
-enum LayoutMode {vertical, horizontal}
+enum LayoutMode {vertical, horizontal, stats}
 
 class GameWidget extends ConsumerWidget {
   final Game _game;
@@ -19,6 +20,7 @@ class GameWidget extends ConsumerWidget {
     switch (layoutMode) {
       case LayoutMode.vertical: return _buildVertical(context, ref);
       case LayoutMode.horizontal: return _buildHorizontal(context, ref);
+      case LayoutMode.stats: return _buildStats(context, ref);
     }
   }
 
@@ -148,4 +150,112 @@ class GameWidget extends ConsumerWidget {
       ),
     );
   }
+
+  Widget _buildStats(BuildContext context, WidgetRef ref) {
+    final UserGame? userGame = ref.watch(userGameProvider(_game.idGame));
+    bool isCompact = MediaQuery.of(context).size.width <= 600;
+
+    return AspectRatio(
+      aspectRatio: 2.5,
+      child: Stack(
+        alignment: Alignment.bottomRight,
+        children: [
+          GestureDetector(
+            onTap: () {
+              ref.read(gamesProvider.notifier).currentGame = _game;
+              Navigator.pushNamed(context, "/details");
+            },
+            child: Card(
+                clipBehavior: Clip.antiAlias,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  spacing: 10,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                      Flexible(
+                        fit: FlexFit.tight,
+                        flex: 3,
+                        child: Image(
+                          image: MemoryImage(_game.image),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      Flexible(
+                        fit: FlexFit.tight,
+                        flex: 7,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              _game.title,
+                              style: TextStyle(
+                                fontSize: isCompact ? compactTitle : normalTitle,
+                                fontWeight: FontWeight.bold
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis
+                            ),
+                            Divider(),
+                            Expanded(
+                              child: !isCompact
+                                ? Text(
+                                    _game.description,
+                                    style: TextStyle(fontSize: normalText),
+                                    overflow: TextOverflow.fade
+                                )
+                                : RichText(
+                                    text: TextSpan(
+                                        children: [
+                                          TextSpan(
+                                            text: "Dev: ",
+                                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: compactText, color: Colors.black)
+                                          ),
+                                          TextSpan(
+                                            text: "${_game.getDeveloper()}\n",
+                                            style: TextStyle(fontSize: compactText, color: Colors.black)
+                                          ),
+                                          TextSpan(
+                                            text: "Pub: ",
+                                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: compactText, color: Colors.black)
+                                          ),
+                                          TextSpan(
+                                            text: _game.getPublisher(),
+                                            style: TextStyle(fontSize: compactText, color: Colors.black)
+                                          ),
+                                        ]
+                                      ),
+                              )
+                            )
+                          ],
+                        ),
+                      )
+                    ]
+                )
+              )
+          ),
+          Padding(
+            padding: const EdgeInsets.all(15),
+            child: RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: "Last update: ",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: compactText, color: Colors.black),
+                  ),
+                  TextSpan(
+                    text: "${userGame?.lastChange.spanishDateTime()}",
+                    style: TextStyle(fontSize: compactText, color: Colors.black)
+                  )
+                ]
+              ),
+            )
+          )
+        ]
+      ),
+    );
+  }
+
 }
+

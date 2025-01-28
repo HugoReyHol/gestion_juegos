@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_juegos/components/game_widget.dart';
 import 'package:gestion_juegos/providers/stats_provider.dart';
-import 'package:gestion_juegos/util/string_extensions.dart';
+import 'package:gestion_juegos/util/extensions.dart';
 import 'package:gestion_juegos/util/style_constants.dart';
 
 class Stats extends ConsumerWidget {
@@ -31,7 +31,7 @@ class Stats extends ConsumerWidget {
           Divider(),
           for (var game in lastGames) GameWidget(
             game: game,
-            layoutMode: LayoutMode.horizontal
+            layoutMode: LayoutMode.stats
           ),
           SizedBox(height: 15,),
           Text(

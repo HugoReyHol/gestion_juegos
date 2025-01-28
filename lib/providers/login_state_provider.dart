@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_juegos/daos/user_dao.dart';
 import 'package:gestion_juegos/models/user.dart';
 import 'package:gestion_juegos/providers/user_provider.dart';
-import 'package:gestion_juegos/util/string_extensions.dart';
+import 'package:gestion_juegos/util/extensions.dart';
 
 class LoginStateNotifier extends AutoDisposeNotifier<bool> {
 
