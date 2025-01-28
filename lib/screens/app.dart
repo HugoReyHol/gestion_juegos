@@ -24,6 +24,7 @@ class _AppState extends ConsumerState<App> {
     _isCompact = MediaQuery.of(context).size.width <= 600;
     _marginSize = _isCompact ? compactMargin : normalMargin;
 
+    // TODO hacer que la navbar y el navrail tengan los mismos colores
     return Scaffold(
       // appBar: AppBar(
       //   automaticallyImplyLeading: true,

@@ -31,6 +31,7 @@ class _HomeState extends ConsumerState<Home>{
     focusNode.dispose();
   }
 
+  // TODO si la app no es compacta no hace falta esconder el selector
   @override
   Widget build(BuildContext context) {
     final selectedState = ref.watch(stateProvider);

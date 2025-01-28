@@ -48,6 +48,7 @@ class GameWidget extends ConsumerWidget {
     );
   }
 
+  // TODO añadir más descripción cuando es campacto
   Widget _buildHorizontal(BuildContext context, WidgetRef ref) {
     final userGamesNotifier = ref.read(userGamesProvider.notifier);
     final UserGame? userGame = ref.watch(userGameProvider(_game.idGame));

@@ -6,6 +6,9 @@ import 'package:gestion_juegos/util/string_extensions.dart';
 class Stats extends ConsumerWidget {
   const Stats({super.key});
 
+  // TODO Si no es compact dividir las stats en 2 columnas
+  // TODO Agregar 3 últimos juegos modificados
+  // TODO Hacer más bonitas las cards de StatInfo
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final gameStats = ref.watch(statsProvider);
