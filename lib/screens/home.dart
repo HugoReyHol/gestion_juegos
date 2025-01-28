@@ -14,6 +14,7 @@ class Home extends ConsumerStatefulWidget {
 
 class _HomeState extends ConsumerState<Home>{
   final FocusNode focusNode = FocusNode();
+  late bool isCompact;
 
 
   @override
@@ -31,12 +32,12 @@ class _HomeState extends ConsumerState<Home>{
     focusNode.dispose();
   }
 
-  // TODO si la app no es compacta no hace falta esconder el selector
   @override
   Widget build(BuildContext context) {
     final selectedState = ref.watch(stateProvider);
     final gamesNotifier = ref.read(gamesProvider.notifier);
     final homeGames = ref.watch(homeGamesProvider);
+    isCompact = MediaQuery.of(context).size.width <= 600;
 
     return Column(
       spacing: 15,
@@ -47,7 +48,7 @@ class _HomeState extends ConsumerState<Home>{
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             spacing: 15,
             children: [
-              if (!focusNode.hasFocus) Card(
+              if (!(focusNode.hasFocus && isCompact)) Card(
                 elevation: 5,
                 child: DropdownButton<GameStates>(
                   padding: EdgeInsets.symmetric(horizontal: 10),
