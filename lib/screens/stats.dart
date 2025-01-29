@@ -29,6 +29,27 @@ class Stats extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
+          "Options:",
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: compactTitle
+          ),
+        ),
+        Divider(),
+        Row(
+          children: [
+            TextButton.icon(
+              label: Text("Logout"),
+              icon: Icon(Icons.logout),
+              style: ButtonStyle(
+                iconSize: WidgetStatePropertyAll(25),
+              ),
+              onPressed: () {},
+            )
+          ],
+        ),
+        SizedBox(height: 15,),
+        Text(
           "Last updates:",
           style: TextStyle(
               fontWeight: FontWeight.bold,
