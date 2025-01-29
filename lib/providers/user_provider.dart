@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_juegos/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -7,14 +6,14 @@ class UserNotifier extends Notifier<User?> {
   @override
   User? build() => null;
 
-  void getSavedUser(BuildContext context) async {
+  Future<bool> getSavedUser() async {
     final prefs = await SharedPreferences.getInstance();
 
     final idUser = prefs.getInt("idUser");
     final name = prefs.getString("name");
     final password = prefs.getString("password");
 
-    if (idUser == null || name == null || password == null) return;
+    if (idUser == null || name == null || password == null) return false;
 
     final User user = User(
       name: name,
@@ -23,7 +22,7 @@ class UserNotifier extends Notifier<User?> {
     user.idUser = idUser;
 
     state = user;
-    Navigator.pushReplacementNamed(context, "/app");
+    return true;
   }
 
   void saveUser() async {
