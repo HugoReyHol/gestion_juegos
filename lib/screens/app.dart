@@ -41,6 +41,30 @@ class _AppState extends ConsumerState<App> {
                 NavigationRailDestination(icon: Icon(Icons.search_outlined), selectedIcon: Icon(Icons.search), label: Text("Buscar")),
                 NavigationRailDestination(icon: Icon(Icons.table_chart_outlined), selectedIcon: Icon(Icons.table_chart), label: Text("Estadísticas"))
               ],
+              trailing: Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(onPressed: () {},
+                      child: Column(
+                        children: [
+                          Icon(
+                            Icons.logout,
+                            size: 24,
+                            color: Colors.black,
+                          ),
+                          Text(
+                            "Logout",
+                            style: TextStyle(color: Colors.black),
+                          )
+                        ],
+                      ))
+                    ],
+                  ),
+                ),
+              ),
               selectedIndex: _actualScreen,
               onDestinationSelected: (value) {
                 changeScreen(value);
@@ -60,7 +84,7 @@ class _AppState extends ConsumerState<App> {
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.home_outlined), activeIcon: Icon(Icons.home), label: "Inicio"),
           BottomNavigationBarItem(icon: Icon(Icons.search_outlined), activeIcon: Icon(Icons.search), label: "Buscar"),
-          BottomNavigationBarItem(icon: Icon(Icons.table_chart_outlined), activeIcon: Icon(Icons.table_chart), label: "Estadísticas"),
+          BottomNavigationBarItem(icon: Icon(Icons.person_outlined), activeIcon: Icon(Icons.person), label: "Perfil"),
         ],
         currentIndex: _actualScreen,
         onTap: (value) {
