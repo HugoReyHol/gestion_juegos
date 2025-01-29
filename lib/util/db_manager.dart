@@ -6,15 +6,10 @@ import 'package:path/path.dart' as path;
 
 class DbManager {
 
-  DbManager._init();
-  static final DbManager _dbManager = DbManager._init();
-
-  factory DbManager() => _dbManager;
-
   static Database? _database;
   static Future<Database>? _futureDB;
 
-  Future<Database> get database async {
+  static Future<Database> get database async {
     if (_database == null) {
       _futureDB ??= _createDatabase();
       _database = await _futureDB;
@@ -23,7 +18,7 @@ class DbManager {
     return _database!;
   }
 
-  Future<Database> _createDatabase() async {
+  static Future<Database> _createDatabase() async {
     sqfliteFfiInit();
 
     final dbFactory = !(Platform.isAndroid || Platform.isIOS) ? databaseFactoryFfi : databaseFactory;
@@ -36,7 +31,7 @@ class DbManager {
     return db;
   }
 
-  Future<void> _onCreate(Database db) async {
+  static Future<void> _onCreate(Database db) async {
     await db.execute("""
       CREATE TABLE IF NOT EXISTS Users (
         idUser INTEGER PRIMARY KEY AUTOINCREMENT,

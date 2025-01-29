@@ -3,7 +3,7 @@ import '../models/user.dart';
 
 class UserDao {
   static Future<User?> getUser(String name) async {
-    final db = await DbManager().database;
+    final db = await DbManager.database;
 
     final result = await db.query("Users", where: "name = ?", whereArgs: [name]);
 
@@ -11,7 +11,7 @@ class UserDao {
   }
 
   static Future<int> insertUser(User user) async {
-    final db = await DbManager().database;
+    final db = await DbManager.database;
 
     return await db.insert("Users", user.toMap());
   }

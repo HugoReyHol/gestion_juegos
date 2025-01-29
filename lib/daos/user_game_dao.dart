@@ -3,7 +3,7 @@ import 'package:gestion_juegos/util/db_manager.dart';
 
 class UserGameDao {
   static Future<int> insertUserGame(UserGame userGame) async {
-    final db = await DbManager().database;
+    final db = await DbManager.database;
 
     final Map<String, dynamic> game = userGame.toMap();
 
@@ -11,7 +11,7 @@ class UserGameDao {
   }
 
   static Future<UserGame?> getUserGame(int idUser, int idGame) async {
-    final db = await DbManager().database;
+    final db = await DbManager.database;
 
     final result = await db.query(
       "Users_Games",
@@ -23,7 +23,7 @@ class UserGameDao {
   }
 
   static Future<List<UserGame>> getUserGames(int idUser) async {
-    final db = await DbManager().database;
+    final db = await DbManager.database;
 
     final result = await db.query("Users_Games", where: "idUser = ?", whereArgs: [idUser]);
 
@@ -37,7 +37,7 @@ class UserGameDao {
   }
 
   static Future<int> updateUserGame(UserGame userGame) async {
-    final db = await DbManager().database;
+    final db = await DbManager.database;
 
     return db.update(
       "Users_Games",
@@ -48,7 +48,7 @@ class UserGameDao {
   }
 
   static Future<int> deleteUserGame(UserGame userGame) async {
-    final db = await DbManager().database;
+    final db = await DbManager.database;
 
     return db.delete(
       "Users_Games",
