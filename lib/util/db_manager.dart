@@ -12,9 +12,13 @@ class DbManager {
   factory DbManager() => _dbManager;
 
   static Database? _database;
+  static Future<Database>? _futureDB;
 
   Future<Database> get database async {
-    _database ??= _database = await _createDatabase();
+    if (_database == null) {
+      _futureDB ??= _createDatabase();
+      _database = await _futureDB;
+    }
 
     return _database!;
   }
