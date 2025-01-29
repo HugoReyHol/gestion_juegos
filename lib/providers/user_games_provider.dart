@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_juegos/daos/user_game_dao.dart';
 import 'package:gestion_juegos/models/user_game.dart';
-import 'package:gestion_juegos/providers/home_providers.dart';
 import 'package:gestion_juegos/providers/user_provider.dart';
 import 'package:collection/collection.dart';
 

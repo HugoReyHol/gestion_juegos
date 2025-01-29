@@ -59,8 +59,8 @@ class _HomeState extends ConsumerState<Home>{
                       child: Text(gameState.name.replaceAll("_", " ").toUpperCase())
                     );
                   }).followedBy([DropdownMenuItem<GameStates>(
-                      value: null,
-                      child: Text("ALL")
+                    value: null,
+                    child: Text("ALL")
                   )]).toList(),
                   onChanged: (GameStates? gameState) {
                     ref.read(stateProvider.notifier).state = gameState;

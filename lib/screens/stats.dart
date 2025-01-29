@@ -32,8 +32,8 @@ class Stats extends ConsumerWidget {
         Text(
           "Options:",
           style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: compactTitle
+            fontWeight: FontWeight.bold,
+            fontSize: compactTitle
           ),
         ),
         Divider(),
@@ -55,21 +55,21 @@ class Stats extends ConsumerWidget {
         Text(
           "Last updates:",
           style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: compactTitle
+            fontWeight: FontWeight.bold,
+            fontSize: compactTitle
           ),
         ),
         Divider(),
         for (var game in lastGames) GameWidget(
-            game: game,
-            layoutMode: LayoutMode.statsCompact
+          game: game,
+          layoutMode: LayoutMode.statsCompact
         ),
         SizedBox(height: 15,),
         Text(
           "Statistics:",
           style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: compactTitle
+            fontWeight: FontWeight.bold,
+            fontSize: compactTitle
           ),
         ),
         Divider(),
@@ -97,14 +97,14 @@ class Stats extends ConsumerWidget {
               Text(
                 "Last updates:",
                 style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: normalTitle
+                  fontWeight: FontWeight.bold,
+                  fontSize: normalTitle
                 ),
               ),
               Divider(),
               for (var game in lastGames) GameWidget(
-                  game: game,
-                  layoutMode: LayoutMode.statsNormal
+                game: game,
+                layoutMode: LayoutMode.statsNormal
               )
             ],
           ),
@@ -117,8 +117,8 @@ class Stats extends ConsumerWidget {
               Text(
                 "Statistics:",
                 style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: normalTitle
+                  fontWeight: FontWeight.bold,
+                  fontSize: normalTitle
                 ),
               ),
               Divider(),
