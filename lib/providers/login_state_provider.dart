@@ -6,7 +6,6 @@ import 'package:gestion_juegos/providers/user_provider.dart';
 import 'package:gestion_juegos/util/extensions.dart';
 
 class LoginStateNotifier extends AutoDisposeNotifier<bool> {
-
   @override
   bool build() => false;
 
@@ -32,6 +31,7 @@ class LoginStateNotifier extends AutoDisposeNotifier<bool> {
     }
 
     ref.read(userProvider.notifier).state = user;
+    ref.read(userProvider.notifier).saveUser();
     Navigator.pushReplacementNamed(context, "/app");
   }
 
@@ -60,6 +60,7 @@ class LoginStateNotifier extends AutoDisposeNotifier<bool> {
     }
 
     ref.read(userProvider.notifier).state = user;
+    ref.read(userProvider.notifier).saveUser();
     Navigator.pushReplacementNamed(context, "/app");
   }
 }

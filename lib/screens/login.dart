@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_juegos/providers/login_state_provider.dart';
+import 'package:gestion_juegos/providers/user_provider.dart';
 import 'package:gestion_juegos/util/style_constants.dart';
 
 class Login extends ConsumerStatefulWidget {
@@ -21,6 +22,7 @@ class _LoginState extends ConsumerState<Login> {
   @override
   Widget build(BuildContext context) {
     final loginState = ref.watch(loginStateProvider);
+    ref.read(userProvider.notifier).getSavedUser(context);
 
     return Scaffold(
         appBar: AppBar(
