@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_juegos/components/game_widget.dart';
 import 'package:gestion_juegos/providers/stats_provider.dart';
+import 'package:gestion_juegos/providers/user_provider.dart';
 import 'package:gestion_juegos/util/extensions.dart';
 import 'package:gestion_juegos/util/style_constants.dart';
 
@@ -44,7 +45,9 @@ class Stats extends ConsumerWidget {
                 Icons.logout,
                 size: 25
               ),
-              onPressed: () {},
+              onPressed: () {
+                ref.read(userProvider.notifier).deleteSavedUser(context);
+              },
             )
           ],
         ),

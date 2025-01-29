@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_juegos/providers/games_provider.dart';
+import 'package:gestion_juegos/providers/user_provider.dart';
 import 'package:gestion_juegos/screens/search.dart';
 import 'package:gestion_juegos/screens/stats.dart';
 import 'package:gestion_juegos/screens/home.dart';
@@ -47,7 +48,9 @@ class _AppState extends ConsumerState<App> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      TextButton(onPressed: () {},
+                      TextButton(onPressed: () {
+                        ref.read(userProvider.notifier).deleteSavedUser(context);
+                      },
                       child: Column(
                         children: [
                           Icon(

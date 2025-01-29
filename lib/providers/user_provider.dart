@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_juegos/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -32,10 +33,11 @@ class UserNotifier extends Notifier<User?> {
     await prefs.setString("password", state!.password);
   }
 
-  void deleteSavedUser() async {
+  void deleteSavedUser(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
 
     prefs.clear();
+    Navigator.pushNamedAndRemoveUntil(context, "/login", (route) => false);
   }
 }
 
