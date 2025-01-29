@@ -40,9 +40,9 @@ class Stats extends ConsumerWidget {
           children: [
             TextButton.icon(
               label: Text("Logout"),
-              icon: Icon(Icons.logout),
-              style: ButtonStyle(
-                iconSize: WidgetStatePropertyAll(25),
+              icon: Icon(
+                Icons.logout,
+                size: 25
               ),
               onPressed: () {},
             )
