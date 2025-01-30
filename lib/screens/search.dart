@@ -29,9 +29,13 @@ class Search extends ConsumerWidget {
           ],
         ),
         Expanded(
-          child: ListView.builder(
-            itemCount: games.length,
+          child: GridView.builder(
+            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 600,
+              childAspectRatio: 2.5
+            ),
             padding: EdgeInsets.symmetric(horizontal: 8),
+            itemCount: games.length,
             itemBuilder: (context, index) => GameWidget(game: games[index], layoutMode: LayoutMode.horizontal),
           )
         ),
