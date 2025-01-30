@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ThemeNotifier extends Notifier<bool> {
@@ -12,7 +10,8 @@ class ThemeNotifier extends Notifier<bool> {
 
   void _loadTheme() async {
     final prefs = await SharedPreferences.getInstance();
-    state = prefs.getBool("isDarkTheme") ?? MediaQuery.of(context as BuildContext).platformBrightness == Brightness.dark;
+    // TODO Hacer que cargue por defecto el del sistema
+    state = prefs.getBool("isDarkTheme") ?? false;
   }
 
   void toggleTheme() async {
