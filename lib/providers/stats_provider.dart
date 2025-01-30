@@ -41,6 +41,7 @@ class StatsNotifier extends Notifier<Map<String, dynamic>> {
     });
 
     numScores != 0 ? state["average_score"] /= numScores : state["average_score"] = -1;
+    state["average_score"] = (state["average_score"] as double).toStringAsFixed(2);
 
     ref.notifyListeners();
   }
