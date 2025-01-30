@@ -54,7 +54,7 @@ class GameWidget extends ConsumerWidget {
   Widget _buildHorizontal(BuildContext context, WidgetRef ref) {
     final userGamesNotifier = ref.read(userGamesProvider.notifier);
     final UserGame? userGame = ref.watch(userGameProvider(_game.idGame));
-    bool isCompact = MediaQuery.of(context).size.width <= 600;
+    bool isCompact = MediaQuery.sizeOf(context).width <= 600;
     final Color color = Theme.of(context).textTheme.bodyMedium!.color!;
 
     return AspectRatio(

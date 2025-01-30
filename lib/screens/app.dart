@@ -24,7 +24,7 @@ class _AppState extends ConsumerState<App> {
   @override
   Widget build(BuildContext context) {
     final isDarkTheme = ref.watch(themeProvider);
-    _isCompact = MediaQuery.of(context).size.width <= 600;
+    _isCompact = MediaQuery.sizeOf(context).width <= 600;
     _marginSize = _isCompact ? compactMargin : normalMargin;
     final Color color = Theme.of(context).textTheme.bodyMedium!.color!;
 

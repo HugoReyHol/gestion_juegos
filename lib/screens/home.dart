@@ -37,7 +37,7 @@ class _HomeState extends ConsumerState<Home>{
     final selectedState = ref.watch(stateProvider);
     final gamesNotifier = ref.read(gamesProvider.notifier);
     final homeGames = ref.watch(homeGamesProvider);
-    isCompact = MediaQuery.of(context).size.width <= 600;
+    isCompact = MediaQuery.sizeOf(context).width <= 600;
 
     return Column(
       spacing: 15,

@@ -13,6 +13,7 @@ class Details extends ConsumerWidget {
 
   final List<String> _scoreValues = ["10", "9", "8", "7", "6", "5", "4", "3", "2", "1", "0", "Sin seleccionar"];
   final TextEditingController _timePlayedCtrll = TextEditingController();
+  late bool isCompact;
   late double marginSize;
 
   @override
@@ -20,7 +21,8 @@ class Details extends ConsumerWidget {
     final Game game = ref.read(gamesProvider.notifier).currentGame!;
     final UserGame? userGame = ref.watch(userGameProvider(game.idGame));
     _timePlayedCtrll.text = "${userGame?.timePlayed}";
-    marginSize = MediaQuery.of(context).size.width <= 600 ? compactMargin : normalMargin;
+    isCompact = MediaQuery.sizeOf(context).width <= 600;
+    marginSize = isCompact ? compactMargin : normalMargin;
 
     // TODO con el movil rotado el formulario entra en las tabbars
     // TODO probar singlechildscroll view o hacer una pantalla distinta para no compact

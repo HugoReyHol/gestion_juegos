@@ -15,7 +15,7 @@ class Stats extends ConsumerWidget {
   // TODO Hacer más bonitas las cards de StatInfo
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    isCompact = MediaQuery.of(context).size.width <= 600;
+    isCompact = MediaQuery.sizeOf(context).width <= 600;
     isDarkTheme = ref.watch(themeProvider);
 
     return SingleChildScrollView(
