@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -5,13 +6,13 @@ class ThemeNotifier extends Notifier<bool> {
   @override
   bool build() {
     _loadTheme();
-    return false;
+    return WidgetsBinding.instance.platformDispatcher.platformBrightness == Brightness.dark;
   }
 
   void _loadTheme() async {
     final prefs = await SharedPreferences.getInstance();
-    // TODO Hacer que cargue por defecto el del sistema
-    state = prefs.getBool("isDarkTheme") ?? false;
+
+    state = prefs.getBool("isDarkTheme") ?? state;
   }
 
   void toggleTheme() async {
