@@ -36,7 +36,9 @@ class UserNotifier extends Notifier<User?> {
   void deleteSavedUser(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
 
-    prefs.clear();
+    await prefs.remove("idUser");
+    await prefs.remove("name");
+    await prefs.remove("password");
     Navigator.pushNamedAndRemoveUntil(context, "/login", (route) => false);
   }
 }

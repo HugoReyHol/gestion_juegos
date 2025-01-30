@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_juegos/providers/games_provider.dart';
+import 'package:gestion_juegos/providers/theme_provider.dart';
 import 'package:gestion_juegos/providers/user_provider.dart';
 import 'package:gestion_juegos/screens/search.dart';
 import 'package:gestion_juegos/screens/stats.dart';
@@ -22,6 +23,7 @@ class _AppState extends ConsumerState<App> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme = ref.watch(themeProvider);
     _isCompact = MediaQuery.of(context).size.width <= 600;
     _marginSize = _isCompact ? compactMargin : normalMargin;
 
@@ -47,23 +49,44 @@ class _AppState extends ConsumerState<App> {
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
+                    spacing: 10,
                     children: [
-                      TextButton(onPressed: () {
-                        ref.read(userProvider.notifier).deleteSavedUser(context);
-                      },
-                      child: Column(
-                        children: [
-                          Icon(
-                            Icons.logout,
-                            size: 24,
-                            color: Colors.black,
-                          ),
-                          Text(
-                            "Logout",
-                            style: TextStyle(color: Colors.black),
-                          )
-                        ],
-                      ))
+                      TextButton(
+                        onPressed: () {
+                          ref.read(themeProvider.notifier).toggleTheme();
+                        },
+                        child: Column(
+                          children: [
+                            Icon(
+                              isDarkTheme ? Icons.light_mode : Icons.dark_mode,
+                              size: 24,
+                              // color: Theme.of(context).,
+                            ),
+                            Text(
+                              isDarkTheme ? "Light mode" : "Dark mode",
+                              // style: TextStyle(color: Colors.black),
+                            )
+                          ],
+                        )
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          ref.read(userProvider.notifier).deleteSavedUser(context);
+                        },
+                        child: Column(
+                          children: [
+                            Icon(
+                              Icons.logout,
+                              size: 24,
+                              // color: Colors.black,
+                            ),
+                            Text(
+                              "Logout",
+                              // style: TextStyle(color: Colors.black),
+                            )
+                          ],
+                        )
+                      )
                     ],
                   ),
                 ),

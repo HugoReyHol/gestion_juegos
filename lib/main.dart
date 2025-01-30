@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gestion_juegos/providers/theme_provider.dart';
 import 'package:gestion_juegos/providers/user_provider.dart';
 import 'package:gestion_juegos/screens/app.dart';
 import 'package:gestion_juegos/screens/details.dart';
 import 'package:gestion_juegos/screens/login.dart';
+import 'package:gestion_juegos/util/style_constants.dart';
 
 void main() {
   runApp(const ProviderScope(child: MainApp()));
@@ -14,7 +16,14 @@ class MainApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isDarkTheme = ref.watch(themeProvider);
+    
     return MaterialApp(
+      theme: ThemeData.light(),
+      darkTheme: ThemeData.dark(),
+      // theme: lightTheme,
+      // darkTheme: darkTheme,
+      themeMode: isDarkTheme ? ThemeMode.dark : ThemeMode.light,
       debugShowCheckedModeBanner: false,
       routes: {
         "/": (context) => FutureBuilder(
@@ -34,7 +43,6 @@ class MainApp extends ConsumerWidget {
                   child: Text("Error: ${snapshot.error}"),
                 ),
               );
-
             }
 
             if (snapshot.hasData) {
