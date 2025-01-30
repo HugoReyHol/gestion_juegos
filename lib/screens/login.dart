@@ -26,75 +26,77 @@ class _LoginState extends ConsumerState<Login> {
       appBar: AppBar(
         title: Center(child: Text("Login")),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(normalMargin),
-        child: Column(
-          spacing: 50,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Form(
-              key: _formkey,
-              child: Column(
-                spacing: 15,
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.all(normalMargin),
+          child: Column(
+            spacing: 50,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Form(
+                key: _formkey,
+                child: Column(
+                  spacing: 15,
+                  children: [
+                    TextFormField(
+                      enabled: !loginState,
+                      decoration:  InputDecoration(
+                        labelText: "Introduzca su nombre"
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) return "Introduzca un nombre";
+                        return null;
+                      },
+                      maxLength: _maxNameLength,
+                      controller: _nameCtrll,
+                    ),
+                    TextFormField(
+                      enabled: !loginState,
+                      decoration: InputDecoration(
+                        labelText: "Introduzca su contreña",
+                        suffixIcon: IconButton(
+                          icon: Icon(isObscured ? Icons.visibility : Icons.visibility_off),
+                          onPressed: () {
+                            setState(() {
+                              isObscured = !isObscured;
+                            });
+                          }
+                        )
+                      ),
+                      validator: (value) {
+                        if (value == null || value.length < _minPassLength) return "Su contraseña debe tener al menos $_minPassLength carácteres";
+                        return null;
+                      },
+                      obscureText: isObscured,
+                      controller: _passCtrll,
+                    )
+                  ],
+                )
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                spacing: 20,
                 children: [
-                  TextFormField(
-                    enabled: !loginState,
-                    decoration:  InputDecoration(
-                      labelText: "Introduzca su nombre"
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) return "Introduzca un nombre";
-                      return null;
+                  ElevatedButton(
+                    onPressed: loginState ? null : () {
+                      if (_formkey.currentState!.validate()) {
+                        ref.read(loginStateProvider.notifier).onRegister(_nameCtrll.text, _passCtrll.text, context);
+                      }
                     },
-                    maxLength: _maxNameLength,
-                    controller: _nameCtrll,
+                    child: Text("Registrarme")
                   ),
-                  TextFormField(
-                    enabled: !loginState,
-                    decoration: InputDecoration(
-                      labelText: "Introduzca su contreña",
-                      suffixIcon: IconButton(
-                        icon: Icon(isObscured ? Icons.visibility : Icons.visibility_off),
-                        onPressed: () {
-                          setState(() {
-                            isObscured = !isObscured;
-                          });
-                        }
-                      )
-                    ),
-                    validator: (value) {
-                      if (value == null || value.length < _minPassLength) return "Su contraseña debe tener al menos $_minPassLength carácteres";
-                      return null;
+                  ElevatedButton(
+                    onPressed: loginState ? null : () {
+                      if (_formkey.currentState!.validate()) {
+                        ref.read(loginStateProvider.notifier).onLogIn(_nameCtrll.text, _passCtrll.text, context);
+                      }
                     },
-                    obscureText: isObscured,
-                    controller: _passCtrll,
+                    child: Text("Iniciar sesión")
                   )
                 ],
               )
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              spacing: 20,
-              children: [
-                ElevatedButton(
-                  onPressed: loginState ? null : () {
-                    if (_formkey.currentState!.validate()) {
-                      ref.read(loginStateProvider.notifier).onRegister(_nameCtrll.text, _passCtrll.text, context);
-                    }
-                  },
-                  child: Text("Registrarme")
-                ),
-                ElevatedButton(
-                  onPressed: loginState ? null : () {
-                    if (_formkey.currentState!.validate()) {
-                      ref.read(loginStateProvider.notifier).onLogIn(_nameCtrll.text, _passCtrll.text, context);
-                    }
-                  },
-                  child: Text("Iniciar sesión")
-                )
-              ],
-            )
-          ],
+            ],
+          ),
         ),
       )
     );
