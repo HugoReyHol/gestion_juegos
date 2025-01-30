@@ -13,6 +13,7 @@ class DbManager {
     if (_database == null) {
       _futureDB ??= _createDatabase();
       _database = await _futureDB;
+      _futureDB = null;
     }
 
     return _database!;

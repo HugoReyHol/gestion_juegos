@@ -23,6 +23,7 @@ class Details extends ConsumerWidget {
     marginSize = MediaQuery.of(context).size.width <= 600 ? compactMargin : normalMargin;
 
     // TODO con el movil rotado el formulario entra en las tabbars
+    // TODO probar singlechildscroll view o hacer una pantalla distinta para no compact
     return DefaultTabController(
       length: 3,
       child: Scaffold(
