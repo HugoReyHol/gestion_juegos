@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_juegos/components/game_widget.dart';
 import 'package:gestion_juegos/providers/stats_provider.dart';
+import 'package:gestion_juegos/providers/theme_provider.dart';
 import 'package:gestion_juegos/providers/user_provider.dart';
 import 'package:gestion_juegos/util/extensions.dart';
 import 'package:gestion_juegos/util/style_constants.dart';
@@ -9,11 +10,13 @@ import 'package:gestion_juegos/util/style_constants.dart';
 class Stats extends ConsumerWidget {
   Stats({super.key});
   late bool isCompact;
+  late bool isDarkTheme;
 
   // TODO Hacer más bonitas las cards de StatInfo
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     isCompact = MediaQuery.of(context).size.width <= 600;
+    isDarkTheme = ref.watch(themeProvider);
 
     return SingleChildScrollView(
       child: isCompact
@@ -38,6 +41,7 @@ class Stats extends ConsumerWidget {
         ),
         Divider(),
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             TextButton.icon(
               label: Text("Logout"),
@@ -47,6 +51,16 @@ class Stats extends ConsumerWidget {
               ),
               onPressed: () {
                 ref.read(userProvider.notifier).deleteSavedUser(context);
+              },
+            ),
+            TextButton.icon(
+              label: Text(isDarkTheme ? "Light mode" : "Dark mode"),
+              icon: Icon(
+                isDarkTheme ? Icons.light_mode : Icons.dark_mode,
+                size: 25
+              ),
+              onPressed: () {
+                ref.read(themeProvider.notifier).toggleTheme();
               },
             )
           ],
