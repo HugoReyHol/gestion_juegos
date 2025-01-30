@@ -28,6 +28,7 @@ class Stats extends ConsumerWidget {
   Widget _compactStats(BuildContext context, WidgetRef ref) {
     final gameStats = ref.watch(statsProvider);
     final lastGames = ref.watch(lastGamesProvider(2));
+    final Color color = Theme.of(context).textTheme.bodyMedium!.color!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,20 +45,28 @@ class Stats extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             TextButton.icon(
-              label: Text("Logout"),
+              label: Text(
+                "Logout",
+                style: TextStyle(color: color),
+              ),
               icon: Icon(
                 Icons.logout,
-                size: 25
+                size: 25,
+                color: color,
               ),
               onPressed: () {
                 ref.read(userProvider.notifier).deleteSavedUser(context);
               },
             ),
             TextButton.icon(
-              label: Text(isDarkTheme ? "Light mode" : "Dark mode"),
+              label: Text(
+                isDarkTheme ? "Light mode" : "Dark mode",
+                style: TextStyle(color: color),
+              ),
               icon: Icon(
                 isDarkTheme ? Icons.light_mode : Icons.dark_mode,
-                size: 25
+                size: 25,
+                color: color,
               ),
               onPressed: () {
                 ref.read(themeProvider.notifier).toggleTheme();

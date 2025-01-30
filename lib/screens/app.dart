@@ -26,12 +26,9 @@ class _AppState extends ConsumerState<App> {
     final isDarkTheme = ref.watch(themeProvider);
     _isCompact = MediaQuery.of(context).size.width <= 600;
     _marginSize = _isCompact ? compactMargin : normalMargin;
+    final Color color = Theme.of(context).textTheme.bodyMedium!.color!;
 
-    // TODO hacer que la navbar y el navrail tengan los mismos colores
     return Scaffold(
-      // appBar: AppBar(
-      //   automaticallyImplyLeading: true,
-      // ),
       body: SafeArea(
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,11 +57,11 @@ class _AppState extends ConsumerState<App> {
                             Icon(
                               isDarkTheme ? Icons.light_mode : Icons.dark_mode,
                               size: 24,
-                              // color: Theme.of(context).,
+                              color: color
                             ),
                             Text(
                               isDarkTheme ? "Light mode" : "Dark mode",
-                              // style: TextStyle(color: Colors.black),
+                              style: TextStyle(color: color),
                             )
                           ],
                         )
@@ -78,11 +75,11 @@ class _AppState extends ConsumerState<App> {
                             Icon(
                               Icons.logout,
                               size: 24,
-                              // color: Colors.black,
+                              color: color
                             ),
                             Text(
                               "Logout",
-                              // style: TextStyle(color: Colors.black),
+                              style: TextStyle(color: color),
                             )
                           ],
                         )

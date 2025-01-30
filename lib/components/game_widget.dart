@@ -55,6 +55,7 @@ class GameWidget extends ConsumerWidget {
     final userGamesNotifier = ref.read(userGamesProvider.notifier);
     final UserGame? userGame = ref.watch(userGameProvider(_game.idGame));
     bool isCompact = MediaQuery.of(context).size.width <= 600;
+    final Color color = Theme.of(context).textTheme.bodyMedium!.color!;
 
     return AspectRatio(
       aspectRatio: 2.5,
@@ -111,19 +112,19 @@ class GameWidget extends ConsumerWidget {
                                   children: [
                                     TextSpan(
                                       text: "Dev: ",
-                                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: compactText, color: Colors.black)
+                                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: compactText, color: color)
                                     ),
                                     TextSpan(
                                       text: "${_game.getDeveloper()}\n",
-                                      style: TextStyle(fontSize: compactText, color: Colors.black)
+                                      style: TextStyle(fontSize: compactText, color: color)
                                     ),
                                     TextSpan(
                                       text: "Pub: ",
-                                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: compactText, color: Colors.black)
+                                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: compactText, color: color)
                                     ),
                                     TextSpan(
                                       text: _game.getPublisher(),
-                                      style: TextStyle(fontSize: compactText, color: Colors.black)
+                                      style: TextStyle(fontSize: compactText, color: color)
                                     ),
                                   ]
                                 ),
@@ -154,6 +155,7 @@ class GameWidget extends ConsumerWidget {
 
   Widget _buildStatsCompact(BuildContext context, WidgetRef ref) {
     final UserGame? userGame = ref.watch(userGameProvider(_game.idGame));
+    final Color color = Theme.of(context).textTheme.bodyMedium!.color!;
 
     return AspectRatio(
       aspectRatio: 2.5,
@@ -201,19 +203,19 @@ class GameWidget extends ConsumerWidget {
                           children: [
                             TextSpan(
                               text: "Dev: ",
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: compactText, color: Colors.black)
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: compactText, color: color)
                             ),
                             TextSpan(
                               text: "${_game.getDeveloper()}\n",
-                              style: TextStyle(fontSize: compactText, color: Colors.black)
+                              style: TextStyle(fontSize: compactText, color: color)
                             ),
                             TextSpan(
                               text: "Pub: ",
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: compactText, color: Colors.black)
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: compactText, color: color)
                             ),
                             TextSpan(
                               text: _game.getPublisher(),
-                              style: TextStyle(fontSize: compactText, color: Colors.black)
+                              style: TextStyle(fontSize: compactText, color: color)
                             ),
                           ]
                         ),
@@ -229,11 +231,11 @@ class GameWidget extends ConsumerWidget {
                               children: [
                                 TextSpan(
                                   text: "Last update: ",
-                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: compactText, color: Colors.black),
+                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: compactText, color: color),
                                 ),
                                 TextSpan(
                                   text: "${userGame?.lastChange.spanishDateTime()}",
-                                  style: TextStyle(fontSize: compactText, color: Colors.black)
+                                  style: TextStyle(fontSize: compactText, color: color)
                                 )
                               ]
                             ),
@@ -253,6 +255,7 @@ class GameWidget extends ConsumerWidget {
 
   Widget _buildStatsNormal(BuildContext context, WidgetRef ref) {
     final UserGame? userGame = ref.watch(userGameProvider(_game.idGame));
+    final Color color = Theme.of(context).textTheme.bodyMedium!.color!;
 
     return AspectRatio(
       aspectRatio: 2.5,
@@ -311,11 +314,11 @@ class GameWidget extends ConsumerWidget {
                               children: [
                                 TextSpan(
                                   text: "Last update: ",
-                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: normalText, color: Colors.black),
+                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: normalText, color: color),
                                 ),
                                 TextSpan(
                                   text: "${userGame?.lastChange.spanishDateTime()}",
-                                  style: TextStyle(fontSize: normalText, color: Colors.black)
+                                  style: TextStyle(fontSize: normalText, color: color)
                                 )
                               ]
                             ),
