@@ -11,13 +11,26 @@ void main() {
   runApp(const ProviderScope(child: MainApp()));
 }
 
-class MainApp extends ConsumerWidget {
+class MainApp extends ConsumerStatefulWidget {
   const MainApp({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<MainApp> createState() => _MainAppState();
+}
+
+class _MainAppState extends ConsumerState<MainApp> {
+  late Future<bool> futureUser;
+
+  @override
+  void initState() {
+    super.initState();
+    futureUser = ref.read(userProvider.notifier).getSavedUser();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final isDarkTheme = ref.watch(themeProvider);
-    
+
     return MaterialApp(
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
@@ -27,7 +40,7 @@ class MainApp extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       routes: {
         "/": (context) => FutureBuilder(
-          future: ref.read(userProvider.notifier).getSavedUser(),
+          future: futureUser,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Scaffold(

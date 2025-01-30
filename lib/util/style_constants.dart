@@ -9,6 +9,7 @@ const double normalTitle = 26;
 const double compactText = 14;
 const double normalText = 20;
 
+// TODO acabar temas personalizados
 ThemeData darkTheme = ThemeData(
   brightness: Brightness.dark,
   useMaterial3: true,
