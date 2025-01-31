@@ -4,7 +4,7 @@ import 'package:gestion_juegos/models/game.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:path/path.dart' as path;
 
-class DbManager {
+abstract class DbManager {
 
   static Database? _database;
   static Future<Database>? _futureDB;

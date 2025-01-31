@@ -5,7 +5,6 @@ import 'package:gestion_juegos/providers/user_provider.dart';
 import 'package:gestion_juegos/screens/app.dart';
 import 'package:gestion_juegos/screens/details.dart';
 import 'package:gestion_juegos/screens/login.dart';
-import 'package:gestion_juegos/util/style_constants.dart';
 
 void main() {
   runApp(const ProviderScope(child: MainApp()));

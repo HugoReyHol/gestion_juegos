@@ -1,7 +1,7 @@
 import 'package:gestion_juegos/util/db_manager.dart';
 import '../models/user.dart';
 
-class UserDao {
+abstract class UserDao {
   static Future<User?> getUser(String name) async {
     final db = await DbManager.database;
 

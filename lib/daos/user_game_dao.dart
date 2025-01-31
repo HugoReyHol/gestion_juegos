@@ -1,25 +1,13 @@
 import 'package:gestion_juegos/models/user_game.dart';
 import 'package:gestion_juegos/util/db_manager.dart';
 
-class UserGameDao {
+abstract class UserGameDao {
   static Future<int> insertUserGame(UserGame userGame) async {
     final db = await DbManager.database;
 
     final Map<String, dynamic> game = userGame.toMap();
 
     return db.insert("Users_Games", game);
-  }
-
-  static Future<UserGame?> getUserGame(int idUser, int idGame) async {
-    final db = await DbManager.database;
-
-    final result = await db.query(
-      "Users_Games",
-      where: "idUser = ? AND idGame = ?",
-      whereArgs: [idUser, idGame]
-    );
-
-    return result.isEmpty ? null : UserGame.fromMap(result.first);
   }
 
   static Future<List<UserGame>> getUserGames(int idUser) async {
