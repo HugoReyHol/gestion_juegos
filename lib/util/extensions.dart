@@ -8,10 +8,3 @@ extension StringExtensions on String {
   String capitalize() => this[0].toUpperCase() + substring(1);
 
 }
-
-extension DateTimeExtensions on DateTime {
-  String spanishDate() => "$day-$month-$year ";
-
-  String spanishDateTime() => "$day-$month-$year $hour:$minute";
-
-}

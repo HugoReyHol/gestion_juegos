@@ -6,6 +6,7 @@ import 'package:gestion_juegos/providers/games_provider.dart';
 import 'package:gestion_juegos/providers/user_games_provider.dart';
 import 'package:gestion_juegos/util/extensions.dart';
 import 'package:gestion_juegos/util/style_constants.dart';
+import 'package:intl/intl.dart';
 
 enum LayoutMode {vertical, horizontal, statsCompact, statsNormal}
 
@@ -234,7 +235,7 @@ class GameWidget extends ConsumerWidget {
                                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: compactText, color: color),
                                 ),
                                 TextSpan(
-                                  text: "${userGame?.lastChange.spanishDateTime()}",
+                                  text: DateFormat("dd-MM-yyyy HH:mm").format(userGame!.lastChange),
                                   style: TextStyle(fontSize: compactText, color: color)
                                 )
                               ]
@@ -317,7 +318,7 @@ class GameWidget extends ConsumerWidget {
                                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: normalText, color: color),
                                 ),
                                 TextSpan(
-                                  text: "${userGame?.lastChange.spanishDateTime()}",
+                                  text: DateFormat("dd-MM-yyyy HH:mm").format(userGame!.lastChange),
                                   style: TextStyle(fontSize: normalText, color: color)
                                 )
                               ]
