@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gestion_juegos/components/game_form_widget.dart';
 import 'package:gestion_juegos/models/game.dart';
 import 'package:gestion_juegos/models/user_game.dart';
 import 'package:gestion_juegos/providers/games_provider.dart';
@@ -11,8 +12,6 @@ import 'package:gestion_juegos/util/style_constants.dart';
 class Details extends ConsumerWidget {
   Details({super.key});
 
-  final List<String> _scoreValues = ["10", "9", "8", "7", "6", "5", "4", "3", "2", "1", "0", "Sin seleccionar"];
-  final TextEditingController _timePlayedCtrll = TextEditingController();
   late bool isCompact;
   late double marginSize;
 
@@ -20,7 +19,6 @@ class Details extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final Game game = ref.read(gamesProvider.notifier).currentGame!;
     final UserGame? userGame = ref.watch(userGameProvider(game.idGame));
-    _timePlayedCtrll.text = "${userGame?.timePlayed}";
     isCompact = MediaQuery.sizeOf(context).width <= 600;
     marginSize = isCompact ? compactMargin : normalMargin;
 
@@ -100,76 +98,8 @@ class Details extends ConsumerWidget {
                                 },
                                 child: Text("Añadir a la lista")
                               )
-                            : Column( // Si userGame existe
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Row(
-                                    spacing: 15,
-                                    children: [
-                                      Text("Nota"),
-                                      DropdownButton<String>(
-                                        padding: EdgeInsets.all(5),
-                                        value: userGame.score == null ? _scoreValues.last : "${userGame.score}",
-                                        items: _scoreValues.map((String score) =>
-                                          DropdownMenuItem<String>(
-                                            value: score,
-                                            child: Text(score)
-                                          )).toList(),
-                                        onChanged: (value) {
-                                          userGame.score = value == _scoreValues.last ? null : int.parse(value!);
-                                          ref.read(userGamesProvider.notifier).updateUserGame(userGame);
-                                        },
-                                      )
-                                    ],
-                                  ),
-                                  Row(
-                                    spacing: 15,
-                                    children: [
-                                      Text("Estado"),
-                                      DropdownButton<GameStates>(
-                                        value: userGame.gameState,
-                                        items: GameStates.values.map((GameStates gameState) {
-                                          return DropdownMenuItem<GameStates>(
-                                            value: gameState,
-                                            child: Text(gameState.name.replaceAll("_", " ").toUpperCase())
-                                          );
-                                        }).toList(),
-                                        onChanged: (value) {
-                                          userGame.gameState = value!;
-                                          ref.read(userGamesProvider.notifier).updateUserGame(userGame);
-                                        },
-                                      )
-                                    ],
-                                  ),
-                                  Row(
-                                    spacing: 15,
-                                    children: [
-                                      Text("Tiempo jugado"),
-                                      SizedBox(
-                                        width: 75,
-                                        child: TextField(
-                                          controller: _timePlayedCtrll,
-                                          decoration: InputDecoration(
-                                            suffixText: "h"
-                                          ),
-                                          keyboardType: TextInputType.number,
-                                          inputFormatters: [
-                                            FilteringTextInputFormatter.digitsOnly
-                                          ],
-                                          onChanged: (value) {
-                                            userGame.timePlayed = value.isEmpty ? 0 : int.parse(value);
-                                          },
-                                          onSubmitted: (value) {
-                                            ref.read(userGamesProvider.notifier).updateUserGame(userGame);
-                                          },
-                                          onTapOutside: (event) {
-                                            ref.read(userGamesProvider.notifier).updateUserGame(userGame);
-                                          },
-                                        ),
-                                      )
-                                    ],
-                                  )
-                                ],
+                            : GameFormWidget(
+                                userGame: userGame
                               ),
                         )
                       ],
@@ -206,100 +136,39 @@ class Details extends ConsumerWidget {
                         spacing: 15,
                         children: [
                           TabBar(
-                              tabs: <Tab>[
-                                Tab(text: "Editar",),
-                                Tab(text: "Descripcion"),
-                                Tab(text: "Detalles"),
-                                Tab(text: "Lanzamientos")
-                              ]
+                            tabs: <Tab>[
+                              Tab(text: "Editar",),
+                              Tab(text: "Descripcion"),
+                              Tab(text: "Detalles"),
+                              Tab(text: "Lanzamientos")
+                            ]
                           ),
                           Expanded(
-                              child: TabBarView(
-                                  children: <Widget>[
-                                    userGame == null
-                                    // TODO Arreglar boton enorme
-                                      ? ElevatedButton( // Boton para registra un userGame si no existe
-                                          onPressed: () {
-                                            ref.read(userGamesProvider.notifier).insertUserGame(game.idGame);
-                                          },
-                                          child: Text("Añadir a la lista")
+                            child: TabBarView(
+                              children: <Widget>[
+                                userGame == null
+                                  // TODO Arreglar boton enorme
+                                  ? Stack(
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.only(top: 20),
+                                          child: ElevatedButton( // Boton para registrar un userGame si no existe
+                                            onPressed: () {
+                                              ref.read(userGamesProvider.notifier).insertUserGame(game.idGame);
+                                            },
+                                            child: Text("Añadir a la lista")
+                                          ),
                                         )
-                                      : Column( // Si userGame existe
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Row(
-                                            spacing: 15,
-                                            children: [
-                                              Text("Nota"),
-                                              DropdownButton<String>(
-                                                padding: EdgeInsets.all(5),
-                                                value: userGame.score == null ? _scoreValues.last : "${userGame.score}",
-                                                items: _scoreValues.map((String score) =>
-                                                  DropdownMenuItem<String>(
-                                                    value: score,
-                                                    child: Text(score)
-                                                  )).toList(),
-                                                onChanged: (value) {
-                                                  userGame.score = value == _scoreValues.last ? null : int.parse(value!);
-                                                  ref.read(userGamesProvider.notifier).updateUserGame(userGame);
-                                                },
-                                              )
-                                            ],
-                                          ),
-                                          Row(
-                                            spacing: 15,
-                                            children: [
-                                              Text("Estado"),
-                                              DropdownButton<GameStates>(
-                                                value: userGame.gameState,
-                                                items: GameStates.values.map((GameStates gameState) {
-                                                  return DropdownMenuItem<GameStates>(
-                                                    value: gameState,
-                                                    child: Text(gameState.name.replaceAll("_", " ").toUpperCase())
-                                                  );
-                                                }).toList(),
-                                                onChanged: (value) {
-                                                  userGame.gameState = value!;
-                                                  ref.read(userGamesProvider.notifier).updateUserGame(userGame);
-                                                },
-                                              )
-                                            ],
-                                          ),
-                                          Row(
-                                            spacing: 15,
-                                            children: [
-                                              Text("Tiempo jugado"),
-                                              SizedBox(
-                                                width: 75,
-                                                child: TextField(
-                                                  controller: _timePlayedCtrll,
-                                                  decoration: InputDecoration(
-                                                    suffixText: "h"
-                                                  ),
-                                                  keyboardType: TextInputType.number,
-                                                  inputFormatters: [
-                                                    FilteringTextInputFormatter.digitsOnly
-                                                  ],
-                                                  onChanged: (value) {
-                                                    userGame.timePlayed = value.isEmpty ? 0 : int.parse(value);
-                                                  },
-                                                  onSubmitted: (value) {
-                                                    ref.read(userGamesProvider.notifier).updateUserGame(userGame);
-                                                  },
-                                                  onTapOutside: (event) {
-                                                    ref.read(userGamesProvider.notifier).updateUserGame(userGame);
-                                                  },
-                                                ),
-                                              )
-                                            ],
-                                          )
-                                        ],
-                                        ),
-                                    SingleChildScrollView(child: Text(game.description)),
-                                    SingleChildScrollView(child: Text(game.details)),
-                                    SingleChildScrollView(child: Text(game.releases))
-                                  ]
-                              )
+                                      ],
+                                    )
+                                  : GameFormWidget(
+                                    userGame: userGame
+                                    ),
+                                SingleChildScrollView(child: Text(game.description)),
+                                SingleChildScrollView(child: Text(game.details)),
+                                SingleChildScrollView(child: Text(game.releases))
+                              ]
+                            )
                           ),
                         ],
                       ),
