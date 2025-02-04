@@ -39,7 +39,9 @@ class UserNotifier extends Notifier<User?> {
     await prefs.remove("idUser");
     await prefs.remove("name");
     await prefs.remove("password");
-    Navigator.pushNamedAndRemoveUntil(context, "/login", (route) => false);
+    if (context.mounted) {
+      Navigator.pushNamedAndRemoveUntil(context, "/login", (route) => false);
+    }
   }
 }
 

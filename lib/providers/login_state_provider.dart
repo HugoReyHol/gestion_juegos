@@ -15,24 +15,30 @@ class LoginStateNotifier extends AutoDisposeNotifier<bool> {
     final User? user = await UserDao.getUser(name);
 
     if (user == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Center(child: Text("El usuario $name no existe")))
-      );
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Center(child: Text("El usuario $name no existe")))
+        );
+      }
       state = false;
       return;
     }
 
     if (user.password != password.encrypt()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Center(child: Text("Contraseña incorrecta")))
-      );
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Center(child: Text("Contraseña incorrecta")))
+        );
+      }
       state = false;
       return;
     }
 
     ref.read(userProvider.notifier).state = user;
     ref.read(userProvider.notifier).saveUser();
-    Navigator.pushReplacementNamed(context, "/app");
+    if (context.mounted) {
+      Navigator.pushReplacementNamed(context, "/app");
+    }
   }
 
   Future<void> onRegister(String name, String password, BuildContext context) async {
@@ -41,9 +47,11 @@ class LoginStateNotifier extends AutoDisposeNotifier<bool> {
     User? user = await UserDao.getUser(name);
 
     if (user != null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Center(child: Text("El usuario $name ya está registrado")))
-      );
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Center(child: Text("El usuario $name ya está registrado")))
+        );
+      }
       state = false;
       return;
     }
@@ -52,16 +60,20 @@ class LoginStateNotifier extends AutoDisposeNotifier<bool> {
     user.idUser = await UserDao.insertUser(user);
 
     if (user.idUser == 0) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Center(child: Text("No se ha podido crear el usuario")))
-      );
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Center(child: Text("No se ha podido crear el usuario")))
+        );
+      }
       state = false;
       return;
     }
 
     ref.read(userProvider.notifier).state = user;
     ref.read(userProvider.notifier).saveUser();
-    Navigator.pushReplacementNamed(context, "/app");
+    if (context.mounted) {
+      Navigator.pushReplacementNamed(context, "/app");
+    }
   }
 }
 
