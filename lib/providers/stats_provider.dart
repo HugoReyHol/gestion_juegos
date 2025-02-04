@@ -16,7 +16,7 @@ class StatsNotifier extends Notifier<Map<String, dynamic>> {
       GameStates.plan_to_play.name: 0,
       "total": 0,
       "total_time": 0,
-      "average_score": 0,
+      "average_score": 0.0,
     };
 
     _setStats();
@@ -40,8 +40,9 @@ class StatsNotifier extends Notifier<Map<String, dynamic>> {
       }
     });
 
-    numScores != 0 ? state["average_score"] /= numScores : state["average_score"] = -1;
-    state["average_score"] = (state["average_score"] as double).toStringAsFixed(2);
+    numScores != 0
+      ? state["average_score"] = (state["average_score"] / numScores).toStringAsFixed(2)
+      : state["average_score"] = -1;
 
     ref.notifyListeners();
   }
@@ -55,7 +56,7 @@ final lastGamesProvider = Provider.family<List<Game>, int>((ref, amount) {
   final userGames = ref.watch(userGamesProvider);
   final games = ref.read(gamesProvider.notifier).allGames;
 
-  final List<UserGame> lastUserGames = userGames.isNotEmpty ? userGames.sublist(userGames.length - amount).reversed.toList() : [];
+  final List<UserGame> lastUserGames = userGames.sublist(userGames.length - (userGames.length < amount ? userGames.length : amount)).reversed.toList();
   final List<Game> lastGames = [];
   
   for (UserGame ug in lastUserGames) {
