@@ -6,6 +6,7 @@ import 'package:gestion_juegos/providers/theme_provider.dart';
 import 'package:gestion_juegos/providers/user_provider.dart';
 import 'package:gestion_juegos/util/extensions.dart';
 import 'package:gestion_juegos/util/style_constants.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Stats extends ConsumerWidget {
   Stats({super.key});
@@ -28,12 +29,13 @@ class Stats extends ConsumerWidget {
     final gameStats = ref.watch(statsProvider);
     final lastGames = ref.watch(lastGamesProvider(2));
     final Color color = Theme.of(context).textTheme.bodyMedium!.color!;
+    final loc = AppLocalizations.of(context)!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Options:",
+          loc.stats_options,
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: compactTitle
@@ -45,7 +47,7 @@ class Stats extends ConsumerWidget {
           children: [
             TextButton.icon(
               label: Text(
-                "Logout",
+                loc.logout,
                 style: TextStyle(color: color),
               ),
               icon: Icon(
@@ -59,7 +61,7 @@ class Stats extends ConsumerWidget {
             ),
             TextButton.icon(
               label: Text(
-                isDarkTheme ? "Light mode" : "Dark mode",
+                isDarkTheme ? loc.l_mode : loc.d_mode,
                 style: TextStyle(color: color),
               ),
               icon: Icon(
@@ -75,7 +77,7 @@ class Stats extends ConsumerWidget {
         ),
         SizedBox(height: 15,),
         Text(
-          "Last updates:",
+          loc.stats_updates,
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: compactTitle
@@ -88,7 +90,7 @@ class Stats extends ConsumerWidget {
         ),
         SizedBox(height: 15,),
         Text(
-          "Statistics:",
+          loc.stats_stats,
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: compactTitle
@@ -107,17 +109,19 @@ class Stats extends ConsumerWidget {
   Widget _normalStats(BuildContext context, WidgetRef ref) {
     final gameStats = ref.watch(statsProvider);
     final lastGames = ref.watch(lastGamesProvider(3));
+    final loc = AppLocalizations.of(context)!;
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
+      spacing: 30,
       children: [
         Expanded(
-          flex: 4,
+          flex: 6,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Last updates:",
+                loc.stats_updates,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: normalTitle
@@ -132,12 +136,12 @@ class Stats extends ConsumerWidget {
           ),
         ),
         Expanded(
-          flex: 6,
+          flex: 4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Statistics:",
+                loc.stats_stats,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: normalTitle
@@ -166,6 +170,8 @@ class StatInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
+
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
       child: Padding(
@@ -181,7 +187,7 @@ class StatInfo extends StatelessWidget {
               ),
             ),
             Text(
-              value == -1 ? "None" : "$value",
+              value == -1 ? loc.none : "$value",
               style: TextStyle(fontSize: isCompact ? compactText : normalText),
             )
           ],

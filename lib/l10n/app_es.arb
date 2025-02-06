@@ -3,6 +3,7 @@
   "l_mode": "Tema claro",
   "d_mode": "Tema oscuro",
   "logout": "Cerrar sesión",
+  "none": "None",
 
   "app_home": "Inicio",
   "app_search": "Buscar",
@@ -15,5 +16,9 @@
   "login_pass_field": "Introduzca su contreña",
   "login_pass_error": "Su contraseña debe tener al menos {minChars} carácteres",
   "login_btn_reg": "Registrarme",
-  "login_btn_login": "Iniciar sesión"
+  "login_btn_login": "Iniciar sesión",
+
+  "stats_options": "Opciones:",
+  "stats_updates": "Últimas actualizaciones:",
+  "stats_stats": "Estadísticas:"
 }

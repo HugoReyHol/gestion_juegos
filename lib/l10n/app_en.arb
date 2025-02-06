@@ -3,6 +3,7 @@
   "l_mode": "Light theme",
   "d_mode": "Dark theme",
   "logout": "Logout",
+  "none": "Ninguna",
 
   "app_home": "Home",
   "app_search": "Search",
@@ -15,5 +16,9 @@
   "login_pass_field": "Enter your password",
   "login_pass_error": "Your password must be at least {minChars} characters long",
   "login_btn_reg": "Register",
-  "login_btn_login": "Login"
+  "login_btn_login": "Login",
+
+  "stats_options": "Options:",
+  "stats_updates": "Last updates:",
+  "stats_stats": "Statistics:"
 }
