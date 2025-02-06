@@ -5,6 +5,7 @@ import 'package:gestion_juegos/daos/user_game_dao.dart';
 import 'package:gestion_juegos/models/user_game.dart';
 import 'package:gestion_juegos/providers/user_provider.dart';
 import 'package:collection/collection.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // Provider de todos los juegos en la base de datos
 class UserGamesNotifier extends Notifier<List<UserGame>> {
@@ -42,7 +43,7 @@ class UserGamesNotifier extends Notifier<List<UserGame>> {
     if (context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-            content: Text("Juego borrado de la colección")
+            content: Text(AppLocalizations.of(context)!.details_del_snckbar)
         )
       );
     }

@@ -30,9 +30,11 @@
 
   "details_del_title": "Delete game from collection?",
   "details_del_content": "This action cannot be undone, you will lose your saved game data",
-  "details_add_btn": "Add to list",
+  "details_add_btn": "Add to collection",
   "details_tab_desc": "Description",
   "details_tab_detail": "Details",
   "details_tab_reles": "Releases",
-  "details_tab_edit": "Edit"
+  "details_tab_edit": "Edit",
+  "details_del_snckbar": "Game deleted from collection"
+
 }
