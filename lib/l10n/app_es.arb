@@ -1,3 +1,11 @@
 {
-  "error": "Error: {err}"
+  "error": "Error: {err}",
+  "l_mode": "Tema claro",
+  "d_mode": "Tema oscuro",
+  "logout": "Cerrar sesión",
+
+  "app_home": "Inicio",
+  "app_search": "Buscar",
+  "app_stats": "Estadísticas",
+  "app_profile": "Perfil"
 }

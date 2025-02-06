@@ -7,6 +7,7 @@ import 'package:gestion_juegos/screens/search.dart';
 import 'package:gestion_juegos/screens/stats.dart';
 import 'package:gestion_juegos/screens/home.dart';
 import 'package:gestion_juegos/util/style_constants.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class App extends ConsumerStatefulWidget {
   const App({super.key});
@@ -27,6 +28,7 @@ class _AppState extends ConsumerState<App> {
     _isCompact = MediaQuery.sizeOf(context).width <= 600;
     _marginSize = _isCompact ? compactMargin : normalMargin;
     final Color color = Theme.of(context).textTheme.bodyMedium!.color!;
+    final loc = AppLocalizations.of(context)!;
 
     return Scaffold(
       body: SafeArea(
@@ -37,9 +39,9 @@ class _AppState extends ConsumerState<App> {
               labelType: NavigationRailLabelType.all,
               elevation: 5,
               destinations: [
-                NavigationRailDestination(icon: Icon(Icons.home_outlined), selectedIcon: Icon(Icons.home), label: Text("Inicio")),
-                NavigationRailDestination(icon: Icon(Icons.search_outlined), selectedIcon: Icon(Icons.search), label: Text("Buscar")),
-                NavigationRailDestination(icon: Icon(Icons.table_chart_outlined), selectedIcon: Icon(Icons.table_chart), label: Text("Estadísticas"))
+                NavigationRailDestination(icon: Icon(Icons.home_outlined), selectedIcon: Icon(Icons.home), label: Text(loc.app_home)),
+                NavigationRailDestination(icon: Icon(Icons.search_outlined), selectedIcon: Icon(Icons.search), label: Text(loc.app_search)),
+                NavigationRailDestination(icon: Icon(Icons.table_chart_outlined), selectedIcon: Icon(Icons.table_chart), label: Text(loc.app_stats))
               ],
               trailing: Expanded(
                 child: Padding(
@@ -60,7 +62,7 @@ class _AppState extends ConsumerState<App> {
                               color: color
                             ),
                             Text(
-                              isDarkTheme ? "Light mode" : "Dark mode",
+                              isDarkTheme ? loc.l_mode : loc.d_mode,
                               style: TextStyle(color: color),
                             )
                           ],
@@ -78,7 +80,7 @@ class _AppState extends ConsumerState<App> {
                               color: color
                             ),
                             Text(
-                              "Logout",
+                              loc.logout,
                               style: TextStyle(color: color),
                             )
                           ],
@@ -105,9 +107,9 @@ class _AppState extends ConsumerState<App> {
       bottomNavigationBar: _isCompact ? BottomNavigationBar(
         elevation: 5,
         items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home_outlined), activeIcon: Icon(Icons.home), label: "Inicio"),
-          BottomNavigationBarItem(icon: Icon(Icons.search_outlined), activeIcon: Icon(Icons.search), label: "Buscar"),
-          BottomNavigationBarItem(icon: Icon(Icons.person_outlined), activeIcon: Icon(Icons.person), label: "Perfil"),
+          BottomNavigationBarItem(icon: Icon(Icons.home_outlined), activeIcon: Icon(Icons.home), label: loc.app_home),
+          BottomNavigationBarItem(icon: Icon(Icons.search_outlined), activeIcon: Icon(Icons.search), label: loc.app_search),
+          BottomNavigationBarItem(icon: Icon(Icons.person_outlined), activeIcon: Icon(Icons.person), label: loc.app_profile),
         ],
         currentIndex: _actualScreen,
         onTap: (value) {

@@ -1,3 +1,11 @@
 {
-  "error": "Error: {err}"
+  "error": "Error: {err}",
+  "l_mode": "Light theme",
+  "d_mode": "Dark theme",
+  "logout": "Logout",
+
+  "app_home": "Home",
+  "app_search": "Search",
+  "app_stats": "Statistics",
+  "app_profile": "Profile"
 }
