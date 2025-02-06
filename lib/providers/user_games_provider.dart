@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_juegos/daos/user_game_dao.dart';
 import 'package:gestion_juegos/models/user_game.dart';
@@ -32,10 +34,18 @@ class UserGamesNotifier extends Notifier<List<UserGame>> {
     ref.notifyListeners();
   }
 
-  void deleteUserGame(UserGame userGame) async {
+  void deleteUserGame(UserGame userGame, BuildContext context) async {
     await UserGameDao.deleteUserGame(userGame);
     state.removeWhere((e) => e.idGame == userGame.idGame);
     ref.notifyListeners();
+
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text("Juego borrado de la colección")
+        )
+      );
+    }
   }
 }
 

@@ -3,7 +3,9 @@
   "l_mode": "Light theme",
   "d_mode": "Dark theme",
   "logout": "Logout",
-  "none": "Ninguna",
+  "none": "None",
+  "accept_btn": "Accept",
+  "cancel_btn": "Cancel",
 
   "app_home": "Home",
   "app_search": "Search",
@@ -24,5 +26,13 @@
 
   "search_bar": "Search a game by its name",
 
-  "home_all": "ALL"
+  "home_all": "ALL",
+
+  "details_del_title": "Delete game from collection?",
+  "details_del_content": "This action cannot be undone, you will lose your saved game data",
+  "details_add_btn": "Add to list",
+  "details_tab_desc": "Description",
+  "details_tab_detail": "Details",
+  "details_tab_reles": "Releases",
+  "details_tab_edit": "Edit"
 }

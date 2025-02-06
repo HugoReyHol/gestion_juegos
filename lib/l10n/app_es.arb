@@ -3,7 +3,9 @@
   "l_mode": "Tema claro",
   "d_mode": "Tema oscuro",
   "logout": "Cerrar sesión",
-  "none": "None",
+  "none": "Ninguna",
+  "accept_btn": "Aceptar",
+  "cancel_btn": "Cancelar",
 
   "app_home": "Inicio",
   "app_search": "Buscar",
@@ -24,5 +26,13 @@
 
   "search_bar": "Busca un juego por su nombre",
 
-  "home_all": "TODAS"
+  "home_all": "TODAS",
+
+  "details_del_title": "¿Borrar juego de la colección?",
+  "details_del_content": "Esta acción no se puede deshacer, perderá los datos guardados del juego",
+  "details_add_btn": "Añadir a la lista",
+  "details_tab_desc": "Descripción",
+  "details_tab_detail": "Detalles",
+  "details_tab_reles": "Lanzamientos",
+  "details_tab_edit": "Editar"
 }
