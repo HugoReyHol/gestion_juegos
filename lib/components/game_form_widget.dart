@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_juegos/models/user_game.dart';
 import 'package:gestion_juegos/providers/user_games_provider.dart';
+import 'package:gestion_juegos/util/extensions.dart';
 
 class GameFormWidget extends ConsumerWidget {
   GameFormWidget({super.key, required this.userGame});
@@ -47,7 +48,7 @@ class GameFormWidget extends ConsumerWidget {
               items: GameStates.values.map((GameStates gameState) {
                 return DropdownMenuItem<GameStates>(
                   value: gameState,
-                  child: Text(gameState.name.replaceAll("_", " ").toUpperCase())
+                  child: Text(gameState.localize(context).toUpperCase())
                 );
               }).toList(),
               onChanged: (value) {

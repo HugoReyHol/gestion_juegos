@@ -5,6 +5,7 @@ import 'package:gestion_juegos/models/user_game.dart';
 import 'package:gestion_juegos/providers/games_provider.dart';
 import 'package:gestion_juegos/providers/home_providers.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:gestion_juegos/util/extensions.dart';
 
 class Home extends ConsumerStatefulWidget {
   const Home({super.key});
@@ -58,8 +59,7 @@ class _HomeState extends ConsumerState<Home>{
                   items: GameStates.values.map((GameStates gameState) {
                     return DropdownMenuItem<GameStates>(
                       value: gameState,
-                      // TODO traducir dropdown
-                      child: Text(gameState.name.replaceAll("_", " ").toUpperCase())
+                      child: Text(gameState.localize(context).toUpperCase())
                     );
                   }).followedBy([DropdownMenuItem<GameStates>(
                     value: null,
