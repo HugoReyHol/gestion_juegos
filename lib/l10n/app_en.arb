@@ -7,5 +7,13 @@
   "app_home": "Home",
   "app_search": "Search",
   "app_stats": "Statistics",
-  "app_profile": "Profile"
+  "app_profile": "Profile",
+
+  "login_title": "Login",
+  "login_name_field": "Enter your name",
+  "login_name_error": "Enter a name",
+  "login_pass_field": "Enter your password",
+  "login_pass_error": "Your password must be at least {minChars} characters long",
+  "login_btn_reg": "Register",
+  "login_btn_login": "Login"
 }

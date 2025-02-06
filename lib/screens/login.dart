@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_juegos/providers/login_state_provider.dart';
 import 'package:gestion_juegos/util/style_constants.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Login extends ConsumerStatefulWidget {
   Login({super.key});
@@ -21,10 +22,11 @@ class _LoginState extends ConsumerState<Login> {
   @override
   Widget build(BuildContext context) {
     final loginState = ref.watch(loginStateProvider);
+    final loc = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text("Login")),
+        title: Center(child: Text(loc.login_title)),
       ),
       body: SafeArea(
         child: Padding(
@@ -41,10 +43,10 @@ class _LoginState extends ConsumerState<Login> {
                     TextFormField(
                       enabled: !loginState,
                       decoration:  InputDecoration(
-                        labelText: "Introduzca su nombre"
+                        labelText: loc.login_name_field
                       ),
                       validator: (value) {
-                        if (value == null || value.isEmpty) return "Introduzca un nombre";
+                        if (value == null || value.isEmpty) return loc.login_name_error;
                         return null;
                       },
                       maxLength: _maxNameLength,
@@ -53,7 +55,7 @@ class _LoginState extends ConsumerState<Login> {
                     TextFormField(
                       enabled: !loginState,
                       decoration: InputDecoration(
-                        labelText: "Introduzca su contreña",
+                        labelText: loc.login_pass_field,
                         suffixIcon: IconButton(
                           icon: Icon(isObscured ? Icons.visibility : Icons.visibility_off),
                           onPressed: () {
@@ -64,7 +66,7 @@ class _LoginState extends ConsumerState<Login> {
                         )
                       ),
                       validator: (value) {
-                        if (value == null || value.length < _minPassLength) return "Su contraseña debe tener al menos $_minPassLength carácteres";
+                        if (value == null || value.length < _minPassLength) return loc.login_pass_error(_minPassLength);
                         return null;
                       },
                       obscureText: isObscured,
@@ -83,7 +85,7 @@ class _LoginState extends ConsumerState<Login> {
                         ref.read(loginStateProvider.notifier).onRegister(_nameCtrll.text, _passCtrll.text, context);
                       }
                     },
-                    child: Text("Registrarme")
+                    child: Text(loc.login_btn_reg)
                   ),
                   ElevatedButton(
                     onPressed: loginState ? null : () {
@@ -91,7 +93,7 @@ class _LoginState extends ConsumerState<Login> {
                         ref.read(loginStateProvider.notifier).onLogIn(_nameCtrll.text, _passCtrll.text, context);
                       }
                     },
-                    child: Text("Iniciar sesión")
+                    child: Text(loc.login_btn_login)
                   )
                 ],
               )
@@ -101,6 +103,4 @@ class _LoginState extends ConsumerState<Login> {
       )
     );
   }
-
-
 }
