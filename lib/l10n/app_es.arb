@@ -7,6 +7,12 @@
   "accept_btn": "Aceptar",
   "cancel_btn": "Cancelar",
 
+  "state_playing": "Jugando",
+  "state_completed": "Completado",
+  "state_hold": "En espera",
+  "state_dropped": "Abandonado",
+  "state_plan": "Pendiente",
+
   "app_home": "Inicio",
   "app_search": "Buscar",
   "app_stats": "Estadísticas",
