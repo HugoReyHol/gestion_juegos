@@ -4,6 +4,7 @@ import 'package:gestion_juegos/components/game_grid_widget.dart';
 import 'package:gestion_juegos/models/user_game.dart';
 import 'package:gestion_juegos/providers/games_provider.dart';
 import 'package:gestion_juegos/providers/home_providers.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Home extends ConsumerStatefulWidget {
   const Home({super.key});
@@ -38,6 +39,7 @@ class _HomeState extends ConsumerState<Home>{
     final gamesNotifier = ref.read(gamesProvider.notifier);
     final homeGames = ref.watch(homeGamesProvider);
     isCompact = MediaQuery.sizeOf(context).width <= 600;
+    final loc = AppLocalizations.of(context)!;
 
     return Column(
       spacing: 15,
@@ -56,11 +58,12 @@ class _HomeState extends ConsumerState<Home>{
                   items: GameStates.values.map((GameStates gameState) {
                     return DropdownMenuItem<GameStates>(
                       value: gameState,
+                      // TODO traducir dropdown
                       child: Text(gameState.name.replaceAll("_", " ").toUpperCase())
                     );
                   }).followedBy([DropdownMenuItem<GameStates>(
                     value: null,
-                    child: Text("ALL")
+                    child: Text(loc.home_all)
                   )]).toList(),
                   onChanged: (GameStates? gameState) {
                     ref.read(stateProvider.notifier).state = gameState;
@@ -72,7 +75,7 @@ class _HomeState extends ConsumerState<Home>{
                   focusNode: focusNode,
                   elevation: WidgetStatePropertyAll(5),
                   leading: Icon(Icons.search),
-                  hintText: "Busca el nombre de un juego",
+                  hintText: loc.search_bar,
                   onChanged: (value) {
                     gamesNotifier.filterGamesByTitle(value);
                   },

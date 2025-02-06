@@ -180,6 +180,7 @@ class StatInfo extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
+              // TODO traducir campos de stats
               text.capitalize().replaceAll("_", " "),
               style: TextStyle(
                 fontWeight: FontWeight.bold,

@@ -22,5 +22,7 @@
   "stats_updates": "Last updates:",
   "stats_stats": "Statistics:",
 
-  "search_bar": "Search a game by its name"
+  "search_bar": "Search a game by its name",
+
+  "home_all": "ALL"
 }
