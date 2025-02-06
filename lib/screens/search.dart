@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_juegos/components/game_widget.dart';
 import 'package:gestion_juegos/providers/games_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Search extends ConsumerWidget {
   const Search({super.key});
@@ -10,6 +11,7 @@ class Search extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final games = ref.watch(gamesProvider);
     final gamesNotifer = ref.read(gamesProvider.notifier);
+    final loc = AppLocalizations.of(context)!;
 
     return Column(
       spacing: 15,
@@ -20,7 +22,7 @@ class Search extends ConsumerWidget {
               child: SearchBar(
                 elevation: WidgetStatePropertyAll(5),
                 leading: Icon(Icons.search),
-                hintText: "Busca el nombre de un juego",
+                hintText: loc.search_bar,
                 onChanged: (value) {
                   gamesNotifer.filterGamesByTitle(value);
                 },

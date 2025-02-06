@@ -20,5 +20,7 @@
 
   "stats_options": "Opciones:",
   "stats_updates": "Últimas actualizaciones:",
-  "stats_stats": "Estadísticas:"
+  "stats_stats": "Estadísticas:",
+
+  "search_bar": "Busca un juego por su nombre"
 }
