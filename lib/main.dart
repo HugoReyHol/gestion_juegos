@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_juegos/providers/theme_provider.dart';
 import 'package:gestion_juegos/providers/user_provider.dart';
@@ -31,10 +33,12 @@ class _MainAppState extends ConsumerState<MainApp> {
     final isDarkTheme = ref.watch(themeProvider);
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
       themeMode: isDarkTheme ? ThemeMode.dark : ThemeMode.light,
-      debugShowCheckedModeBanner: false,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       routes: {
         "/": (context) => FutureBuilder(
           future: futureUser,
