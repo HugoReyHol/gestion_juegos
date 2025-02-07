@@ -21,7 +21,7 @@ void main() {
     await UserDao.insertUser(testUser);
   });
 
-  testWidgets("Añadir juego a la lista de usuario", (tester) async {
+  testWidgets("Añadir y borrar juego de la lista del usuario", (tester) async {
     app.main();
     await tester.pumpAndSettle();
 
@@ -36,7 +36,7 @@ void main() {
     await tester.tap(find.byIcon(Icons.search_outlined));
     await tester.pumpAndSettle();
 
-    // Entra en le juego
+    // Entra en el juego
     await tester.tap(find.byType(GameWidget).first);
     await tester.pumpAndSettle();
 
