@@ -53,6 +53,11 @@
 
   "game_wid_dev": "Des: ",
   "game_wid_pub": "Ed: ",
-  "game_wid_l_upd": "Última actualización: "
+  "game_wid_l_upd": "Última actualización: ",
 
+  "game_form_score": "Nota:",
+  "game_form_state": "Estado:",
+  "game_form_time": "Tiempo jugado:",
+  "game_form_time_suf": "h",
+  "game_form_none": "Sin seleccionar"
 }

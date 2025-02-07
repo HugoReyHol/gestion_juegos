@@ -53,5 +53,11 @@
 
   "game_wid_dev": "Dev: ",
   "game_wid_pub": "Pub: ",
-  "game_wid_l_upd": "Last update: "
+  "game_wid_l_upd": "Last update: ",
+
+  "game_form_score": "Score:",
+  "game_form_state": "State:",
+  "game_form_time": "Time played:",
+  "game_form_time_suf": "h",
+  "game_form_none": "Not selected"
 }

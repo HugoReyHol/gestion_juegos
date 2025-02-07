@@ -4,18 +4,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_juegos/models/user_game.dart';
 import 'package:gestion_juegos/providers/user_games_provider.dart';
 import 'package:gestion_juegos/util/extensions.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class GameFormWidget extends ConsumerWidget {
   GameFormWidget({super.key, required this.userGame});
 
   UserGame userGame;
 
-  final List<String> _scoreValues = ["10", "9", "8", "7", "6", "5", "4", "3", "2", "1", "0", "Sin seleccionar"];
+  final List<String> _scoreValues = ["10", "9", "8", "7", "6", "5", "4", "3", "2", "1", "0", "No score"];
   final TextEditingController _timePlayedCtrll = TextEditingController();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     _timePlayedCtrll.text = "${userGame.timePlayed}";
+    final loc = AppLocalizations.of(context)!;
+    _scoreValues[_scoreValues.length-1] = loc.game_form_none;
 
     return Column( // Si userGame existe
       mainAxisSize: MainAxisSize.min,
@@ -23,7 +26,7 @@ class GameFormWidget extends ConsumerWidget {
         Row(
           spacing: 15,
           children: [
-            Text("Nota"),
+            Text(loc.game_form_score),
             DropdownButton<String>(
               padding: EdgeInsets.all(5),
               value: userGame.score == null ? _scoreValues.last : "${userGame.score}",
@@ -42,7 +45,7 @@ class GameFormWidget extends ConsumerWidget {
         Row(
           spacing: 15,
           children: [
-            Text("Estado"),
+            Text(loc.game_form_state),
             DropdownButton<GameStates>(
               value: userGame.gameState,
               items: GameStates.values.map((GameStates gameState) {
@@ -61,13 +64,13 @@ class GameFormWidget extends ConsumerWidget {
         Row(
           spacing: 15,
           children: [
-            Text("Tiempo jugado"),
+            Text(loc.game_form_time),
             SizedBox(
               width: 75,
               child: TextField(
                 controller: _timePlayedCtrll,
                 decoration: InputDecoration(
-                  suffixText: "h"
+                  suffixText: loc.game_form_time_suf
                 ),
                 keyboardType: TextInputType.number,
                 inputFormatters: [
