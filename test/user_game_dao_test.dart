@@ -1,40 +1,41 @@
-
 import 'package:flutter_test/flutter_test.dart';
+import 'package:gestion_juegos/daos/user_dao.dart';
 import 'package:gestion_juegos/daos/user_game_dao.dart';
+import 'package:gestion_juegos/models/user.dart';
 import 'package:gestion_juegos/models/user_game.dart';
-import 'package:gestion_juegos/util/db_manager.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
+  test("Crear usuario", () async {
+    User testUser = User(name: "test", password: "test");
+
+    testUser.idUser = await UserDao.insertUser(testUser);
+
+    expect(testUser.idUser, isNonZero);
+  });
+
   test("Insertar juegos a usuario", () async {
-    await UserGameDao.insertUserGame(UserGame(idGame: 1, idUser: 1));
-    await UserGameDao.insertUserGame(UserGame(idGame: 2, idUser: 1));
-  });
+    User? testUser = await UserDao.getUser("test");
 
-  test("Leer juegos a usuario", () async {
-    List<UserGame> games = await UserGameDao.getUserGames(1);
+    await UserGameDao.insertUserGame(UserGame(idGame: 1, idUser: testUser!.idUser!, lastChange: DateTime.now()));
+    await UserGameDao.insertUserGame(UserGame(idGame: 2, idUser: testUser.idUser!, lastChange: DateTime.now()));
 
+    List<UserGame> games = await UserGameDao.getUserGames(testUser.idUser!);
+
+    expect(games.length, 2);
     print(games.length);
-
-    for (UserGame game in games) {
-      print(game.toMap());
-    }
   });
 
-  test("Eliminar juegos de usuairo", () async {
-    await UserGameDao.deleteUserGame(UserGame(idGame: 1, idUser: 1));
-    await UserGameDao.deleteUserGame(UserGame(idGame: 1, idUser: 2));
+  test("Eliminar juegos de usuario", () async {
+    User? testUser = await UserDao.getUser("test");
 
+    await UserGameDao.deleteUserGame(UserGame(idGame: 1, idUser: testUser!.idUser!, lastChange: DateTime.now()));
+    await UserGameDao.deleteUserGame(UserGame(idGame: 2, idUser: testUser.idUser!, lastChange: DateTime.now()));
+
+    List<UserGame> games = await UserGameDao.getUserGames(testUser.idUser!);
+
+    expect(games.length, isZero);
+    print(games.length);
   });
-
-  test("Obtener el userGame con su game", () async {
-    final db = await DbManager().database;
-
-    print(await db.rawQuery("""
-      SELECT *
-      FROM Users_Games, Games
-      WHERE Users_Games.idUser = 1 
-      AND Users_Games.idGame = Games.idGame
-    """));
-  });
-
 }
