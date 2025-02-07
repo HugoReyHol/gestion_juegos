@@ -21,7 +21,7 @@
   "login_title": "Inicio de sesión",
   "login_name_field": "Introduzca su nombre",
   "login_name_error": "Introduzca un nombre",
-  "login_pass_field": "Introduzca su contreña",
+  "login_pass_field": "Introduzca su contraseña",
   "login_pass_error": "Su contraseña debe tener al menos {minChars} carácteres",
   "login_btn_reg": "Registrarme",
   "login_btn_login": "Iniciar sesión",

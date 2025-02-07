@@ -45,6 +45,7 @@ class Stats extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             TextButton.icon(
+              key: Key("logout"),
               label: Text(
                 loc.logout,
                 style: TextStyle(color: color),

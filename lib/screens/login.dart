@@ -41,6 +41,7 @@ class _LoginState extends ConsumerState<Login> {
                   spacing: 15,
                   children: [
                     TextFormField(
+                      key: Key("name_field"),
                       enabled: !loginState,
                       decoration:  InputDecoration(
                         labelText: loc.login_name_field
@@ -53,6 +54,7 @@ class _LoginState extends ConsumerState<Login> {
                       controller: _nameCtrll,
                     ),
                     TextFormField(
+                      key: Key("pass_field"),
                       enabled: !loginState,
                       decoration: InputDecoration(
                         labelText: loc.login_pass_field,
@@ -88,6 +90,7 @@ class _LoginState extends ConsumerState<Login> {
                     child: Text(loc.login_btn_reg)
                   ),
                   ElevatedButton(
+                    key: Key("login_btn"),
                     onPressed: loginState ? null : () {
                       if (_formkey.currentState!.validate()) {
                         ref.read(loginStateProvider.notifier).onLogIn(_nameCtrll.text, _passCtrll.text, context);

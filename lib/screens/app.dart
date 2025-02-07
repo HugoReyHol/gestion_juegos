@@ -69,6 +69,7 @@ class _AppState extends ConsumerState<App> {
                         )
                       ),
                       TextButton(
+                        key: Key("logout"),
                         onPressed: () {
                           ref.read(userProvider.notifier).deleteSavedUser(context);
                         },

@@ -3,6 +3,7 @@ import 'package:gestion_juegos/daos/user_dao.dart';
 import 'package:gestion_juegos/daos/user_game_dao.dart';
 import 'package:gestion_juegos/models/user.dart';
 import 'package:gestion_juegos/models/user_game.dart';
+import 'package:gestion_juegos/util/extensions.dart';
 
 void main() {
   User? testUser;
@@ -14,7 +15,7 @@ void main() {
 
     if (testUser != null) return;
 
-    testUser = User(name: "test", password: "test");
+    testUser = User(name: "test", password: "testtest".encrypt());
 
     await UserDao.insertUser(testUser!);
   });
