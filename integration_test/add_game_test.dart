@@ -9,9 +9,9 @@ import 'package:integration_test/integration_test.dart';
 import 'package:gestion_juegos/main.dart' as app;
 
 void main() {
-  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
-
   setUp(() async {
+    IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+
     User? testUser = await UserDao.getUser("test");
 
     if (testUser != null) return;
@@ -40,7 +40,22 @@ void main() {
     await tester.tap(find.byType(GameWidget).first);
     await tester.pumpAndSettle();
 
-    await Future.delayed(Duration(seconds: 2));
+    // Añade el juego
+    expect(find.byKey(Key("add_btn")), findsOneWidget);
+
+    await tester.tap(find.byKey(Key("add_btn")));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(Key("add_btn")), findsNothing);
+
+    // Borra el juego
+    await tester.tap(find.byIcon(Icons.delete));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(Key("accept_btn")));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(Key("add_btn")), findsOneWidget);
 
     // Sale del juego
     await tester.tap(find.byIcon(Icons.arrow_back));

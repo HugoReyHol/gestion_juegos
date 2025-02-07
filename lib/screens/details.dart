@@ -52,6 +52,7 @@ class _DetailsState extends ConsumerState<Details> with TickerProviderStateMixin
                           child: Text(loc.cancel_btn)
                         ),
                         TextButton(
+                          key: Key("accept_btn"),
                           onPressed: () {
                             ref.read(userGamesProvider.notifier).deleteUserGame(userGame, context);
                             Navigator.of(context).pop(true);
@@ -90,6 +91,7 @@ class _DetailsState extends ConsumerState<Details> with TickerProviderStateMixin
                           flex: 7,
                           child: userGame == null
                             ? ElevatedButton( // Boton para registra un userGame si no existe
+                                key: Key("add_btn"),
                                 onPressed: () {
                                   ref.read(userGamesProvider.notifier).insertUserGame(game.idGame);
                                 },
@@ -153,6 +155,7 @@ class _DetailsState extends ConsumerState<Details> with TickerProviderStateMixin
                                       Padding(
                                         padding: EdgeInsets.only(top: 20),
                                         child: ElevatedButton( // Boton para registrar un userGame si no existe
+                                          key: Key("add_btn"),
                                           onPressed: () {
                                             ref.read(userGamesProvider.notifier).insertUserGame(game.idGame);
                                           },
