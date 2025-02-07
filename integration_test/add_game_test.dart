@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:gestion_juegos/components/game_widget.dart';
 import 'package:gestion_juegos/daos/user_dao.dart';
 import 'package:gestion_juegos/models/user.dart';
 import 'package:gestion_juegos/util/extensions.dart';
@@ -28,9 +30,24 @@ void main() {
     await tester.enterText(find.byKey(Key("pass_field")), "testtest");
 
     await tester.tap(find.byKey(Key("login_btn")));
+    await tester.pumpAndSettle();
 
     // Uso de la app
+    await tester.tap(find.byIcon(Icons.search_outlined));
+    await tester.pumpAndSettle();
+
+    // Entra en le juego
+    await tester.tap(find.byType(GameWidget).first);
+    await tester.pumpAndSettle();
+
     await Future.delayed(Duration(seconds: 2));
+
+    // Sale del juego
+    await tester.tap(find.byIcon(Icons.arrow_back));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byIcon(Icons.home_outlined));
+    await tester.pumpAndSettle();
 
     // Cierra la sesion
     await tester.tap(find.byKey(Key("logout")));

@@ -36,6 +36,7 @@ class _AppState extends ConsumerState<App> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (!_isCompact) NavigationRail(
+              key: Key("nav_rail"),
               labelType: NavigationRailLabelType.all,
               elevation: 5,
               destinations: [
