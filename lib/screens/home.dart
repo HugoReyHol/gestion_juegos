@@ -54,6 +54,7 @@ class _HomeState extends ConsumerState<Home>{
               if (!(focusNode.hasFocus && isCompact)) Card(
                 elevation: 5,
                 child: DropdownButton<GameStates?>(
+                  key: Key("dropdown"),
                   padding: EdgeInsets.symmetric(horizontal: 10),
                   value: selectedState,
                   items: GameStates.values.map((GameStates gameState) {
@@ -62,6 +63,7 @@ class _HomeState extends ConsumerState<Home>{
                       child: Text(gameState.localize(context).toUpperCase())
                     );
                   }).followedBy([DropdownMenuItem<GameStates>(
+                    key: Key("all_games"),
                     value: null,
                     child: Text(loc.home_all)
                   )]).toList(),

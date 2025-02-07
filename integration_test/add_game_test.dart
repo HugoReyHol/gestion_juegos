@@ -48,7 +48,28 @@ void main() {
 
     expect(find.byKey(Key("add_btn")), findsNothing);
 
+    // Vuelve a home
+    await tester.tap(find.byIcon(Icons.arrow_back));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byIcon(Icons.home_outlined));
+    await tester.pumpAndSettle();
+
+    // Cambia la lista
+    expect(find.byType(GameWidget), findsNothing);
+
+    await tester.tap(find.byKey(Key("dropdown")));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(Key("all_games")));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(GameWidget), findsOneWidget);
+
     // Borra el juego
+    await tester.tap(find.byType(GameWidget).first);
+    await tester.pumpAndSettle();
+
     await tester.tap(find.byIcon(Icons.delete));
     await tester.pumpAndSettle();
 
@@ -61,8 +82,7 @@ void main() {
     await tester.tap(find.byIcon(Icons.arrow_back));
     await tester.pumpAndSettle();
 
-    await tester.tap(find.byIcon(Icons.home_outlined));
-    await tester.pumpAndSettle();
+    expect(find.byType(GameWidget), findsNothing);
 
     // Cierra la sesion
     await tester.tap(find.byKey(Key("logout")));
