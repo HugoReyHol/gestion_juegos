@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_juegos/components/game_widget.dart';
+import 'package:gestion_juegos/models/user_game.dart';
 import 'package:gestion_juegos/providers/stats_provider.dart';
 import 'package:gestion_juegos/providers/theme_provider.dart';
 import 'package:gestion_juegos/providers/user_provider.dart';
@@ -168,6 +169,21 @@ class StatInfo extends StatelessWidget {
 
   const StatInfo({super.key, required this.text, required this.value, required this.isCompact});
 
+  String key2LocString(String key, BuildContext context) {
+    switch (key) {
+      case "playing": return AppLocalizations.of(context)!.state_playing;
+      case "completed": return AppLocalizations.of(context)!.state_completed;
+      case "on_hold": return AppLocalizations.of(context)!.state_hold;
+      case "dropped": return AppLocalizations.of(context)!.state_dropped;
+      case "plan_to_play": return AppLocalizations.of(context)!.state_plan;
+      case "total": return AppLocalizations.of(context)!.stats_total;
+      case "total_time": return AppLocalizations.of(context)!.stats_t_time;
+      case "average_score": return AppLocalizations.of(context)!.stats_avg_score;
+    }
+
+    return key;
+  }
+
   @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
@@ -180,8 +196,7 @@ class StatInfo extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              // TODO traducir campos de stats
-              text.capitalize().replaceAll("_", " "),
+              key2LocString(text, context),
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: isCompact ? compactText : normalText

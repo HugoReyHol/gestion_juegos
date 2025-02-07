@@ -29,6 +29,9 @@
   "stats_options": "Options:",
   "stats_updates": "Last updates:",
   "stats_stats": "Statistics:",
+  "stats_total": "Total",
+  "stats_t_time": "Total time",
+  "stats_avg_score": "Average score",
 
   "search_bar": "Search a game by its name",
 

@@ -29,6 +29,9 @@
   "stats_options": "Opciones:",
   "stats_updates": "Últimas actualizaciones:",
   "stats_stats": "Estadísticas:",
+  "stats_total": "Total",
+  "stats_t_time": "Tiempo total",
+  "stats_avg_score": "Nota promedio",
 
   "search_bar": "Busca un juego por su nombre",
 
