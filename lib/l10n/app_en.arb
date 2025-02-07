@@ -49,6 +49,9 @@
   "log_prv_no_user": "The user {name} doesn't exists",
   "log_prv_wrg_pass": "Wrong password",
   "log_prv_user_exst": "The user {name} is already registered",
-  "log_prv_err_user": "The user could not be created"
+  "log_prv_err_user": "The user could not be created",
 
+  "game_wid_dev": "Dev: ",
+  "game_wid_pub": "Pub: ",
+  "game_wid_l_upd": "Last update: "
 }

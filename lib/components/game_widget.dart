@@ -6,6 +6,7 @@ import 'package:gestion_juegos/providers/games_provider.dart';
 import 'package:gestion_juegos/providers/user_games_provider.dart';
 import 'package:gestion_juegos/util/style_constants.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 enum LayoutMode {vertical, horizontal, statsCompact, statsNormal}
 
@@ -56,6 +57,7 @@ class GameWidget extends ConsumerWidget {
     final UserGame? userGame = ref.watch(userGameProvider(_game.idGame));
     bool isCompact = MediaQuery.sizeOf(context).width <= 600;
     final Color color = Theme.of(context).textTheme.bodyMedium!.color!;
+    final loc = AppLocalizations.of(context)!;
 
     return AspectRatio(
       aspectRatio: 2.5,
@@ -111,7 +113,7 @@ class GameWidget extends ConsumerWidget {
                                 text: TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: "Dev: ",
+                                      text: loc.game_wid_dev,
                                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: compactText, color: color)
                                     ),
                                     TextSpan(
@@ -119,7 +121,7 @@ class GameWidget extends ConsumerWidget {
                                       style: TextStyle(fontSize: compactText, color: color)
                                     ),
                                     TextSpan(
-                                      text: "Pub: ",
+                                      text: loc.game_wid_pub,
                                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: compactText, color: color)
                                     ),
                                     TextSpan(
@@ -156,6 +158,7 @@ class GameWidget extends ConsumerWidget {
   Widget _buildStatsCompact(BuildContext context, WidgetRef ref) {
     final UserGame? userGame = ref.watch(userGameProvider(_game.idGame));
     final Color color = Theme.of(context).textTheme.bodyMedium!.color!;
+    final loc = AppLocalizations.of(context)!;
 
     return AspectRatio(
       aspectRatio: 2.5,
@@ -202,7 +205,7 @@ class GameWidget extends ConsumerWidget {
                         text: TextSpan(
                           children: [
                             TextSpan(
-                              text: "Dev: ",
+                              text: loc.game_wid_dev,
                               style: TextStyle(fontWeight: FontWeight.bold, fontSize: compactText, color: color)
                             ),
                             TextSpan(
@@ -210,7 +213,7 @@ class GameWidget extends ConsumerWidget {
                               style: TextStyle(fontSize: compactText, color: color)
                             ),
                             TextSpan(
-                              text: "Pub: ",
+                              text: loc.game_wid_pub,
                               style: TextStyle(fontWeight: FontWeight.bold, fontSize: compactText, color: color)
                             ),
                             TextSpan(
@@ -230,7 +233,7 @@ class GameWidget extends ConsumerWidget {
                             text: TextSpan(
                               children: [
                                 TextSpan(
-                                  text: "Last update: ",
+                                  text: loc.game_wid_l_upd,
                                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: compactText, color: color),
                                 ),
                                 TextSpan(
@@ -256,6 +259,7 @@ class GameWidget extends ConsumerWidget {
   Widget _buildStatsNormal(BuildContext context, WidgetRef ref) {
     final UserGame? userGame = ref.watch(userGameProvider(_game.idGame));
     final Color color = Theme.of(context).textTheme.bodyMedium!.color!;
+    final loc = AppLocalizations.of(context)!;
 
     return AspectRatio(
       aspectRatio: 2.5,
@@ -313,7 +317,7 @@ class GameWidget extends ConsumerWidget {
                             text: TextSpan(
                               children: [
                                 TextSpan(
-                                  text: "Last update: ",
+                                  text: loc.game_wid_l_upd,
                                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: normalText, color: color),
                                 ),
                                 TextSpan(

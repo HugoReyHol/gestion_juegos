@@ -49,5 +49,10 @@
   "log_prv_no_user": "El usuario {name} no existe",
   "log_prv_wrg_pass": "Contraseña incorrecta",
   "log_prv_user_exst": "El usuario {name} ya está registrado",
-  "log_prv_err_user": "No se ha podido crear el usuario"
+  "log_prv_err_user": "No se ha podido crear el usuario",
+
+  "game_wid_dev": "Des: ",
+  "game_wid_pub": "Ed: ",
+  "game_wid_l_upd": "Última actualización: "
+
 }
