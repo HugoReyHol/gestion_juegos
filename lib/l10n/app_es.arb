@@ -41,5 +41,10 @@
   "details_tab_detail": "Detalles",
   "details_tab_reles": "Lanzamientos",
   "details_tab_edit": "Editar",
-  "details_del_snckbar": "Juego borrado de la colección"
+  "details_del_snckbar": "Juego borrado de la colección",
+
+  "log_prv_no_user": "El usuario {name} no existe",
+  "log_prv_wrg_pass": "Contraseña incorrecta",
+  "log_prv_user_exst": "El usuario {name} ya está registrado",
+  "log_prv_err_user": "No se ha podido crear el usuario"
 }

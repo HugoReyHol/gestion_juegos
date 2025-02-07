@@ -4,6 +4,7 @@ import 'package:gestion_juegos/daos/user_dao.dart';
 import 'package:gestion_juegos/models/user.dart';
 import 'package:gestion_juegos/providers/user_provider.dart';
 import 'package:gestion_juegos/util/extensions.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginStateNotifier extends AutoDisposeNotifier<bool> {
   @override
@@ -11,13 +12,14 @@ class LoginStateNotifier extends AutoDisposeNotifier<bool> {
 
   Future<void> onLogIn(String name, String password, BuildContext context) async {
     state = true;
+    final loc = AppLocalizations.of(context)!;
 
     final User? user = await UserDao.getUser(name);
 
     if (user == null) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Center(child: Text("El usuario $name no existe")))
+          SnackBar(content: Center(child: Text(loc.log_prv_no_user(name))))
         );
       }
       state = false;
@@ -27,7 +29,7 @@ class LoginStateNotifier extends AutoDisposeNotifier<bool> {
     if (user.password != password.encrypt()) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Center(child: Text("Contraseña incorrecta")))
+          SnackBar(content: Center(child: Text(loc.log_prv_wrg_pass)))
         );
       }
       state = false;
@@ -43,13 +45,14 @@ class LoginStateNotifier extends AutoDisposeNotifier<bool> {
 
   Future<void> onRegister(String name, String password, BuildContext context) async {
     state = true;
+    final loc = AppLocalizations.of(context)!;
 
     User? user = await UserDao.getUser(name);
 
     if (user != null) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Center(child: Text("El usuario $name ya está registrado")))
+          SnackBar(content: Center(child: Text(loc.log_prv_user_exst(name))))
         );
       }
       state = false;
@@ -62,7 +65,7 @@ class LoginStateNotifier extends AutoDisposeNotifier<bool> {
     if (user.idUser == 0) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Center(child: Text("No se ha podido crear el usuario")))
+          SnackBar(content: Center(child: Text(loc.log_prv_err_user)))
         );
       }
       state = false;

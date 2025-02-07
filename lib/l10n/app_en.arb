@@ -41,6 +41,11 @@
   "details_tab_detail": "Details",
   "details_tab_reles": "Releases",
   "details_tab_edit": "Edit",
-  "details_del_snckbar": "Game deleted from collection"
+  "details_del_snckbar": "Game deleted from collection",
+
+  "log_prv_no_user": "The user {name} doesn't exists",
+  "log_prv_wrg_pass": "Wrong password",
+  "log_prv_user_exst": "The user {name} is already registered",
+  "log_prv_err_user": "The user could not be created"
 
 }
