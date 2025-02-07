@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gestion_juegos/components/game_widget.dart';
@@ -58,6 +57,7 @@ void main() {
     // Cambia la lista
     expect(find.byType(GameWidget), findsNothing);
 
+    // TODO Arreglar error al pulsarlo
     await tester.tap(find.byKey(Key("dropdown")));
     await tester.pumpAndSettle();
 
@@ -85,6 +85,7 @@ void main() {
     expect(find.byType(GameWidget), findsNothing);
 
     // Cierra la sesion
+    // TODO Arreglar error al pulsarlo
     await tester.tap(find.byKey(Key("logout")));
   });
 }
