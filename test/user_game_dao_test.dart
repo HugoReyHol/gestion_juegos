@@ -5,37 +5,45 @@ import 'package:gestion_juegos/models/user.dart';
 import 'package:gestion_juegos/models/user_game.dart';
 
 void main() {
-  TestWidgetsFlutterBinding.ensureInitialized();
+  User? testUser;
 
-  test("Crear usuario", () async {
-    User testUser = User(name: "test", password: "test");
+  setUp(() async {
+    TestWidgetsFlutterBinding.ensureInitialized();
 
-    testUser.idUser = await UserDao.insertUser(testUser);
+    testUser = await UserDao.getUser("test");
 
-    expect(testUser.idUser, isNonZero);
+    if (testUser != null) return;
+
+    testUser = User(name: "test", password: "test");
+
+    await UserDao.insertUser(testUser!);
   });
 
   test("Insertar juegos a usuario", () async {
-    User? testUser = await UserDao.getUser("test");
-
     await UserGameDao.insertUserGame(UserGame(idGame: 1, idUser: testUser!.idUser!, lastChange: DateTime.now()));
-    await UserGameDao.insertUserGame(UserGame(idGame: 2, idUser: testUser.idUser!, lastChange: DateTime.now()));
+    await UserGameDao.insertUserGame(UserGame(idGame: 2, idUser: testUser!.idUser!, lastChange: DateTime.now()));
 
-    List<UserGame> games = await UserGameDao.getUserGames(testUser.idUser!);
+    List<UserGame> games = await UserGameDao.getUserGames(testUser!.idUser!);
 
     expect(games.length, 2);
     print(games.length);
   });
 
   test("Eliminar juegos de usuario", () async {
-    User? testUser = await UserDao.getUser("test");
-
     await UserGameDao.deleteUserGame(UserGame(idGame: 1, idUser: testUser!.idUser!, lastChange: DateTime.now()));
-    await UserGameDao.deleteUserGame(UserGame(idGame: 2, idUser: testUser.idUser!, lastChange: DateTime.now()));
+    await UserGameDao.deleteUserGame(UserGame(idGame: 2, idUser: testUser!.idUser!, lastChange: DateTime.now()));
 
-    List<UserGame> games = await UserGameDao.getUserGames(testUser.idUser!);
+    List<UserGame> games = await UserGameDao.getUserGames(testUser!.idUser!);
 
     expect(games.length, isZero);
     print(games.length);
+  });
+
+  tearDown(() async {
+    List<UserGame> games = await UserGameDao.getUserGames(testUser!.idUser!);
+
+    games.forEach((game) async {
+      await UserGameDao.deleteUserGame(game);
+    });
   });
 }
