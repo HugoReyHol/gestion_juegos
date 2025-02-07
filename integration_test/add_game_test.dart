@@ -57,7 +57,6 @@ void main() {
     // Cambia la lista
     expect(find.byType(GameWidget), findsNothing);
 
-    // TODO Arreglar error al pulsarlo
     await tester.tap(find.byKey(Key("dropdown")));
     await tester.pumpAndSettle();
 
@@ -84,8 +83,12 @@ void main() {
 
     expect(find.byType(GameWidget), findsNothing);
 
-    // Cierra la sesion
-    // TODO Arreglar error al pulsarlo
+    // Cierra la sesion esperando a que se cierre el snackbar
+    while (find.byType(SnackBar).evaluate().isNotEmpty) {
+      await tester.pump(const Duration(seconds: 1));
+    }
+
     await tester.tap(find.byKey(Key("logout")));
+    await tester.pump();
   });
 }
