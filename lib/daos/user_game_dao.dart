@@ -1,7 +1,11 @@
 import 'package:gestion_juegos/models/user_game.dart';
 import 'package:gestion_juegos/util/db_manager.dart';
 
+/// Clase para interactuar con los juegos de un usuario de la base de datos
 abstract class UserGameDao {
+  /// Inserta un juego de un usuario en la base de datos
+  ///
+  /// Devuelve un `int` con el valor del id creado
   static Future<int> insertUserGame(UserGame userGame) async {
     final db = await DbManager.database;
 
@@ -10,6 +14,9 @@ abstract class UserGameDao {
     return db.insert("Users_Games", game);
   }
 
+  /// Obtiene todos los juegos de un usuario a partir del id del usuario
+  ///
+  /// Devuelve una `List<UserGame>` con los juegos
   static Future<List<UserGame>> getUserGames(int idUser) async {
     final db = await DbManager.database;
 
@@ -24,6 +31,9 @@ abstract class UserGameDao {
     return userGames;
   }
 
+  /// Actualiza un juego de un usuario
+  ///
+  /// Devuelve un `int` con la cantidad de entidades afectadas
   static Future<int> updateUserGame(UserGame userGame) async {
     final db = await DbManager.database;
 
@@ -35,6 +45,9 @@ abstract class UserGameDao {
     );
   }
 
+  /// Borra un juego de un usuario
+  ///
+  /// Devuelve un `int` con la cantidad de entidades afectadas
   static Future<int> deleteUserGame(UserGame userGame) async {
     final db = await DbManager.database;
 
