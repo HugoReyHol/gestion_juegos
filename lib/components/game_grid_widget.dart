@@ -3,7 +3,9 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:gestion_juegos/models/game.dart';
 import 'game_widget.dart';
 
+/// Grid para mostrar los juegos en la pantalla home
 class GameGridWidget extends StatelessWidget {
+  /// La lista a representar
   final List<Game> _games;
 
   const GameGridWidget({super.key, required games}) : _games = games;
