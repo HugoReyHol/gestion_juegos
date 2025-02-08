@@ -6,10 +6,16 @@ import 'package:gestion_juegos/providers/user_provider.dart';
 import 'package:gestion_juegos/util/extensions.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+/// Notifier del estado de inicio de sesión
+///
+/// Representa si login está realizando alguna función de inicio o de registro
+/// Por defecto es `false`
+/// Contiene métodos para iniciar sesión y registrar un usuario
 class LoginStateNotifier extends AutoDisposeNotifier<bool> {
   @override
   bool build() => false;
 
+  /// Inicia sesión en la app
   Future<void> onLogIn(String name, String password, BuildContext context) async {
     state = true;
     final loc = AppLocalizations.of(context)!;
@@ -43,6 +49,7 @@ class LoginStateNotifier extends AutoDisposeNotifier<bool> {
     }
   }
 
+  /// Registra a un usuario e inicia sesión como él
   Future<void> onRegister(String name, String password, BuildContext context) async {
     state = true;
     final loc = AppLocalizations.of(context)!;
@@ -80,4 +87,5 @@ class LoginStateNotifier extends AutoDisposeNotifier<bool> {
   }
 }
 
+/// Provider del estado de login
 final loginStateProvider = AutoDisposeNotifierProvider<LoginStateNotifier, bool>(() => LoginStateNotifier());
