@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+// Constantes usadas en la app
 
 const double compactMargin = 10;
 const double normalMargin = 30;
