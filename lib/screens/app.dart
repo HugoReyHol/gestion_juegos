@@ -9,6 +9,10 @@ import 'package:gestion_juegos/screens/home.dart';
 import 'package:gestion_juegos/util/style_constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+/// La pantalla principal de la app
+///
+/// Contiene la navegación para desplazarse entre las pantallas home, search y
+/// stats
 class App extends ConsumerStatefulWidget {
   const App({super.key});
 
@@ -35,6 +39,8 @@ class _AppState extends ConsumerState<App> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Si la app no es compacta usa un navigation rail en la izquierda
+            // de la ventana
             if (!_isCompact) NavigationRail(
               key: Key("nav_rail"),
               labelType: NavigationRailLabelType.all,
@@ -97,6 +103,7 @@ class _AppState extends ConsumerState<App> {
                 changeScreen(value);
               },
             ),
+            // Las sub-pantallas de la app
             Expanded(
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 5, horizontal: _marginSize),
@@ -106,6 +113,7 @@ class _AppState extends ConsumerState<App> {
           ],
         ),
       ),
+      // Si la app es compacta usa un navbar
       bottomNavigationBar: _isCompact ? BottomNavigationBar(
         elevation: 5,
         items: <BottomNavigationBarItem>[
@@ -121,6 +129,7 @@ class _AppState extends ConsumerState<App> {
     );
   }
 
+  /// Cambia la ventana actual por la nuevo seleccionada
   void changeScreen(int screen) {
     setState(() {
       ref.read(gamesProvider.notifier).resetGames();
