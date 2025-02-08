@@ -19,19 +19,19 @@ class UserGamesNotifier extends Notifier<List<UserGame>> {
     return state;
   }
 
-  /// Método privado que carga en el state los userGames desde la base de datos
+  /// Carga en el state los userGames desde la base de datos
   void _getUserGames() async{
     state = await UserGameDao.getUserGames(ref.watch(userProvider)!.idUser!);
   }
 
-  /// Método que agrega un userGame a la base de datos
+  /// Agrega un userGame a la base de datos
   void insertUserGame(int idGame) async {
     final UserGame userGame = UserGame(idGame: idGame, idUser: ref.read(userProvider)!.idUser!, lastChange: DateTime.now());
     await UserGameDao.insertUserGame(userGame);
     state = [...state, userGame];
   }
 
-  /// Método que actualiza un userGame de la base de datos
+  /// Actualiza un userGame de la base de datos
   void updateUserGame(UserGame userGame) async{
     userGame.lastChange = DateTime.now();
     await UserGameDao.updateUserGame(userGame);
@@ -40,7 +40,7 @@ class UserGamesNotifier extends Notifier<List<UserGame>> {
     ref.notifyListeners();
   }
 
-  /// Método que borra un userGame de la base de datos
+  /// Borra un userGame de la base de datos
   void deleteUserGame(UserGame userGame, BuildContext context) async {
     await UserGameDao.deleteUserGame(userGame);
     state.removeWhere((e) => e.idGame == userGame.idGame);
