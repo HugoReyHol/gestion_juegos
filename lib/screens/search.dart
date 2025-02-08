@@ -4,6 +4,10 @@ import 'package:gestion_juegos/components/game_widget.dart';
 import 'package:gestion_juegos/providers/games_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+/// La pantalla para buscar los juegos
+///
+/// En esta pantalla puedes ver todos los juegos de la base de datos en una
+/// lista
 class Search extends ConsumerWidget {
   const Search({super.key});
 
