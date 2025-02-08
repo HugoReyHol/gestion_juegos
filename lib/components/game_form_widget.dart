@@ -6,9 +6,11 @@ import 'package:gestion_juegos/providers/user_games_provider.dart';
 import 'package:gestion_juegos/util/extensions.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+/// Formulario para modificar los valores de un juego de un usuario
 class GameFormWidget extends ConsumerWidget {
   GameFormWidget({super.key, required this.userGame});
 
+  /// El juego del usuario
   UserGame userGame;
 
   final List<String> _scoreValues = ["10", "9", "8", "7", "6", "5", "4", "3", "2", "1", "0", "No score"];
