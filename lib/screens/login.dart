@@ -4,6 +4,7 @@ import 'package:gestion_juegos/providers/login_state_provider.dart';
 import 'package:gestion_juegos/util/style_constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+/// La pantalla para iniciar sesión y registrarse
 class Login extends ConsumerStatefulWidget {
   Login({super.key});
 
@@ -77,6 +78,7 @@ class _LoginState extends ConsumerState<Login> {
                   ],
                 )
               ),
+              // Botones para registrarse e iniciar sesión
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 spacing: 20,
