@@ -7,6 +7,10 @@ import 'package:gestion_juegos/providers/user_provider.dart';
 import 'package:gestion_juegos/util/style_constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+/// La pantalla que hace de perfil y estadísticas
+///
+/// En caso de tener la app en modo compacto muestra las opciones además de
+/// las últimas actualizaciones y las estadísticas
 class Stats extends ConsumerWidget {
   Stats({super.key});
   late bool isCompact;
@@ -24,6 +28,7 @@ class Stats extends ConsumerWidget {
     );
   }
 
+  // La versión cuando la app es compacta
   Widget _compactStats(BuildContext context, WidgetRef ref) {
     final gameStats = ref.watch(statsProvider);
     final lastGames = ref.watch(lastGamesProvider(2));
@@ -41,6 +46,7 @@ class Stats extends ConsumerWidget {
           ),
         ),
         Divider(),
+        // Los botones para logout y cambio de tema
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -84,6 +90,7 @@ class Stats extends ConsumerWidget {
           ),
         ),
         Divider(),
+        // Muestra los últimos juegos actualizados
         for (var game in lastGames) GameWidget(
           game: game,
           layoutMode: LayoutMode.statsCompact
@@ -97,6 +104,7 @@ class Stats extends ConsumerWidget {
           ),
         ),
         Divider(),
+        // Instancia una card para cada estadística
         for (var key in gameStats.keys) StatInfo(
           text: key,
           value: gameStats[key],
@@ -128,6 +136,7 @@ class Stats extends ConsumerWidget {
                 ),
               ),
               Divider(),
+              // Muestra los últimos juegos actualizados
               for (var game in lastGames) GameWidget(
                 game: game,
                 layoutMode: LayoutMode.statsNormal
@@ -148,6 +157,7 @@ class Stats extends ConsumerWidget {
                 ),
               ),
               Divider(),
+              // Instancia una card para cada estadística
               for (var key in gameStats.keys) StatInfo(
                 text: key,
                 value: gameStats[key],
@@ -161,13 +171,21 @@ class Stats extends ConsumerWidget {
   }
 }
 
+/// Representa la información de las estadísticas
+///
+/// Se compone por una card que en su lado izquierdo muestra el nombre de la
+/// estadística y en la derecha su valor
 class StatInfo extends StatelessWidget {
+  /// El nombre de la estadística
   final String text;
+  /// El valor de la estadística
   final dynamic value;
+  /// Si la app es compacta o no
   final bool isCompact;
 
   const StatInfo({super.key, required this.text, required this.value, required this.isCompact});
 
+  // Devuelve la localización de la estadística
   String key2LocString(String key, BuildContext context) {
     switch (key) {
       case "playing": return AppLocalizations.of(context)!.state_playing;
