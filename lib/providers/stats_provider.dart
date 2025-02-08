@@ -4,7 +4,9 @@ import 'package:gestion_juegos/models/user_game.dart';
 import 'package:gestion_juegos/providers/games_provider.dart';
 import 'package:gestion_juegos/providers/user_games_provider.dart';
 
-// Provider para las estadisticas
+/// Notifier para las estadísticas del usuario
+///
+/// Por defecto carga un mapa con valores a 0 mientras calcula las reales
 class StatsNotifier extends Notifier<Map<String, dynamic>> {
   @override
   Map<String, dynamic> build() {
@@ -24,6 +26,7 @@ class StatsNotifier extends Notifier<Map<String, dynamic>> {
     return state;
   }
 
+  /// Calcula las estadísticas del usuario
   void _setStats() {
     final List<UserGame> userGames = ref.watch(userGamesProvider);
 
@@ -49,13 +52,16 @@ class StatsNotifier extends Notifier<Map<String, dynamic>> {
 
 }
 
+/// Provider de las estadísticas del usuario
 final statsProvider = NotifierProvider<StatsNotifier, Map<String, dynamic>>(() => StatsNotifier());
 
-// Provider de los últimos juegos modificados
+/// Provider de los últimos juegos modificados
 final lastGamesProvider = Provider.family<List<Game>, int>((ref, amount) {
+  // Se actualiza cuando el usuario modifica un userGame
   final userGames = ref.watch(userGamesProvider);
   final games = ref.read(gamesProvider.notifier).allGames;
 
+  // Obtiene los últimos n juegos pedidos o todos los que haya si hay menos de n
   final List<UserGame> lastUserGames = userGames.sublist(userGames.length - (userGames.length < amount ? userGames.length : amount)).reversed.toList();
   final List<Game> lastGames = [];
   
