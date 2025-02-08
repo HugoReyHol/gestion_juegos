@@ -8,10 +8,14 @@ import 'package:gestion_juegos/util/style_constants.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+/// Enum con las distintas distribuciones que puede tener un GameWidget
 enum LayoutMode {vertical, horizontal, statsCompact, statsNormal}
 
+/// Clase que representa la información de un juego en listas
 class GameWidget extends ConsumerWidget {
+  /// El juego que representa
   final Game _game;
+  /// La disposición del widget
   final LayoutMode layoutMode;
 
   const GameWidget({super.key, required Game game, required this.layoutMode}) : _game = game;
@@ -26,6 +30,7 @@ class GameWidget extends ConsumerWidget {
     }
   }
 
+  // La disposición vertical que se usa en home
   Widget _buildVertical(BuildContext context, WidgetRef ref) {
     return GestureDetector(
       onTap: () {
@@ -52,6 +57,7 @@ class GameWidget extends ConsumerWidget {
     );
   }
 
+  // La disposición horizontal que se usa en search
   Widget _buildHorizontal(BuildContext context, WidgetRef ref) {
     final userGamesNotifier = ref.read(userGamesProvider.notifier);
     final UserGame? userGame = ref.watch(userGameProvider(_game.idGame));
@@ -139,6 +145,7 @@ class GameWidget extends ConsumerWidget {
               )
             )
           ),
+          // Si el usuario no tiene el juego agregado aparece un botón para añadirlo
           if (userGame == null) Padding(
             padding: const EdgeInsets.all(15),
             child: FloatingActionButton(
@@ -155,6 +162,7 @@ class GameWidget extends ConsumerWidget {
     );
   }
 
+  // La disposición que se ve en stats cuando la app es compacta
   Widget _buildStatsCompact(BuildContext context, WidgetRef ref) {
     final UserGame? userGame = ref.watch(userGameProvider(_game.idGame));
     final Color color = Theme.of(context).textTheme.bodyMedium!.color!;
@@ -256,6 +264,7 @@ class GameWidget extends ConsumerWidget {
     );
   }
 
+  // La disposición que se ve en stats cuando la app no es compacta
   Widget _buildStatsNormal(BuildContext context, WidgetRef ref) {
     final UserGame? userGame = ref.watch(userGameProvider(_game.idGame));
     final Color color = Theme.of(context).textTheme.bodyMedium!.color!;
