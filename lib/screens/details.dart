@@ -8,6 +8,10 @@ import 'package:gestion_juegos/providers/user_games_provider.dart';
 import 'package:gestion_juegos/util/style_constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+/// La pantalla de detalles
+///
+/// En esta pantalla se puede ver información de los juegos, añadir y eliminar
+/// el juego a la lista de usuario y modificar los valores del juego
 class Details extends ConsumerStatefulWidget {
   const Details({super.key});
 
@@ -34,6 +38,7 @@ class _DetailsState extends ConsumerState<Details> with TickerProviderStateMixin
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(game.title),
+        // Botón de borrar, solo aparece si el juego está registrado
         actions: userGame == null
           ? null
           : [
@@ -89,8 +94,10 @@ class _DetailsState extends ConsumerState<Details> with TickerProviderStateMixin
                         ),
                         Flexible(
                           flex: 7,
+                          // Botón para registrar un userGame si no existe
+                          // o formulario para el juego
                           child: userGame == null
-                            ? ElevatedButton( // Boton para registra un userGame si no existe
+                            ? ElevatedButton(
                                 key: Key("add_btn"),
                                 onPressed: () {
                                   ref.read(userGamesProvider.notifier).insertUserGame(game.idGame);
@@ -149,12 +156,14 @@ class _DetailsState extends ConsumerState<Details> with TickerProviderStateMixin
                           child: TabBarView(
                             controller: tabController,
                             children: <Widget>[
+                              // Botón para registrar un userGame si no existe
+                              // o formulario para el juego
                               userGame == null
                                 ? Stack(
                                     children: [
                                       Padding(
                                         padding: EdgeInsets.only(top: 20),
-                                        child: ElevatedButton( // Boton para registrar un userGame si no existe
+                                        child: ElevatedButton(
                                           key: Key("add_btn"),
                                           onPressed: () {
                                             ref.read(userGamesProvider.notifier).insertUserGame(game.idGame);
