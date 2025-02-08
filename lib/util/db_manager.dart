@@ -4,13 +4,25 @@ import 'package:gestion_juegos/models/game.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:path/path.dart' as path;
 
+/// Clase encargada de la base de datos
+///
+/// Contiene la lógica para crear, inicializar, cargar, almacenar y cerrar una
+/// instancia de la base de datos
 abstract class DbManager {
 
+  /// La instancia compartida de la base de datos
   static Database? _database;
+  /// La variable donde se guarda temporalmente la base de datos mientras se inicializa
   static Future<Database>? _futureDB;
 
+  /// Obtiene la base de datos de la clase
+  ///
+  /// Devuelve la `Database`
   static Future<Database> get database async {
+    // En caso de no existir la instancia
     if (_database == null) {
+      // Se usa esta variable intermedia para que no se instancie varias veces
+      // si hay multiples accesos a ella antes de inicializarse
       _futureDB ??= _createDatabase();
       _database = await _futureDB;
       _futureDB = null;
@@ -19,6 +31,9 @@ abstract class DbManager {
     return _database!;
   }
 
+  /// Crea la base de datos
+  ///
+  /// Devuelve la `Database` creada
   static Future<Database> _createDatabase() async {
     sqfliteFfiInit();
 
@@ -32,6 +47,10 @@ abstract class DbManager {
     return db;
   }
 
+  /// Carga los datos en la base de datos
+  ///
+  /// En caso de no existir las tablas las crea
+  /// Inserta los juegos en la lista games o los actualiza si ya existían
   static Future<void> _onCreate(Database db) async {
     await db.execute("""
       CREATE TABLE IF NOT EXISTS Users (
@@ -291,7 +310,8 @@ abstract class DbManager {
     }
   }
 
-  Future<void> close() async {
+  /// Cierra la base de datos
+  static Future<void> close() async {
     if (_database != null) await _database!.close();
   }
 
