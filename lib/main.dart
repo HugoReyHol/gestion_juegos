@@ -11,6 +11,7 @@ void main() {
   runApp(const ProviderScope(child: MainApp()));
 }
 
+/// La clase principal del programa
 class MainApp extends ConsumerStatefulWidget {
   const MainApp({super.key});
 
@@ -18,9 +19,11 @@ class MainApp extends ConsumerStatefulWidget {
   ConsumerState<MainApp> createState() => _MainAppState();
 }
 
+/// El estado de la clase principal MainApp
 class _MainAppState extends ConsumerState<MainApp> {
   late Future<bool> futureUser;
 
+  // Obtiene el usuario guardado en shared preferences
   @override
   void initState() {
     super.initState();
@@ -42,6 +45,7 @@ class _MainAppState extends ConsumerState<MainApp> {
         "/": (context) => FutureBuilder(
           future: futureUser,
           builder: (context, snapshot) {
+            // Mientras obtiene el usuario muestra un circulo de carga
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Scaffold(
                 body: Center(
@@ -50,14 +54,12 @@ class _MainAppState extends ConsumerState<MainApp> {
               );
             }
 
+            // Si hubiese un error va a la pantalla de login
             if (snapshot.hasError) {
-              return Scaffold(
-                body: Center(
-                  child: Text(AppLocalizations.of(context)!.error(snapshot.error!)),
-                ),
-              );
+              return Login();
             }
 
+            // Cuando ha cargado si hay un usuario guardado entra en App y si no en Login
             if (snapshot.hasData) {
               return snapshot.data! ? App() : Login();
             }
