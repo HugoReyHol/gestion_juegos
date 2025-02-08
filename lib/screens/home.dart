@@ -7,6 +7,10 @@ import 'package:gestion_juegos/providers/home_providers.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:gestion_juegos/util/extensions.dart';
 
+/// La pantalla inicial de la aplicación
+///
+/// Muestra los juegos que el usuario ha añadido a su colección y tiene un filtro
+/// para organizarlos por categorías
 class Home extends ConsumerStatefulWidget {
   const Home({super.key});
 
@@ -23,6 +27,7 @@ class _HomeState extends ConsumerState<Home>{
   void initState() {
     super.initState();
 
+    // Actualiza el estado del widget cuando la searchBar obtiene el foco
     focusNode.addListener(() {
       setState(() {});
     });
@@ -51,8 +56,11 @@ class _HomeState extends ConsumerState<Home>{
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             spacing: 15,
             children: [
+              // Si la app es compacta y la searchBar tiene el foco no se muestra
+              // el selector para que la esta ocupe toda la pantalla
               if (!(focusNode.hasFocus && isCompact)) Card(
                 elevation: 5,
+                // Selector para las distintas categorías
                 child: DropdownButton<GameStates?>(
                   key: Key("dropdown"),
                   padding: EdgeInsets.symmetric(horizontal: 10),
