@@ -39,6 +39,7 @@ class UserGame {
   ///
   /// Necesarío para crear la clase `UserGame` a partir de los datos de la base de datos
   factory UserGame.fromMap(Map<String, dynamic> map) {
+    print(map["lastChange"]);
     return UserGame(
       idGame: map["idGame"],
       idUser: map["idUser"],
@@ -54,8 +55,8 @@ class UserGame {
   /// Necesario para inserta el juego en la base de datos
   /// Devuelve un `Map<String, dynamic>` con los valores
   Map<String, dynamic> toMap() => {
+    "idUser": idUser,
     "idGame": idGame,
-    // "idUser": idUser,
     "score": score,
     "timePlayed": timePlayed,
     "gameState": gameState.name,

@@ -9,14 +9,16 @@ abstract class UserGameService {
 
   /// Inserta un juego de un usuario en la API
   static Future<void> insertUserGame(UserGame userGame, String token) async {
+    final String endpoint = "/";
+
     final response = await http.post(
-      Uri.parse(_url),
+      Uri.parse("$_url$endpoint"),
       headers: {
         "accept": "application/json",
         "Content-Type": "application/json",
         "Authorization": token
       },
-      body: jsonEncode({userGame.toMap()})
+      body: jsonEncode(userGame.toMap())
     );
 
     if (response.statusCode != 200) throw Exception("Error insert");
@@ -26,19 +28,22 @@ abstract class UserGameService {
   ///
   /// Devuelve una `List<UserGame>` con los juegos del usuario
   static Future<List<UserGame>> getUserGames(String token) async {
-    final response = await http.post(
-      Uri.parse(_url),
+    final String endpoint = "/";
+
+    final response = await http.get(
+      Uri.parse("$_url$endpoint"),
       headers: {
         "Authorization": token
       }
     );
 
-    if (response.statusCode != 200) throw Exception("Error insert");
+    if (response.statusCode != 200) throw Exception("Error getGames");
 
     final List<UserGame> userGames = [];
 
     for (var userGame in jsonDecode(response.body)) {
       userGames.add(UserGame.fromMap(userGame));
+      print(userGame["lastChange"]);
     }
 
     return userGames;
@@ -55,7 +60,7 @@ abstract class UserGameService {
         "Content-Type": "application/json",
         "Authorization": token
       },
-      body: jsonEncode({userGame.toMap()})
+      body: jsonEncode(userGame.toMap())
     );
 
     if (response.statusCode != 200) throw Exception("Error update");

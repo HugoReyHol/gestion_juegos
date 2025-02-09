@@ -49,10 +49,7 @@ abstract class UserService {
         "accept": "application/json",
         "Content-Type": "application/json"
       },
-      body: jsonEncode({
-        "username": user.name,
-        "password": user.password
-      })
+      body: jsonEncode(user.toMap())
     );
 
     if (response.statusCode == 400) throw Exception("User already exists");
