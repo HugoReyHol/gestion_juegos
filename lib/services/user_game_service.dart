@@ -8,7 +8,7 @@ abstract class UserGameService {
   static const String _url = "http://localhost:8000/user_game";
 
   /// Inserta un juego de un usuario en la API
-  static void insertUserGame(UserGame userGame, String token) async {
+  static Future<void> insertUserGame(UserGame userGame, String token) async {
     final response = await http.post(
       Uri.parse(_url),
       headers: {
@@ -45,7 +45,7 @@ abstract class UserGameService {
   }
 
   /// Actualiza un juego de un usuario
-  static void updateUserGame(UserGame userGame, String token) async {
+  static Future<void> updateUserGame(UserGame userGame, String token) async {
     final String endpoint = "/{idGame}?id_game=${userGame.idGame}";
 
     final response = await http.patch(
@@ -62,7 +62,7 @@ abstract class UserGameService {
   }
 
   /// Borra un juego de un usuario
-  static void deleteUserGame(UserGame userGame, String token) async {
+  static Future<void> deleteUserGame(UserGame userGame, String token) async {
     final String endpoint = "/{idGame}?id_game=${userGame.idGame}";
 
     final response = await http.delete(

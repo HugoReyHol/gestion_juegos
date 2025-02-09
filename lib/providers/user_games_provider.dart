@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gestion_juegos/daos/user_game_dao.dart';
 import 'package:gestion_juegos/models/user_game.dart';
 import 'package:gestion_juegos/providers/user_provider.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../services/user_game_service.dart';
 
 /// Notifier de todos los juegos del usuario en la base de datos
 ///
@@ -21,20 +21,20 @@ class UserGamesNotifier extends Notifier<List<UserGame>> {
 
   /// Carga en el state los userGames desde la base de datos
   void _getUserGames() async{
-    state = await UserGameDao.getUserGames(ref.watch(userProvider)!.idUser!);
+    state = await UserGameService.getUserGames(ref.watch(userProvider)!.token!);
   }
 
   /// Agrega un userGame a la base de datos
   void insertUserGame(int idGame) async {
     final UserGame userGame = UserGame(idGame: idGame, idUser: ref.read(userProvider)!.idUser!, lastChange: DateTime.now());
-    await UserGameDao.insertUserGame(userGame);
+    await UserGameService.insertUserGame(userGame, ref.read(userProvider)!.token!);
     state = [...state, userGame];
   }
 
   /// Actualiza un userGame de la base de datos
   void updateUserGame(UserGame userGame) async{
     userGame.lastChange = DateTime.now();
-    await UserGameDao.updateUserGame(userGame);
+    await UserGameService.updateUserGame(userGame, ref.read(userProvider)!.token!);
     state.removeWhere((e) => e.idGame == userGame.idGame);
     state.add(userGame.copyWith());
     ref.notifyListeners();
@@ -42,7 +42,7 @@ class UserGamesNotifier extends Notifier<List<UserGame>> {
 
   /// Borra un userGame de la base de datos
   void deleteUserGame(UserGame userGame, BuildContext context) async {
-    await UserGameDao.deleteUserGame(userGame);
+    await UserGameService.deleteUserGame(userGame, ref.read(userProvider)!.token!);
     state.removeWhere((e) => e.idGame == userGame.idGame);
     ref.notifyListeners();
 
