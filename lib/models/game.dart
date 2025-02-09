@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:typed_data';
 
 /// Representa un juego de la base de datos
@@ -32,7 +33,7 @@ class Game {
     idGame = map["idGame"];
     title = map["title"];
     description = map["description"];
-    image = map["image"];
+    image = base64Decode(map["image"]);
     details = map["details"];
     releases = map["releases"];
   }

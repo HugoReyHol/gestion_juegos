@@ -6,11 +6,15 @@ class User {
   late String name;
   /// Contraseña encriptada del usuario
   late String password;
+  /// Token devuelto por la API
+  late String? token;
 
   /// Constructor base
   User({
+    this.idUser,
     required this.name,
-    required this.password
+    required this.password,
+    this.token
   });
 
   /// Constructor de usuario a partir de un mapa
@@ -20,6 +24,7 @@ class User {
     idUser = map["idUser"];
     name = map["name"];
     password = map["password"];
+    token = map["token"];
   }
 
   /// Crea un mapa a partir de los datos de `User`
