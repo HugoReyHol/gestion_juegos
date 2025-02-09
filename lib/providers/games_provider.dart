@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gestion_juegos/daos/game_dao.dart';
 import 'package:gestion_juegos/models/game.dart';
+import 'package:gestion_juegos/services/game_service.dart';
 
 /// Notifier de los juegos de la base de datos filtrados
 ///
@@ -20,7 +20,7 @@ class GamesNotifier extends Notifier<List<Game>> {
 
   /// Obtiene todos los juegos de la base de datos
   void _getGames() async {
-    allGames = await GameDao.getGames();
+    allGames = await GameService.getGames();
     state = allGames;
   }
 
