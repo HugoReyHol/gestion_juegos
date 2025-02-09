@@ -44,7 +44,7 @@ class UserGame {
       idUser: map["idUser"],
       score: map["score"],
       timePlayed: map["timePlayed"],
-      gameState: GameStates.values.firstWhere((element) => element.name.toString() == map["state"]),
+      gameState: GameStates.values.firstWhere((element) => element.name.toString() == map["gameState"]),
       lastChange: DateTime.fromMillisecondsSinceEpoch(map["lastChange"])
     );
   }
@@ -55,10 +55,10 @@ class UserGame {
   /// Devuelve un `Map<String, dynamic>` con los valores
   Map<String, dynamic> toMap() => {
     "idGame": idGame,
-    "idUser": idUser,
+    // "idUser": idUser,
     "score": score,
     "timePlayed": timePlayed,
-    "state": gameState.name,
+    "gameState": gameState.name,
     "lastChange": lastChange.millisecondsSinceEpoch
   };
 

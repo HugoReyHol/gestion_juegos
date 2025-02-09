@@ -39,20 +39,20 @@ abstract class UserService {
 
   /// Inserta un usuario en la API
   ///
-  /// Devuelve un `int` con el valor del id creado
+  /// Devuelve el `User` con el token e id añadido
   static Future<User> insertUser(User user) async {
     const String endpoint = "/insert";
 
     final response = await http.post(
-        Uri.parse("$_url$endpoint"),
-        headers: {
-          "accept": "application/json",
-          "Content-Type": "application/json"
-        },
-        body: jsonEncode({
-          "username": user.name,
-          "password": user.password
-        })
+      Uri.parse("$_url$endpoint"),
+      headers: {
+        "accept": "application/json",
+        "Content-Type": "application/json"
+      },
+      body: jsonEncode({
+        "username": user.name,
+        "password": user.password
+      })
     );
 
     if (response.statusCode == 400) throw Exception("User already exists");
