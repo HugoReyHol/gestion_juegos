@@ -3,7 +3,7 @@ import '../models/user_game.dart';
 import "package:http/http.dart" as http;
 
 /// Clase para interactuar con los juegos de un usuario de la API
-abstract class UserGameDao {
+abstract class UserGameService {
   /// url de los usuarios en la API
   static const String _url = "http://localhost:8000/user_game";
 
