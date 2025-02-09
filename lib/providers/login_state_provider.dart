@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gestion_juegos/daos/user_dao.dart';
+import 'package:gestion_juegos/services/user_service.dart';
 import 'package:gestion_juegos/models/user.dart';
 import 'package:gestion_juegos/providers/user_provider.dart';
 import 'package:gestion_juegos/util/extensions.dart';
@@ -20,22 +20,24 @@ class LoginStateNotifier extends AutoDisposeNotifier<bool> {
     state = true;
     final loc = AppLocalizations.of(context)!;
 
-    final User? user = await UserDao.getUser(name);
+    final User? user;
 
-    if (user == null) {
+    try {
+      user = await UserService.getUser(name, password.encrypt());
+    } on Exception catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Center(child: Text(loc.log_prv_no_user(name))))
+            SnackBar(content: Center(child: Text(loc.log_prv_wrg_pass)))
         );
       }
       state = false;
       return;
     }
 
-    if (user.password != password.encrypt()) {
+    if (user == null) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Center(child: Text(loc.log_prv_wrg_pass)))
+          SnackBar(content: Center(child: Text(loc.log_prv_no_user(name))))
         );
       }
       state = false;
@@ -54,20 +56,24 @@ class LoginStateNotifier extends AutoDisposeNotifier<bool> {
     state = true;
     final loc = AppLocalizations.of(context)!;
 
-    User? user = await UserDao.getUser(name);
+    final User user;
 
-    if (user != null) {
+    try {
+      user = await UserService.insertUser(
+        User(
+          name: name,
+          password: password.encrypt()
+        )
+      );
+    } on Exception catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Center(child: Text(loc.log_prv_user_exst(name))))
+            SnackBar(content: Center(child: Text(loc.log_prv_user_exst(name))))
         );
       }
       state = false;
       return;
     }
-
-    user = User(name: name, password: password.encrypt());
-    user.idUser = await UserDao.insertUser(user);
 
     if (user.idUser == 0) {
       if (context.mounted) {
