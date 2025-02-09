@@ -13,7 +13,7 @@ abstract class GameService {
   static Future<List<Game>> getGames() async {
     final response = await http.get(Uri.parse(_url));
 
-    if (response.statusCode != 200) throw Exception("Error games");
+    if (response.statusCode != 200) throw Exception("Error getting games");
 
     final List<Game> games = [];
     for (var game in jsonDecode(response.body)) {
