@@ -3,7 +3,7 @@ class User {
   /// Id del usuario
   late int? idUser;
   /// Nombre del usuario
-  late String name;
+  late String username;
   /// Contraseña encriptada del usuario
   late String password;
   /// Token devuelto por la API
@@ -12,7 +12,7 @@ class User {
   /// Constructor base
   User({
     this.idUser,
-    required this.name,
+    required this.username,
     required this.password,
     this.token
   });
@@ -22,7 +22,7 @@ class User {
   /// Necesarío para crear la clase `User` a partir de los datos de la base de datos
   User.fromMap(Map<String, dynamic> map) {
     idUser = map["idUser"];
-    name = map["name"];
+    username = map["username"];
     password = map["password"];
     token = map["token"];
   }
@@ -33,7 +33,7 @@ class User {
   /// Devuelve un `Map<String, dynamic>` con los valores
   Map<String, dynamic> toMap() => {
     // "idUser": idUser,
-    "name": name,
+    "username": username,
     "password": password
   };
 

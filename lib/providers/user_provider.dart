@@ -31,7 +31,7 @@ class UserNotifier extends Notifier<User?> {
   /// Guarda el usuario actual en las shared preferences
   void saveUser() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString("name", state!.name);
+    await prefs.setString("name", state!.username);
     await prefs.setString("password", state!.password);
   }
 

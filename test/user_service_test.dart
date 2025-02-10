@@ -11,7 +11,7 @@ void main() {
   });
 
   test("Insert service", () async {
-    final user = await UserService.insertUser(User(name: "test2", password: "test2"));
+    final user = await UserService.insertUser(User(username: "test2", password: "test2"));
 
     print(user.idUser);
     print(user.token);

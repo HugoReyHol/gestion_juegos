@@ -15,7 +15,7 @@ void main() {
 
     if (testUser != null) return;
 
-    testUser = User(name: "test", password: "testtest".encrypt());
+    testUser = User(username: "test", password: "testtest".encrypt());
 
     await UserDao.insertUser(testUser);
   });

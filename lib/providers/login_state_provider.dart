@@ -61,7 +61,7 @@ class LoginStateNotifier extends AutoDisposeNotifier<bool> {
     try {
       user = await UserService.insertUser(
         User(
-          name: name,
+          username: name,
           password: password.encrypt()
         )
       );

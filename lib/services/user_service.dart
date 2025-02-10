@@ -29,7 +29,7 @@ abstract class UserService {
 
     final User user = User(
       idUser: data["idUser"],
-      name: name,
+      username: name,
       password: pass,
       token: data["token"]
     );
